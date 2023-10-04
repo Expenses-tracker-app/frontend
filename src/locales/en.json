@@ -1,0 +1,16 @@
+{
+    "common": {
+      "back": "Back",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "done": "Done",
+      "no": "No",
+      "ok": "OK",
+      "repair": "Repair",
+      "version": "Version: ",
+      "yes": "Yes"
+    },
+    "errors": {
+      "required": "Povinné pole"
+    }
+}
