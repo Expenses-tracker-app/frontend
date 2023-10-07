@@ -1,5 +1,5 @@
 import { css, GlobalStyles as MGlobalStyles } from '@mui/material';
-
+import React from 'react';
 const styles = css`
   html,
   body {
