@@ -15,15 +15,16 @@ const Wrapper = styled(Grid)(({ theme }) => ({
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.primary.blue,
-  color: theme.palette.primary.main,
+  background: theme.palette.primary.main,
+  color: theme.palette.primary.blue,
   borderRadius: 25,
   padding: '0px 20px 0px 20px',
   margin: '8px',
   fontSize: '14px',
   '&:hover': {
-    background: theme.palette.primary.main,
-    color: theme.palette.primary.blue
+    background: 'none',
+    color: theme.palette.primary.main,
+    border: '1px solid white'
   }
 }));
 

@@ -10,6 +10,7 @@ const LandingSection = () => {
     <>
       <div>
         <p>{t('common.ok')}</p>
+        <div>KURNIK</div>
       </div>
     </>
   );
