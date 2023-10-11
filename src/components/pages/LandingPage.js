@@ -1,19 +1,25 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Grid, styled } from '@mui/material';
 
 // Styles
+const Wrapper = styled(Grid)(({ theme }) => ({
+  padding: '0px 14px 0px 10px',
+  height: '50px',
+  boxShadow: theme.shadows[2],
+  justifyContent: 'space-between',
+  color: theme.palette.primary.main
+}));
 
-const LandingSection = () => {
+export const LandingPage = () => {
   const { t } = useTranslation();
 
   return (
     <>
-      <div>
-        <p>{t('common.ok')}</p>
-        <div>KURNIK</div>
-      </div>
+      <Wrapper>
+        {t('common.ok')}
+        <div>TEST</div>
+      </Wrapper>
     </>
   );
 };
-
-export default LandingSection;

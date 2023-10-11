@@ -16,6 +16,11 @@
   "user": {
     "login": "Login",
     "logout": "Logout",
-    "register": "Register"
+    "register": "Register",
+    "email": "Email",
+    "password": "Password"
+  },
+  "specific": {
+    "welcome": "Welcome back!"
   }
 }
