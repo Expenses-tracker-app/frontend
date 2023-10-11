@@ -9,7 +9,7 @@ export const palette = {
     contrastText: '#000000'
   },
   secondary: {
-    main: '#132536'
+    main: '#1e1c3c'
   },
   error: {
     main: '#E20613',
@@ -37,6 +37,7 @@ export const palette = {
     primary: '#FFFFFF'
   },
   grey: {
+    600: '#151515',
     500: '#454545',
     400: '#636363',
     300: '#888888',
@@ -174,38 +175,46 @@ export const theme = createTheme({
   shadows,
   typography: {
     h1: {
-      fontWeight: 700,
+      fontWeight: 300,
       fontSize: '38px',
-      lineHeight: '37.5px'
+      lineHeight: '37.5px',
+      fontFamily: 'Montserrat'
     },
     h2: {
       fontWeight: 700,
       fontSize: '28px',
-      lineHeight: '32.81px'
+      lineHeight: '32.81px',
+      fontFamily: 'Montserrat'
     },
     h3: {
       fontWeight: 600,
       fontSize: '24px',
-      lineHeight: '28.13px'
+      lineHeight: '28.13px',
+      fontFamily: 'Montserrat'
     },
     h4: {
       fontWeight: 600,
       fontSize: '20px',
-      lineHeight: '23.44px'
+      lineHeight: '23.44px',
+      fontFamily: 'Montserrat'
     },
     h5: {
       fontWeight: 500,
       fontSize: '18px',
-      lineHeight: '21.09px'
+      lineHeight: '21.09px',
+      fontFamily: 'Montserrat'
     },
     h6: {
       fontWeight: 500,
-      fontSize: '16px',
-      lineHeight: '18.75px'
+      fontSize: '14px',
+      lineHeight: '18.75px',
+      fontFamily: 'Montserrat',
+      color: 'white'
     },
     body1: {
       fontSize: '16px',
-      lineHeight: '18.75px'
+      lineHeight: '18.75px',
+      fontFamily: 'Montserrat'
     }
   }
 });

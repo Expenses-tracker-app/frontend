@@ -1,27 +1,24 @@
 import React from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import paths from './utilities/pathnames';
-import { ThemeProvider } from '@mui/material/styles';
-import { theme } from './styles/theme';
-import LandingPage from './components/pages/LandingPage';
-import Profile from './components/pages/Profile';
+import { LandingPage } from './components/pages/LandingPage';
+import { ProfilePage } from './components/pages/ProfilePage';
 import { Layout } from './components/layout/Layout';
-import { GlobalStyles } from './components/layout/GlobalStyles';
+import { Providers } from './components/layout/Providers';
 
 function App() {
   return (
     <>
-      <GlobalStyles />
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
+      <BrowserRouter>
+        <Providers>
           <Routes>
             <Route element={<Layout />}>
               <Route path={paths.home.path} element={<LandingPage />} />
-              <Route path={paths.profile.path} element={<Profile />} />
+              <Route path={paths.profile.path} element={<ProfilePage />} />
             </Route>
           </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
+        </Providers>
+      </BrowserRouter>
     </>
   );
 }
