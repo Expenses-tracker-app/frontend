@@ -2,10 +2,11 @@ import { createTheme } from '@mui/material';
 
 export const palette = {
   primary: {
-    main: '#00CE90',
-    dark: '#5CDBB5',
-    light: '#BEF1E1',
-    contrastText: '#FFFFFF'
+    main: '#FFFFFF',
+    blue: '#443AD8',
+    red: '#E2D5C6',
+    green: 'E9E3D5',
+    contrastText: '#000000'
   },
   secondary: {
     main: '#132536'
@@ -29,11 +30,11 @@ export const palette = {
     black: '#000000'
   },
   background: {
-    default: '#FFFFFF',
+    default: '#000000',
     paper: '#F6F8FA'
   },
   text: {
-    primary: '#1E1E1E'
+    primary: '#FFFFFF'
   },
   grey: {
     500: '#454545',

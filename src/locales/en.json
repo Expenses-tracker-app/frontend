@@ -5,12 +5,17 @@
     "confirm": "Confirm",
     "done": "Done",
     "no": "No",
-    "ok": "OK",
+    "ok": "Ok",
     "repair": "Repair",
     "version": "Version: ",
     "yes": "Yes"
   },
   "errors": {
-    "required": "Povinné pole"
+    "required": "Required information"
+  },
+  "user": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register"
   }
 }

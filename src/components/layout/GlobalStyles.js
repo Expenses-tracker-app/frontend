@@ -6,7 +6,7 @@ const styles = css`
     margin: 0;
     height: 100%;
     width: 100%;
-    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    font-family: 'Montserrat', 'Helvetica', 'Arial', sans-serif;
   }
 
   #root {
