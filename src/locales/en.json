@@ -22,5 +22,10 @@
   },
   "specific": {
     "welcome": "Welcome back!"
+  },
+  "myExpenses": {
+    "title": "My Expenses",
+    "addNew": "+ New",
+    "totalBalance": "Total Balance"
   }
 }
