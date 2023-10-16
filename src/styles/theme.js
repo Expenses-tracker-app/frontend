@@ -5,7 +5,7 @@ export const palette = {
     main: '#FFFFFF',
     blue: '#443AD8',
     red: '#f00a0a',
-    green: '#22d911',
+    green: '#39d49b',
     contrastText: '#000000'
   },
   secondary: {

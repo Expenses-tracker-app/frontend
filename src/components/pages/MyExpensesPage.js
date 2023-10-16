@@ -1,6 +1,7 @@
 import React from 'react';
 import Expense from '../../data/Expense';
 import ExpenseItem from '../common/ExpenseItem';
+import TotalBalanceItem from '../common/TotalBalanceItem';
 
 import { useTranslation } from 'react-i18next';
 import { 
@@ -13,7 +14,6 @@ import {
     Box,
     List
 } from '@mui/material';
-
 
 const Wrapper = styled(Container)(() => ({
     display: 'flex',
@@ -33,13 +33,14 @@ const ContentContainer = styled(Box)(() => ({
 const StyledCard = styled(Card)(({ theme }) => ({
     background: theme.palette.secondary.main,
     borderRadius: '15px',
-    marginBottom: '20px',
+    marginBottom: '20px'
   }));
 
 const StyledButton = styled(Button)(( ) => ({
     height: '100px',
     width: '100%',
 }));
+
 
 export const MyExpensesPage = () => {
     const { t } = useTranslation();
@@ -49,21 +50,29 @@ export const MyExpensesPage = () => {
         new Expense('Spotify', 'April 10, 2023, 11:10', '20€'),
         new Expense('Spotify', 'April 10, 2023, 11:10', '20€'),
         new Expense('Spotify', 'April 10, 2023, 11:10', '20€'),
+        new Expense('Spotify', 'April 10, 2023, 11:10', '20€'),
     ];
+
+    const amount = '100€';
+    const percentage = '+10%';
 
     return (
         <Wrapper>
             <Typography variant="h1">{t('myExpenses.title')}</Typography>            
-            <ContentContainer>                
+            <ContentContainer> 
+
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <StyledCard>
-                            <StyledButton variant="text">{t('myExpenses.addNew')}</StyledButton>
+                            <StyledButton variant="text">
+                                <Typography variant="h2">{t('myExpenses.addNew')}</Typography>
+                            </StyledButton>
                         </StyledCard>
                     </Grid>
+
                     <Grid item xs={6}>
                         <StyledCard>
-                            <StyledButton variant="text">{t('myExpenses.totalBalance')}</StyledButton>
+                            <TotalBalanceItem amount={amount} percentage={percentage}/>
                         </StyledCard>
                     </Grid>
                 </Grid>
@@ -84,6 +93,7 @@ export const MyExpensesPage = () => {
                         </StyledCard>
                     </Grid>
                 </Grid>
+
             </ContentContainer>
       </Wrapper>
     );
