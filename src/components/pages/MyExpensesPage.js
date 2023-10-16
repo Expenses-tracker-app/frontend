@@ -1,4 +1,7 @@
 import React from 'react';
+import Expense from '../../data/Expense';
+import ExpenseItem from '../common/ExpenseItem';
+
 import { useTranslation } from 'react-i18next';
 import { 
     styled, 
@@ -6,10 +9,9 @@ import {
     Typography,
     Container,
     Button,
-    ListItemButton,
-    ListItemText, 
     Grid,
-    Box
+    Box,
+    List
 } from '@mui/material';
 
 
@@ -42,6 +44,13 @@ const StyledButton = styled(Button)(( ) => ({
 export const MyExpensesPage = () => {
     const { t } = useTranslation();
 
+    const expenses = [
+        new Expense('Spotify', 'April 10, 2023, 11:10', '20€'),
+        new Expense('Spotify', 'April 10, 2023, 11:10', '20€'),
+        new Expense('Spotify', 'April 10, 2023, 11:10', '20€'),
+        new Expense('Spotify', 'April 10, 2023, 11:10', '20€'),
+    ];
+
     return (
         <Wrapper>
             <Typography variant="h1">{t('myExpenses.title')}</Typography>            
@@ -62,9 +71,16 @@ export const MyExpensesPage = () => {
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
                         <StyledCard>
-                            <ListItemButton component="a" href="#simple-list">
-                                <ListItemText primary="Spotify - 400€" />
-                            </ListItemButton>
+                            <List>
+                                {expenses.map((expense, index) => (
+                                <ExpenseItem
+                                    key={index}
+                                    name={expense.name}
+                                    timestamp={expense.timestamp}
+                                    amount={expense.amount}
+                                />
+                                ))}
+                            </List>
                         </StyledCard>
                     </Grid>
                 </Grid>

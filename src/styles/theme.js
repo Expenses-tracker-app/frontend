@@ -4,8 +4,8 @@ export const palette = {
   primary: {
     main: '#FFFFFF',
     blue: '#443AD8',
-    red: '#E2D5C6',
-    green: 'E9E3D5',
+    red: '#f00a0a',
+    green: '#22d911',
     contrastText: '#000000'
   },
   secondary: {
@@ -34,7 +34,8 @@ export const palette = {
     paper: '#F6F8FA'
   },
   text: {
-    primary: '#FFFFFF'
+    primary: '#FFFFFF',
+    secondary: '#ccc6c6'
   },
   grey: {
     600: '#151515',
