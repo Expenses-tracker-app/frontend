@@ -6,6 +6,10 @@ const pathnames = {
   profile: {
     path: '/profile',
     title: 'Profile'
+  },
+  myExpenses: {
+    path: '/my-expenses',
+    title: 'My Expenses'
   }
 };
 
