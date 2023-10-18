@@ -27,5 +27,12 @@
     "title": "My Expenses",
     "addNew": "+ New",
     "totalBalance": "Total Balance"
+  }, 
+  "settings": {
+    "title": "Settings", 
+    "changeEmail": "Change email", 
+    "changePassword": "Change password", 
+    "retypePassword": "Retype password", 
+    "save": "Save"
   }
 }
