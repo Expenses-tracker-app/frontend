@@ -34,5 +34,12 @@
     "changePassword": "Change password", 
     "retypePassword": "Retype password", 
     "save": "Save"
+  }, 
+  "registration": {
+    "title": "Register", 
+    "email": "Email", 
+    "password": "Password", 
+    "retypePassword": "Retype password", 
+    "save": "Register"
   }
 }

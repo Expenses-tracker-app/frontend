@@ -7,6 +7,7 @@ import { MyExpensesPage } from './components/pages/MyExpensesPage';
 import { Layout } from './components/layout/Layout';
 import { Providers } from './components/layout/Providers';
 import {SettingsPage} from './components/pages/SettingsPage';
+import {RegistrationPage} from './components/pages/RegistrationPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <Route path={paths.profile.path} element={<ProfilePage />} />
               <Route path={paths.myExpenses.path} element={<MyExpensesPage />} />
               <Route path={paths.settings.path} element={<SettingsPage />} />
+              <Route path={paths.registration.path} element={<RegistrationPage />} />
             </Route>
           </Routes>
         </Providers>

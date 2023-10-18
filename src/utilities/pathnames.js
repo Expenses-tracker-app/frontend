@@ -14,6 +14,10 @@ const pathnames = {
   settings: {
     path: '/settings',
     title: 'Settings'
+  }, 
+  registration: {
+    path: '/register', 
+    title: 'Register'
   }
 };
 

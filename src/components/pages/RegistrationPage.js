@@ -48,28 +48,28 @@ const Wrapper = styled(Container)(() => ({
     }
   }));
   
-  export const SettingsPage = () => {
+  export const RegistrationPage = () => {
     const { t } = useTranslation();
   
     return (
       <Wrapper>
-        <Typography variant="h1">{t('settings.title')}</Typography>
+        <Typography variant="h1">{t('registration.title')}</Typography>
         <FormWrapper>
           <FormGroup>
             <FormLabel>
-              <Typography variant="h6">{t('settings.changeEmail')}</Typography>
+              <Typography variant="h6">{t('registration.email')}</Typography>
             </FormLabel>
             <InputLine id="settings_email" />
             <FormLabel>
-              <Typography variant="h6">{t('settings.changePassword')}</Typography>
+              <Typography variant="h6">{t('registration.password')}</Typography>
             </FormLabel>
             <InputLine id="settings_psw" />
             <FormLabel>
-              <Typography variant="h6">{t('settings.retypePassword')}</Typography>
+              <Typography variant="h6">{t('registration.retypePassword')}</Typography>
             </FormLabel>
             <InputLine id="settings_retype_psw" />
-            <StyledButton href={paths.settings.path}>
-              <Typography variant="h6">{t('settings.save')}</Typography>
+            <StyledButton href={paths.profile.path}>
+              <Typography variant="h6">{t('registration.save')}</Typography>
             </StyledButton>
           </FormGroup>
         </FormWrapper>
