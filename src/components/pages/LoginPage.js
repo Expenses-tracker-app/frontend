@@ -48,7 +48,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
   }
 }));
 
-export const ProfilePage = () => {
+export const LoginPage = () => {
   const { t } = useTranslation();
 
   const [email, setEmail] = useState('')
