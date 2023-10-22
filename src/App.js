@@ -17,7 +17,7 @@ function App() {
           <Routes>
             <Route element={<Layout />}>
               <Route path={paths.home.path} element={<LandingPage />} />
-              <Route path={paths.profile.path} element={<LoginPage />} />
+              <Route path={paths.login.path} element={<LoginPage />} />
               <Route path={paths.myExpenses.path} element={<MyExpensesPage />} />
               <Route path={paths.settings.path} element={<SettingsPage />} />
               <Route path={paths.registration.path} element={<RegistrationPage />} />

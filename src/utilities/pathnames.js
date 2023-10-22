@@ -3,9 +3,9 @@ const pathnames = {
     path: '/',
     title: 'Landing page'
   },
-  profile: {
-    path: '/profile',
-    title: 'Profile'
+  login: {
+    path: '/login',
+    title: 'Login'
   },
   myExpenses: {
     path: '/my-expenses',
