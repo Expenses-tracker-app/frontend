@@ -8,7 +8,7 @@ export const Layout = () => {
     <>
       <LayoutContainer>
         <LowerLeftWave size="200px" />
-        <UpperRightWave size="200px"/>
+        <UpperRightWave size="200px" />
         <Header />
         <Outlet />
       </LayoutContainer>

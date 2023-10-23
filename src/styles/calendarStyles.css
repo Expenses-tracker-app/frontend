@@ -1,0 +1,52 @@
+/* Hide the navigation buttons */
+.react-calendar__navigation__arrow,
+.react-calendar__navigation__prev-button {
+  display: none;
+}
+
+/* the name of the month will be white */
+.react-calendar__navigation__label {
+  color: white;
+  font-family: Montserrat;
+}
+.react-calendar__navigation {
+  height: fit-content;
+}
+.react-calendar__navigation__label {
+  pointer-events: none;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.react-calendar__tile {
+  color: white;
+  height: fit-content;
+  padding: 5px;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #222222;
+  pointer-events: none;
+}
+
+/* Styles for abbreviations with title attribute */
+abbr[title] {
+  text-decoration: none; /* Removes the underline for abbreviations with title */
+}
+
+/* Styles for enabled calendar tiles (days) on hover or focus */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background: #222222; /* Background color for enabled tiles on hover/focus */
+  pointer-events: none;
+}
+
+/* Styles for the current day */
+.react-calendar__tile--now {
+  background: #444444; /* Background color for the current day */
+  border-radius: 50%; /* Rounded corners for the current day */
+  font-weight: 700; /* Sets the text weight to bold */
+  margin-left: 15px;
+  width: 10px;
+}

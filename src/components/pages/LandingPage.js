@@ -1,6 +1,8 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Grid, styled } from '@mui/material';
+import 'react-calendar/dist/Calendar.css';
+import { MCalendar } from '../../components/common/Calendar';
+import '../../styles/calendarStyles.css';
 
 // Styles
 const Wrapper = styled(Grid)(({ theme }) => ({
@@ -8,17 +10,15 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   height: '50px',
   boxShadow: theme.shadows[2],
   justifyContent: 'space-between',
-  color: theme.palette.primary.main
+  color: theme.palette.primary.main,
+  borderRadius: '20px'
 }));
 
 export const LandingPage = () => {
-  const { t } = useTranslation();
-
   return (
     <>
       <Wrapper>
-        {t('common.ok')}
-        <div>TEST</div>
+        <MCalendar />
       </Wrapper>
     </>
   );

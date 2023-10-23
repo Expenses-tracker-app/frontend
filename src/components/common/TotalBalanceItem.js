@@ -2,38 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import { 
-    styled,
-    Typography,
-    Container
-} from '@mui/material';
+import { styled, Typography, Container } from '@mui/material';
 
 const Wrapper = styled(Container)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'left',    
+  alignItems: 'left',
   justifyContent: 'center',
   height: '100px',
-  width: '100%',
+  width: '100%'
 }));
-
 
 const StyledTotalBalanceText = styled('div')(({ theme }) => ({
   '&': {
-      color: theme.palette.text.secondary,
-  },
+    color: theme.palette.text.secondary
+  }
 }));
 
 const StyledAmountText = styled('div')(({ theme }) => ({
   '&': {
-      color: theme.palette.text.primary,
-  },
+    color: theme.palette.text.primary
+  }
 }));
 
 const StyledPercentageText = styled('div')(({ theme }) => ({
   '&': {
-      color: theme.palette.primary.green,
-  },
+    color: theme.palette.primary.green
+  }
 }));
 
 const TotalBalanceItem = ({ amount, percentage }) => {
@@ -58,7 +53,7 @@ const TotalBalanceItem = ({ amount, percentage }) => {
 
 TotalBalanceItem.propTypes = {
   amount: PropTypes.string.isRequired,
-  percentage: PropTypes.string.isRequired,
+  percentage: PropTypes.string.isRequired
 };
 
 export default TotalBalanceItem;
