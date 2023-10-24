@@ -7,9 +7,9 @@ import '../../styles/calendarStyles.css';
 
 // Styles
 
-const CustomCalendar = styled(Calendar)({
+const CustomCalendar = styled(Calendar)(({ theme }) => ({
   width: '300px',
-  backgroundColor: '#222222',
+  backgroundColor: theme.palette.grey[600],
   color: 'white',
   borderRadius: '30px',
   boxShadow: '0 12px 24px rgba(0, 0, 0, 0.2)',
@@ -18,7 +18,7 @@ const CustomCalendar = styled(Calendar)({
   padding: '20px',
   fontFamily: 'Montserrat',
   fontSize: '14px'
-});
+}));
 
 export const MCalendar = () => {
   const [date, setDate] = useState(new Date());

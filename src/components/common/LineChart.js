@@ -17,12 +17,10 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 const Wrapper = styled(Grid)(({ theme }) => ({
   color: theme.palette.primary.main,
   padding: '10px',
-  width: '400px',
-  height: '200px',
+  width: '450px',
+  height: '100%',
   borderRadius: '30px',
-  boxShadow: '0 12px 24px rgba(0, 0, 0, 0.2)',
-  border: 'none',
-  backgroundColor: '#222222'
+  backgroundColor: theme.palette.grey[600]
 }));
 
 export const options = {
@@ -44,7 +42,7 @@ export const options = {
   scales: {
     x: {
       grid: {
-        color: 'transparent' // Set grid lines color to transparent
+        color: 'transparent'
       },
       ticks: {
         color: 'white',
@@ -56,7 +54,7 @@ export const options = {
     },
     y: {
       grid: {
-        color: 'transparent' // Set grid lines color to transparent
+        color: 'transparent'
       },
       beginAtZero: true,
       ticks: {
