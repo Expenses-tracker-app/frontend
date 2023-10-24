@@ -16,9 +16,9 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const Wrapper = styled(Grid)(({ theme }) => ({
   color: theme.palette.primary.main,
-  padding: '10px',
-  width: '450px',
-  height: '100%',
+  padding: '15px',
+  width: '480px',
+  height: 'auto',
   borderRadius: '30px',
   backgroundColor: theme.palette.grey[600]
 }));
