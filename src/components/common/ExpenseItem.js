@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { styled, ListItemButton, Typography } from '@mui/material';
+import { ArcElement } from 'chart.js';
+import { Chart as ChartJS } from 'chart.js';
+ChartJS.register(ArcElement);
 
 const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
   background: theme.palette.secondary.main,

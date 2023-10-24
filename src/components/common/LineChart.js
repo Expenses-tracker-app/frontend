@@ -1,18 +1,7 @@
 import React from 'react';
 import { Grid, styled } from '@mui/material';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+import { Line } from 'react-chartjs-2';
 
 const Wrapper = styled(Grid)(({ theme }) => ({
   color: theme.palette.primary.main,
@@ -23,7 +12,7 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   backgroundColor: theme.palette.grey[600]
 }));
 
-export const options = {
+export const lineOptions = {
   responsive: true,
   plugins: {
     legend: {
@@ -73,7 +62,7 @@ const incomes = [1500, 1500, 1500, 1500, 1500, 1800, 1800, 1800, 1800, 2200, 220
 
 const labels = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
 
-export const data = {
+export const lineData = {
   labels,
   datasets: [
     {
@@ -94,7 +83,7 @@ export const data = {
 export function LineChart() {
   return (
     <Wrapper>
-      <Line options={options} data={data} />
+      <Line options={lineOptions} data={lineData} unique={true} />
     </Wrapper>
   );
 }
