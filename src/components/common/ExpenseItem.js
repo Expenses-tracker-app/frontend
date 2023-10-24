@@ -27,16 +27,16 @@ const StyledAmountText = styled('div')(({ theme }) => ({
   }
 }));
 
-const ExpenseItem = ({ name, timestamp, amount }) => {
+const ExpenseItem = ({ title, date, amount }) => {
   return (
     <StyledListItemButton>
       <div>
         <StyledNameText>
-          <Typography variant="h3">{name}</Typography>
+          <Typography variant="h3">{title}</Typography>
         </StyledNameText>
 
         <StyledTimestampText>
-          <Typography variant="body1">{timestamp}</Typography>
+          <Typography variant="body1">{date}</Typography>
         </StyledTimestampText>
       </div>
       <div>
@@ -49,8 +49,8 @@ const ExpenseItem = ({ name, timestamp, amount }) => {
 };
 
 ExpenseItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  timestamp: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
   amount: PropTypes.string.isRequired
 };
 

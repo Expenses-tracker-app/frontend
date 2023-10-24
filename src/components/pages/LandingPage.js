@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, styled } from '@mui/material';
 import 'react-calendar/dist/Calendar.css';
+import { LineChart } from '../common/LineChart';
 import { MCalendar } from '../../components/common/Calendar';
 import '../../styles/calendarStyles.css';
 
@@ -19,6 +20,7 @@ export const LandingPage = () => {
     <>
       <Wrapper>
         <MCalendar />
+        <LineChart />
       </Wrapper>
     </>
   );

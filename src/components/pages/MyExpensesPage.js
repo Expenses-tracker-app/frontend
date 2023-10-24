@@ -1,8 +1,7 @@
 import React from 'react';
-import Expense from '../../data/Expense';
 import ExpenseItem from '../common/ExpenseItem';
 import TotalBalanceItem from '../common/TotalBalanceItem';
-
+import data from '../../data/data.json';
 import { useTranslation } from 'react-i18next';
 import { styled, Card, Typography, Container, Button, Grid, Box, List } from '@mui/material';
 
@@ -34,15 +33,7 @@ const StyledButton = styled(Button)(() => ({
 
 export const MyExpensesPage = () => {
   const { t } = useTranslation();
-
-  const expenses = [
-    new Expense('Spotify', 'April 10, 2023, 11:10', '20€'),
-    new Expense('Spotify', 'April 10, 2023, 11:10', '20€'),
-    new Expense('Spotify', 'April 10, 2023, 11:10', '20€'),
-    new Expense('Spotify', 'April 10, 2023, 11:10', '20€'),
-    new Expense('Spotify', 'April 10, 2023, 11:10', '20€')
-  ];
-
+  const expenses = data.expenses;
   const amount = '100€';
   const percentage = '+10%';
 
@@ -73,8 +64,8 @@ export const MyExpensesPage = () => {
                 {expenses.map((expense, index) => (
                   <ExpenseItem
                     key={index}
-                    name={expense.name}
-                    timestamp={expense.timestamp}
+                    title={expense.title}
+                    date={expense.date}
                     amount={expense.amount}
                   />
                 ))}

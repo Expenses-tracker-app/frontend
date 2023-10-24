@@ -8,11 +8,11 @@ import '../../styles/calendarStyles.css';
 // Styles
 
 const CustomCalendar = styled(Calendar)({
-  width: '300px' /* Sets the width of the calendar */,
-  backgroundColor: '#222222' /* Background color of the calendar */,
-  color: 'white' /* Text color */,
-  borderRadius: '30px' /* Rounded corners of the calendar */,
-  boxShadow: '0 12px 24px rgba(0, 0, 0, 0.2)' /* Adds a shadow to the calendar */,
+  width: '300px',
+  backgroundColor: '#222222',
+  color: 'white',
+  borderRadius: '30px',
+  boxShadow: '0 12px 24px rgba(0, 0, 0, 0.2)',
   border: 'none',
   margin: 'auto',
   padding: '20px',
