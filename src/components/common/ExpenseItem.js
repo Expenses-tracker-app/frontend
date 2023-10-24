@@ -41,7 +41,7 @@ const ExpenseItem = ({ title, date, amount }) => {
       </div>
       <div>
         <StyledAmountText>
-          <Typography variant="h3">{amount}</Typography>
+          <Typography variant="h3">{amount}€</Typography>
         </StyledAmountText>
       </div>
     </StyledListItemButton>
