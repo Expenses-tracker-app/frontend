@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import paths from './utilities/pathnames';
-import { LandingPage } from './components/pages/LandingPage';
+import { MainPage } from './components/pages/MainPage';
 import { ProfilePage } from './components/pages/ProfilePage';
 import { MyExpensesPage } from './components/pages/MyExpensesPage';
 import { Layout } from './components/layout/Layout';
@@ -14,7 +14,7 @@ function App() {
         <Providers>
           <Routes>
             <Route element={<Layout />}>
-              <Route path={paths.home.path} element={<LandingPage />} />
+              <Route path={paths.home.path} element={<MainPage />} />
               <Route path={paths.profile.path} element={<ProfilePage />} />
               <Route path={paths.myExpenses.path} element={<MyExpensesPage />} />
             </Route>

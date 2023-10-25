@@ -64,7 +64,7 @@ export const MyExpensesPage = () => {
                 {expenses.map((expense, index) => (
                   <ExpenseItem
                     key={index}
-                    title={expense.title}
+                    desc={expense.desc}
                     date={expense.date}
                     amount={expense.amount}
                   />

@@ -200,8 +200,8 @@ export const theme = createTheme({
       fontFamily: 'Montserrat'
     },
     h5: {
-      fontWeight: 500,
-      fontSize: '18px',
+      fontWeight: 400,
+      fontSize: '16px',
       lineHeight: '21.09px',
       fontFamily: 'Montserrat'
     },

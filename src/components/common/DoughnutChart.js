@@ -8,9 +8,9 @@ ChartJS.register(ArcElement);
 
 const Wrapper = styled(Grid)(({ theme }) => ({
   color: theme.palette.primary.main,
-  padding: '15px',
+  padding: '5px 25px 25px 25px',
   width: '300px',
-  height: '200px',
+  height: '260px',
   borderRadius: '30px',
   backgroundColor: theme.palette.grey[600]
 }));
@@ -29,6 +29,7 @@ const doughnutData = {
 const doughnutOptions = {
   responsive: true,
   maintainAspectRatio: false,
+  cutout: '70%',
   plugins: {
     legend: {
       position: 'top',
@@ -40,10 +41,12 @@ const doughnutOptions = {
         font: {
           size: 10,
           family: 'Montserrat'
-        }
+        },
+        padding: 20
       }
     }
-  }
+  },
+  scale: 70
 };
 
 export const DoughnutChart = () => {

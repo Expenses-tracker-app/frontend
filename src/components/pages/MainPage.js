@@ -2,8 +2,9 @@ import React from 'react';
 import { Grid, styled } from '@mui/material';
 import 'react-calendar/dist/Calendar.css';
 import { LineChart } from '../common/LineChart';
-import { MCalendar } from '../../components/common/Calendar';
+import { MCalendar } from '../common/Calendar';
 import { DoughnutChart } from '../common/DoughnutChart';
+import { Transactions } from '../common/Transactions';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -32,7 +33,7 @@ const Wrapper = styled(Grid)(() => ({
   }
 }));
 
-export const LandingPage = () => {
+export const MainPage = () => {
   return (
     <>
       <Wrapper>
@@ -41,6 +42,7 @@ export const LandingPage = () => {
           <MCalendar />
         </div>
         <div>
+          <Transactions />
           <DoughnutChart />
         </div>
       </Wrapper>

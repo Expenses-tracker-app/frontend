@@ -1,15 +1,15 @@
 const pathnames = {
   home: {
     path: '/',
-    title: 'Landing page'
+    title: 'Main page'
   },
   profile: {
     path: '/profile',
     title: 'Profile'
   },
   myExpenses: {
-    path: '/my-expenses',
-    title: 'My Expenses'
+    path: '/expenses',
+    title: 'Expenses'
   }
 };
 

@@ -7,52 +7,37 @@ import { Chart as ChartJS } from 'chart.js';
 ChartJS.register(ArcElement);
 
 const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
-  background: theme.palette.secondary.main,
+  background: theme.palette.grey[600],
   display: 'flex',
   justifyContent: 'space-between'
 }));
 
-const StyledNameText = styled('div')(({ theme }) => ({
-  '&': {
-    color: theme.palette.text.primary
-  }
+const Date = styled(Typography)(({ theme }) => ({
+  color: theme.palette.grey[400],
+  fontSize: '12px'
 }));
 
-const StyledTimestampText = styled('div')(({ theme }) => ({
-  '&': {
-    color: theme.palette.text.secondary
-  }
+const Amount = styled(Typography)(({ theme }) => ({
+  color: theme.palette.primary.green,
+  fontWeight: '600'
 }));
 
-const StyledAmountText = styled('div')(({ theme }) => ({
-  '&': {
-    color: theme.palette.primary.green
-  }
-}));
-
-const ExpenseItem = ({ title, date, amount }) => {
+const ExpenseItem = ({ desc, date, amount }) => {
   return (
     <StyledListItemButton>
       <div>
-        <StyledNameText>
-          <Typography variant="h3">{title}</Typography>
-        </StyledNameText>
-
-        <StyledTimestampText>
-          <Typography variant="body1">{date}</Typography>
-        </StyledTimestampText>
+        <Typography variant="h5">{desc}</Typography>
+        <Date>{date}</Date>
       </div>
       <div>
-        <StyledAmountText>
-          <Typography variant="h3">{amount}€</Typography>
-        </StyledAmountText>
+        <Amount variant="h5">{amount}€</Amount>
       </div>
     </StyledListItemButton>
   );
 };
 
 ExpenseItem.propTypes = {
-  title: PropTypes.string.isRequired,
+  desc: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   amount: PropTypes.string.isRequired
 };

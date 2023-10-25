@@ -23,8 +23,8 @@
   "specific": {
     "welcome": "Welcome back!"
   },
-  "myExpenses": {
-    "title": "My Expenses",
+  "transactions": {
+    "title": "Transactions",
     "addNew": "+ New",
     "totalBalance": "Total Balance"
   }
