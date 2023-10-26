@@ -5,6 +5,8 @@ import { LineChart } from '../common/LineChart';
 import { MCalendar } from '../common/Calendar';
 import { DoughnutChart } from '../common/DoughnutChart';
 import { Transactions } from '../common/Transactions';
+import { Link } from 'react-router-dom';
+import paths from '../../utilities/pathnames';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,29 +25,34 @@ const Wrapper = styled(Grid)(() => ({
   width: '80%',
   margin: 'auto',
   justifyContent: 'center',
-  ' > div': {
+  [`> div`]: {
     width: 'fit-content',
     display: 'flex',
     margin: 'auto',
-    '> div': {
+    [`> *`]: {
       margin: '10px'
     }
   }
 }));
 
+const MLink = styled(Link)(({ theme }) => ({
+  textDecoration: 'none',
+  color: theme.palette.primary.main
+}));
+
 export const MainPage = () => {
   return (
-    <>
-      <Wrapper>
-        <div>
-          <LineChart />
-          <MCalendar />
-        </div>
-        <div>
+    <Wrapper>
+      <div>
+        <LineChart />
+        <MCalendar />
+      </div>
+      <div>
+        <MLink to={paths.transactions.path}>
           <Transactions />
-          <DoughnutChart />
-        </div>
-      </Wrapper>
-    </>
+        </MLink>
+        <DoughnutChart />
+      </div>
+    </Wrapper>
   );
 };

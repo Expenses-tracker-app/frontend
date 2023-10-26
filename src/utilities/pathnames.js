@@ -7,9 +7,9 @@ const pathnames = {
     path: '/profile',
     title: 'Profile'
   },
-  myExpenses: {
-    path: '/expenses',
-    title: 'Expenses'
+  transactions: {
+    path: '/transactions',
+    title: 'Transactions'
   }
 };
 

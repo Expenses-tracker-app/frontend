@@ -20,46 +20,46 @@ const ContentContainer = styled(Box)(() => ({
   width: '100%'
 }));
 
-const StyledCard = styled(Card)(({ theme }) => ({
-  background: theme.palette.secondary.main,
-  borderRadius: '15px',
+const MCard = styled(Card)(({ theme }) => ({
+  background: theme.palette.grey[600],
+  borderRadius: '35px',
   marginBottom: '20px'
 }));
 
-const StyledButton = styled(Button)(() => ({
-  height: '100px',
+const MButton = styled(Button)(() => ({
+  height: '120px',
   width: '100%'
 }));
 
-export const MyExpensesPage = () => {
+export const TransactionsPage = () => {
   const { t } = useTranslation();
   const expenses = data.expenses;
-  const amount = '100€';
+  const amount = '100.000.000€';
   const percentage = '+10%';
 
   return (
     <Wrapper>
-      <Typography variant="h1">{t('myExpenses.title')}</Typography>
+      <Typography variant="h1">{t('transactions.title')}</Typography>
       <ContentContainer>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <StyledCard>
-              <StyledButton variant="text">
-                <Typography variant="h2">{t('myExpenses.addNew')}</Typography>
-              </StyledButton>
-            </StyledCard>
+            <MCard>
+              <MButton variant="text">
+                <Typography variant="h2">{t('transactions.addNew')}</Typography>
+              </MButton>
+            </MCard>
           </Grid>
 
           <Grid item xs={6}>
-            <StyledCard>
+            <MCard>
               <TotalBalanceItem amount={amount} percentage={percentage} />
-            </StyledCard>
+            </MCard>
           </Grid>
         </Grid>
 
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            <StyledCard>
+            <MCard>
               <List>
                 {expenses.map((expense, index) => (
                   <ExpenseItem
@@ -70,7 +70,7 @@ export const MyExpensesPage = () => {
                   />
                 ))}
               </List>
-            </StyledCard>
+            </MCard>
           </Grid>
         </Grid>
       </ContentContainer>

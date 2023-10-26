@@ -9,7 +9,8 @@ ChartJS.register(ArcElement);
 const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
   background: theme.palette.grey[600],
   display: 'flex',
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
+  margin: '0 10px 0 10px'
 }));
 
 const Date = styled(Typography)(({ theme }) => ({
