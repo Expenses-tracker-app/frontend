@@ -8,6 +8,7 @@ import { Layout } from './components/layout/Layout';
 import { Providers } from './components/layout/Providers';
 import {SettingsPage} from './components/pages/SettingsPage';
 import {RegistrationPage} from './components/pages/RegistrationPage';
+import { NewExpensePage } from './components/pages/NewExpense';
 
 function App() {
   return (
@@ -19,8 +20,6 @@ function App() {
               <Route path={paths.home.path} element={<LandingPage />} />
               <Route path={paths.login.path} element={<LoginPage />} />
               <Route path={paths.myExpenses.path} element={<MyExpensesPage />} />
-              <Route path={paths.settings.path} element={<SettingsPage />} />
-              <Route path={paths.registration.path} element={<RegistrationPage />} />
             </Route>
           </Routes>
         </Providers>

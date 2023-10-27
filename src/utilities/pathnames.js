@@ -18,6 +18,10 @@ const pathnames = {
   registration: {
     path: '/register', 
     title: 'Register'
+  },
+  newExpense: {
+    path: '/new-expense',
+    title: 'New Expense'
   }
 };
 
