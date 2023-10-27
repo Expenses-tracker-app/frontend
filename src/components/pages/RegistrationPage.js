@@ -78,6 +78,7 @@ const Wrapper = styled(Container)(() => ({
         setRegistrationDone(true)
         console.log('Submitting registration done')
         localStorage.setItem('people', JSON.stringify(people))
+        console.log(people)
       } else {
         setPasswordMismatch(true)
         setRegistrationDone(false)

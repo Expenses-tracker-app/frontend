@@ -21,6 +21,8 @@ function App() {
               <Route path={paths.login.path} element={<LoginPage />} />
               <Route path={paths.myExpenses.path} element={<MyExpensesPage />} />
               <Route path={paths.newExpense.path} element={<NewExpensePage />}  />
+              <Route path={paths.settings.path} element={<SettingsPage />} />
+              <Route path={paths.registration.path} element={<RegistrationPage />} />
             </Route>
           </Routes>
         </Providers>
