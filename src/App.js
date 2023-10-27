@@ -20,6 +20,7 @@ function App() {
               <Route path={paths.home.path} element={<LandingPage />} />
               <Route path={paths.login.path} element={<LoginPage />} />
               <Route path={paths.myExpenses.path} element={<MyExpensesPage />} />
+              <Route path={paths.newExpense.path} element={<NewExpensePage />}  />
             </Route>
           </Routes>
         </Providers>
