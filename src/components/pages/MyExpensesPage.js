@@ -2,6 +2,7 @@ import React from 'react';
 import Expense from '../../data/Expense';
 import ExpenseItem from '../common/ExpenseItem';
 import TotalBalanceItem from '../common/TotalBalanceItem';
+import paths from '../../utilities/pathnames';
 
 import { useTranslation } from 'react-i18next';
 import { 
@@ -56,6 +57,7 @@ export const MyExpensesPage = () => {
     const amount = '100€';
     const percentage = '+10%';
 
+
     return (
         <Wrapper>
             <Typography variant="h1">{t('myExpenses.title')}</Typography>            
@@ -64,7 +66,7 @@ export const MyExpensesPage = () => {
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <StyledCard>
-                            <StyledButton variant="text">
+                            <StyledButton variant="text" href={paths.newExpense.path}>
                                 <Typography variant="h2">{t('myExpenses.addNew')}</Typography>
                             </StyledButton>
                         </StyledCard>

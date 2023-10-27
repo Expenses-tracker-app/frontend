@@ -10,6 +10,10 @@ const pathnames = {
   myExpenses: {
     path: '/my-expenses',
     title: 'My Expenses'
+  },
+  newExpense: {
+    path: '/new-expense',
+    title: 'New Expense'
   }
 };
 

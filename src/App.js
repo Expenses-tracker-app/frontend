@@ -6,6 +6,7 @@ import { ProfilePage } from './components/pages/ProfilePage';
 import { MyExpensesPage } from './components/pages/MyExpensesPage';
 import { Layout } from './components/layout/Layout';
 import { Providers } from './components/layout/Providers';
+import { NewExpensePage } from './components/pages/NewExpense';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
               <Route path={paths.home.path} element={<LandingPage />} />
               <Route path={paths.profile.path} element={<ProfilePage />} />
               <Route path={paths.myExpenses.path} element={<MyExpensesPage />} />
+              <Route path={paths.newExpense.path} element={<NewExpensePage />}  />
             </Route>
           </Routes>
         </Providers>
