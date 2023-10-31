@@ -81,7 +81,6 @@ export function LineChart() {
     'D'
   ]);
 
-  // Initial setup of data
   useEffect(() => {
     const expenses = generateRandomData(length);
     const incomes = generateRandomData(length);
@@ -105,13 +104,13 @@ export function LineChart() {
     });
   }, [length, labels]);
 
-  // Update data when selectedDate changes
   useEffect(() => {
-    if (selectedDate) {
+    if (selectedDate.toDateString() !== new Date().toDateString()) {
       setLength(7);
-      setLabels(Array.from({ length: length }, (_, index) => (index + 1).toString()));
+      setLabels(['M', 'T', 'W', 'T', 'F', 'S', 'S']);
+      console.log(selectedDate);
     }
-  }, [selectedDate, length]);
+  }, [selectedDate]);
 
   return (
     <Wrapper>
