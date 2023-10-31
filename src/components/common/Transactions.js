@@ -1,6 +1,5 @@
 import React from 'react';
-import ExpenseItem from '../common/ExpenseItem';
-import IncomeItem from './IncomeItem';
+import TransactionItem from './TransactionItem';
 import data from '../../data/data.json';
 import { useTranslation } from 'react-i18next';
 import { styled, Typography, Grid, List } from '@mui/material';
@@ -20,27 +19,26 @@ const Title = styled(Typography)(() => ({
 
 export const Transactions = () => {
   const { t } = useTranslation();
-  const expenses = data.expenses;
-  const incomes = data.incomes;
+
+  const combinedData = [...data.expenses, ...data.incomes];
+
+  combinedData.sort((a, b) => {
+    const dateA = new Date(a.date.split('-').reverse().join('-'));
+    const dateB = new Date(b.date.split('-').reverse().join('-'));
+    return dateB - dateA;
+  });
 
   return (
     <Wrapper>
       <Title variant="h5">{t('transactions.title')}</Title>
       <List>
-        {expenses.map((expense, index) => (
-          <ExpenseItem
+        {combinedData.map((item, index) => (
+          <TransactionItem
             key={index}
-            desc={expense.desc}
-            date={expense.date}
-            amount={expense.amount}
-          />
-        ))}
-        {incomes.map((income, index) => (
-          <IncomeItem
-            key={index}
-            desc={income.desc}
-            date={income.date}
-            amount={income.amount}
+            desc={item.desc}
+            date={item.date}
+            amount={item.amount}
+            isExpense={item.expense_id !== undefined}
           />
         ))}
       </List>

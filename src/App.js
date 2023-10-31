@@ -6,8 +6,8 @@ import { LoginPage } from './components/pages/LoginPage';
 import { TransactionsPage } from './components/pages/TransactionsPage';
 import { Layout } from './components/layout/Layout';
 import { Providers } from './components/layout/Providers';
-import {SettingsPage} from './components/pages/SettingsPage';
-import {RegistrationPage} from './components/pages/RegistrationPage';
+import { SettingsPage } from './components/pages/SettingsPage';
+import { RegistrationPage } from './components/pages/RegistrationPage';
 
 function App() {
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import ExpenseItem from '../common/ExpenseItem';
+import ExpenseItem from '../common/TransactionItem';
 import TotalBalanceItem from '../common/TotalBalanceItem';
 import data from '../../data/data.json';
 import { useTranslation } from 'react-i18next';

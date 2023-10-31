@@ -1,9 +1,9 @@
-// DoughnutChart.js
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Grid, styled } from '@mui/material';
 import { ArcElement } from 'chart.js';
 import { Chart as ChartJS } from 'chart.js';
+import DateProvider from '../layout/DataContext';
 ChartJS.register(ArcElement);
 
 const Wrapper = styled(Grid)(({ theme }) => ({
@@ -14,17 +14,6 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   borderRadius: '30px',
   backgroundColor: theme.palette.grey[600]
 }));
-
-const doughnutData = {
-  labels: ['Incomes', 'Expenses'],
-  datasets: [
-    {
-      data: [750, 250],
-      backgroundColor: ['#39d49b', '#f00a0a'],
-      borderColor: ['#39d49b', '#f00a0a']
-    }
-  ]
-};
 
 const doughnutOptions = {
   responsive: true,
@@ -50,6 +39,37 @@ const doughnutOptions = {
 };
 
 export const DoughnutChart = () => {
+  const { selectedDate } = useContext(DateProvider);
+
+  // get summary of expenses and summary of incomes in that date from BE
+
+  //so far I put there random number generator just to see it working
+  const [doughnutData, setDoughnutData] = useState({
+    labels: ['Incomes', 'Expenses'],
+    datasets: [
+      {
+        data: [0, 0],
+        backgroundColor: ['#39d49b', '#f00a0a'],
+        borderColor: ['#39d49b', '#f00a0a']
+      }
+    ]
+  });
+
+  useEffect(() => {
+    const randomNumbers = Array.from({ length: 2 }, () => Math.floor(Math.random() * 1000));
+
+    setDoughnutData((prevData) => ({
+      ...prevData,
+      datasets: [
+        {
+          data: randomNumbers,
+          backgroundColor: ['#39d49b', '#f00a0a'],
+          borderColor: ['#39d49b', '#f00a0a']
+        }
+      ]
+    }));
+  }, [selectedDate]);
+
   return (
     <Wrapper>
       <Doughnut data={doughnutData} options={doughnutOptions} unique={true} />

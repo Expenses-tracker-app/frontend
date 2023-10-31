@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { styled } from '@mui/material';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import DateContext from '../layout/DataContext';
 
 // Styles
 const CustomCalendar = styled(Calendar)(({ theme }) => ({
@@ -24,10 +25,10 @@ const CustomCalendar = styled(Calendar)(({ theme }) => ({
     fontSize: '18px',
     fontWeight: '500',
     textAlign: 'left',
-    background: 'none !important',
+    background: 'none !important'
   },
   '& .react-calendar__navigation__label:hover, & .react-calendar__navigation__label:active': {
-    background: 'none', 
+    background: 'none'
   },
   '& .react-calendar__navigation': {
     height: 'fit-content'
@@ -37,44 +38,48 @@ const CustomCalendar = styled(Calendar)(({ theme }) => ({
     height: 'fit-content',
     padding: '5px',
     '&:enabled:hover, &:enabled:focus': {
-      background: theme.palette.grey[400], 
-      borderRadius: '5px',
-    },
+      background: theme.palette.grey[400],
+      borderRadius: '5px'
+    }
   },
   '& .react-calendar__tile--now': {
     background: theme.palette.primary.blue,
     borderRadius: '5px',
-    fontWeight: '700',
+    fontWeight: '700'
   },
   '& abbr[title]': {
-    textDecoration: 'none',
+    textDecoration: 'none'
   },
   '& .react-calendar__tile--hasActive, & .react-calendar__tile--active': {
     background: theme.palette.grey[400],
-    borderRadius: '5px',
-  },
+    borderRadius: '5px'
+  }
 }));
 
 export const MCalendar = () => {
-  const [date, setDate] = useState(new Date());
+  const { selectedDate, setSelectedDate } = useContext(DateContext);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   return (
     <div className="app">
       <div className="calendar-container">
         <CustomCalendar
-          onChange={setDate}
-          value={date}
+          onChange={handleDateChange}
+          value={selectedDate}
           locale="en"
-          startDate={new Date (2021, 1, 1)}
-          defaultView='month'
-          minDetail='year'
+          startDate={new Date(2021, 1, 1)}
+          defaultView="month"
+          minDetail="year"
           formatShortWeekday={(locale, date) =>
             date.toLocaleDateString(locale, { weekday: 'narrow' })
           }
-          formatMonth={(locale, date) => date.toLocaleDateString(locale, { month: 'long' })} 
-          formatMonthYear={(locale, date) => date.toLocaleDateString(locale, { month: 'long' })} 
+          formatMonth={(locale, date) => date.toLocaleDateString(locale, { month: 'long' })}
+          formatMonthYear={(locale, date) => date.toLocaleDateString(locale, { month: 'long' })}
           showNeighboringMonth={false}
-          />
+        />
       </div>
     </div>
   );
