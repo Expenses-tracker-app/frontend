@@ -39,7 +39,7 @@ const Header = () => {
         </Link>
       </Grid>
 
-      <StyledButton href={paths.profile.path}>{t('user.login')}</StyledButton>
+      <StyledButton href={paths.login.path}>{t('user.login')}</StyledButton>
     </Wrapper>
   );
 };

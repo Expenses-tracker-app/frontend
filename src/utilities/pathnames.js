@@ -3,13 +3,21 @@ const pathnames = {
     path: '/',
     title: 'Main page'
   },
-  profile: {
-    path: '/profile',
-    title: 'Profile'
+  login: {
+    path: '/login',
+    title: 'Login'
   },
   transactions: {
     path: '/transactions',
     title: 'Transactions'
+  }, 
+  settings: {
+    path: '/settings',
+    title: 'Settings'
+  }, 
+  registration: {
+    path: '/register', 
+    title: 'Register'
   }
 };
 

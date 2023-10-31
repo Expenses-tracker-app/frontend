@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
@@ -10,7 +10,7 @@ import {
   FormGroup,
   Typography
 } from '@mui/material';
-import paths from '../../utilities/pathnames';
+//import paths from '../../utilities/pathnames';
 
 // Styles
 const Wrapper = styled(Container)(() => ({
@@ -48,8 +48,25 @@ const StyledButton = styled(Button)(({ theme }) => ({
   }
 }));
 
-export const ProfilePage = () => {
+export const LoginPage = () => {
   const { t } = useTranslation();
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  
+
+  const handleLogin = () => {
+    const storedPeople = JSON.parse(localStorage.getItem('people')) || []
+    const user = storedPeople.find((person) => person.email === email && person.password === password)
+    if (user) {
+      setError('')
+      console.log("Login succesfull")
+    } else {
+      setError('Invalid email or password')
+      console.log("login failed")
+    }
+  }
 
   return (
     <Wrapper>
@@ -59,14 +76,15 @@ export const ProfilePage = () => {
           <FormLabel>
             <Typography variant="h6">{t('user.email')}</Typography>
           </FormLabel>
-          <InputLine id="email" />
+          <InputLine id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
           <FormLabel>
             <Typography variant="h6">{t('user.password')}</Typography>
           </FormLabel>
-          <InputLine id="psw" />
-          <StyledButton href={paths.profile.path}>
+          <InputLine id="psw" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+          <StyledButton onClick={handleLogin}>
             <Typography variant="h6">{t('user.login')}</Typography>
           </StyledButton>
+          {error&& <p>{error}</p>}
         </FormGroup>
       </FormWrapper>
     </Wrapper>
