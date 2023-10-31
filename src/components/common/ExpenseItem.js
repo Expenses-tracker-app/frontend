@@ -1,61 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { 
-    styled,
-    ListItemButton,
-    Typography
-} from '@mui/material';
+import { styled, ListItemButton, Typography } from '@mui/material';
+import { ArcElement } from 'chart.js';
+import { Chart as ChartJS } from 'chart.js';
+ChartJS.register(ArcElement);
 
 const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
-    background: theme.palette.secondary.main,
-    display: 'flex',
-    justifyContent: 'space-between',   
-  }));
+  background: theme.palette.grey[600],
+  display: 'flex',
+  justifyContent: 'space-between',
+  margin: '0 10px 0 10px'
+}));
 
-const StyledNameText = styled('div')(({ theme }) => ({
-    '&': {
-        color: theme.palette.text.primary,
-    },
-  }));
-  
-  const StyledTimestampText = styled('div')(({ theme }) => ({
-    '&': {
-        color: theme.palette.text.secondary,
-    },
-  }));
-  
-  const StyledAmountText = styled('div')(({ theme }) => ({
-    '&': {
-        color: theme.palette.primary.green,
-    },
-  }));
+const Date = styled(Typography)(({ theme }) => ({
+  color: theme.palette.grey[400],
+  fontSize: '12px'
+}));
 
-const ExpenseItem = ({ name, timestamp, amount }) => {
+const Amount = styled(Typography)(({ theme }) => ({
+  color: theme.palette.primary.green,
+  fontWeight: '600'
+}));
+
+const ExpenseItem = ({ desc, date, amount }) => {
   return (
     <StyledListItemButton>
-        <div>
-            <StyledNameText>
-                <Typography variant="h3">{name}</Typography>
-            </StyledNameText>
-
-            <StyledTimestampText>
-                <Typography variant="body1">{timestamp}</Typography>
-            </StyledTimestampText>
-        </div>
-        <div>
-            <StyledAmountText>
-                <Typography variant="h3">{amount}</Typography>
-            </StyledAmountText>
-        </div>
+      <div>
+        <Typography variant="h5">{desc}</Typography>
+        <Date>{date}</Date>
+      </div>
+      <div>
+        <Amount variant="h5">{amount}€</Amount>
+      </div>
     </StyledListItemButton>
   );
 };
 
 ExpenseItem.propTypes = {
-    name: PropTypes.string.isRequired,
-    timestamp: PropTypes.string.isRequired,
-    amount: PropTypes.string.isRequired,
-  };
+  desc: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  amount: PropTypes.string.isRequired
+};
 
 export default ExpenseItem;

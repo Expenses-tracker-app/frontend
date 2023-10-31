@@ -1,0 +1,54 @@
+{
+  "expenses": [
+    {
+      "expense_id": 1,
+      "user_id": 1,
+      "date": "10-04-2022",
+      "amount": 10,
+      "desc": "Spotify",
+      "tag_id": 1,
+      "is_rec": true,
+      "rec_freq": "month"
+    },
+    {
+      "expense_id": 2,
+      "user_id": 1,
+      "date": "12-04-2022",
+      "amount": 25,
+      "desc": "Food",
+      "tag_id": 2,
+      "is_rec": false,
+      "rec_freq": ""
+    },
+    {
+      "expense_id": 3,
+      "user_id": 1,
+      "date": "18-04-2022",
+      "amount": 120,
+      "desc": "Cloths",
+      "tag_id": 3,
+      "is_rec": false,
+      "rec_freq": ""
+    },
+    {
+      "expense_id": 4,
+      "user_id": 1,
+      "date": "20-04-2022",
+      "amount": 450,
+      "desc": "Rent",
+      "tag_id": 4,
+      "is_rec": true,
+      "rec_freq": "month"
+    }
+  ],
+  "incomes": [
+    {
+      "income_id": 1,
+      "user_id": 1,
+      "date": "10-04-2022",
+      "amount": 1500,
+      "desc": "salary",
+      "tag_id": 2
+    }
+  ]
+}

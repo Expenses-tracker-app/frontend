@@ -1,15 +1,15 @@
 const pathnames = {
   home: {
     path: '/',
-    title: 'Landing page'
+    title: 'Main page'
   },
   login: {
     path: '/login',
     title: 'Login'
   },
-  myExpenses: {
-    path: '/my-expenses',
-    title: 'My Expenses'
+  transactions: {
+    path: '/transactions',
+    title: 'Transactions'
   }, 
   settings: {
     path: '/settings',

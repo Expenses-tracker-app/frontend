@@ -1,9 +1,9 @@
 import React from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import paths from './utilities/pathnames';
-import { LandingPage } from './components/pages/LandingPage';
+import { MainPage } from './components/pages/MainPage';
 import { LoginPage } from './components/pages/LoginPage';
-import { MyExpensesPage } from './components/pages/MyExpensesPage';
+import { TransactionsPage } from './components/pages/TransactionsPage';
 import { Layout } from './components/layout/Layout';
 import { Providers } from './components/layout/Providers';
 import {SettingsPage} from './components/pages/SettingsPage';
@@ -16,9 +16,9 @@ function App() {
         <Providers>
           <Routes>
             <Route element={<Layout />}>
-              <Route path={paths.home.path} element={<LandingPage />} />
+              <Route path={paths.home.path} element={<MainPage />} />
               <Route path={paths.login.path} element={<LoginPage />} />
-              <Route path={paths.myExpenses.path} element={<MyExpensesPage />} />
+              <Route path={paths.transactions.path} element={<TransactionsPage />} />
               <Route path={paths.settings.path} element={<SettingsPage />} />
               <Route path={paths.registration.path} element={<RegistrationPage />} />
             </Route>
