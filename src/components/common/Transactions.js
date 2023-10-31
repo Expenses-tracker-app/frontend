@@ -1,5 +1,6 @@
 import React from 'react';
 import ExpenseItem from '../common/ExpenseItem';
+import IncomeItem from './IncomeItem';
 import data from '../../data/data.json';
 import { useTranslation } from 'react-i18next';
 import { styled, Typography, Grid, List } from '@mui/material';
@@ -20,6 +21,7 @@ const Title = styled(Typography)(() => ({
 export const Transactions = () => {
   const { t } = useTranslation();
   const expenses = data.expenses;
+  const incomes = data.incomes;
 
   return (
     <Wrapper>
@@ -31,6 +33,14 @@ export const Transactions = () => {
             desc={expense.desc}
             date={expense.date}
             amount={expense.amount}
+          />
+        ))}
+        {incomes.map((income, index) => (
+          <IncomeItem
+            key={index}
+            desc={income.desc}
+            date={income.date}
+            amount={income.amount}
           />
         ))}
       </List>

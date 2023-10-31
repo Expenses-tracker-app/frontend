@@ -19,11 +19,11 @@ const Date = styled(Typography)(({ theme }) => ({
 }));
 
 const Amount = styled(Typography)(({ theme }) => ({
-  color: theme.palette.primary.red,
+  color: theme.palette.primary.green,
   fontWeight: '600'
 }));
 
-const ExpenseItem = ({ desc, date, amount }) => {
+const IncomeItem = ({ desc, date, amount }) => {
   return (
     <StyledListItemButton>
       <div>
@@ -31,16 +31,16 @@ const ExpenseItem = ({ desc, date, amount }) => {
         <Date>{date}</Date>
       </div>
       <div>
-        <Amount variant="h5">-{amount}€</Amount>
+        <Amount variant="h5">{amount}€</Amount>
       </div>
     </StyledListItemButton>
   );
 };
 
-ExpenseItem.propTypes = {
+IncomeItem.propTypes = {
   desc: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   amount: PropTypes.string.isRequired
 };
 
-export default ExpenseItem;
+export default IncomeItem;
