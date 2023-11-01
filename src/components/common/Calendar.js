@@ -7,6 +7,7 @@ import DateContext from '../layout/DataContext';
 // Styles
 const CustomCalendar = styled(Calendar)(({ theme }) => ({
   width: '300px',
+  height: '240px',
   backgroundColor: theme.palette.grey[600],
   borderRadius: '30px',
   border: 'none',

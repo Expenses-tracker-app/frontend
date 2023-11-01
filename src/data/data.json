@@ -3,7 +3,7 @@
     {
       "expense_id": 1,
       "user_id": 1,
-      "date": "10-04-2022",
+      "date": "12-11-2023",
       "amount": 10,
       "desc": "Spotify",
       "tag_id": 1,
@@ -13,7 +13,7 @@
     {
       "expense_id": 2,
       "user_id": 1,
-      "date": "12-04-2022",
+      "date": "11-11-2023",
       "amount": 25,
       "desc": "Food",
       "tag_id": 2,
@@ -23,7 +23,7 @@
     {
       "expense_id": 3,
       "user_id": 1,
-      "date": "18-04-2022",
+      "date": "10-11-2023",
       "amount": 120,
       "desc": "Cloths",
       "tag_id": 3,
@@ -33,7 +33,7 @@
     {
       "expense_id": 4,
       "user_id": 1,
-      "date": "20-04-2022",
+      "date": "11-11-2023",
       "amount": 450,
       "desc": "Rent",
       "tag_id": 4,
@@ -45,7 +45,23 @@
     {
       "income_id": 1,
       "user_id": 1,
-      "date": "10-04-2022",
+      "date": "11-11-2023",
+      "amount": 1500,
+      "desc": "Salary",
+      "tag_id": 2
+    },
+    {
+      "income_id": 2,
+      "user_id": 1,
+      "date": "10-11-2023",
+      "amount": 1500,
+      "desc": "Salary",
+      "tag_id": 2
+    },
+    {
+      "income_id": 3,
+      "user_id": 1,
+      "date": "10-11-2023",
       "amount": 1500,
       "desc": "Salary",
       "tag_id": 2
