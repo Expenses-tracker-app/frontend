@@ -7,7 +7,7 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   color: theme.palette.primary.main,
   padding: '15px',
   width: '480px',
-  height: 'auto',
+  height: '230px',
   borderRadius: '30px',
   backgroundColor: theme.palette.grey[600]
 }));
