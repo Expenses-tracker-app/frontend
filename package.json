@@ -2,7 +2,7 @@
   "name": "expense-tracker",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://expenses-tracker-app.github.io/frontend/",
+  "homepage": "https://expenses-tracker-app.github.io",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -17,6 +17,7 @@
     "chokidar": "^3.5.3",
     "css-select": "^5.1.0",
     "fs-extra": "^11.1.1",
+    "gh-pages": "^6.0.0",
     "html-webpack-plugin": "^5.5.3",
     "i18next": "^23.6.0",
     "mz": "^2.7.0",
@@ -36,6 +37,8 @@
     "workbox-cacheable-response": "^7.0.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
