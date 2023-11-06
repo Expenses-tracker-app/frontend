@@ -19,6 +19,12 @@ jobs:
       with:
         node-version: '21' 
 
+    - name: Install latest npm
+      run: npm install -g npm@latest
+    
+    - name: Clear npm Cache
+      run: npm cache verify
+
     - name: Install Dependencies
       run: npm install
 
