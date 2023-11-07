@@ -12,7 +12,7 @@ import {RegistrationPage} from './components/pages/RegistrationPage';
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter  basename="/frontend">
         <Providers>
           <Routes>
             <Route element={<Layout />}>
