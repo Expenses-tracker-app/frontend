@@ -24,9 +24,9 @@
    
     <script>
       (function() {
-        if (window.location.hash.length > 1) {
-          var path = window.location.hash.substring(1);
-          window.history.replaceState({}, '', path);
+        if (window.location.hash && window.location.hash.startsWith('#/')) {
+          var correctPath = window.location.hash.replace(/^#\/frontend\//, '');
+          window.history.replaceState({}, '', correctPath);
         }
       })();
     </script>
