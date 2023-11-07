@@ -23,13 +23,10 @@
     <div id="root"></div>
    
     <script>
-      (function() {
-        if (window.location.hash.length > 1) {
-          var path = window.location.hash.substring(1);
-          window.history.replaceState({}, '', path);
-        }
-      })();
+      document.addEventListener('DOMContentLoaded', function() {
+        var path = window.location.pathname;
+        document.location.href = '/index.html#' + path;
+      });
     </script>
-    
   </body>
 </html>
