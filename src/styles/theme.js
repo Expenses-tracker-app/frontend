@@ -39,7 +39,7 @@ export const palette = {
   },
   grey: {
     600: '#151515',
-    500: '#454545',
+    500: '#444444',
     400: '#636363',
     300: '#888888',
     200: '#CFCFCF',
@@ -200,8 +200,8 @@ export const theme = createTheme({
       fontFamily: 'Montserrat'
     },
     h5: {
-      fontWeight: 500,
-      fontSize: '18px',
+      fontWeight: 400,
+      fontSize: '16px',
       lineHeight: '21.09px',
       fontFamily: 'Montserrat'
     },

@@ -1,39 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-
-import { 
-    styled,
-    Typography,
-    Container
-} from '@mui/material';
+import { styled, Typography, Container } from '@mui/material';
 
 const Wrapper = styled(Container)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'left',    
+  alignItems: 'left',
   justifyContent: 'center',
-  height: '100px',
+  height: '120px',
   width: '100%',
+  marginLeft: '10px'
 }));
 
-
-const StyledTotalBalanceText = styled('div')(({ theme }) => ({
-  '&': {
-      color: theme.palette.text.secondary,
-  },
+const TotalBalance = styled(Typography)(({ theme }) => ({
+  color: theme.palette.grey[300],
+  fontSize: '13px',
+  weight: '300',
+  marginBottom: '2px'
 }));
 
-const StyledAmountText = styled('div')(({ theme }) => ({
-  '&': {
-      color: theme.palette.text.primary,
-  },
-}));
-
-const StyledPercentageText = styled('div')(({ theme }) => ({
-  '&': {
-      color: theme.palette.primary.green,
-  },
+const Percentage = styled(Typography)(({ theme }) => ({
+  color: theme.palette.primary.green,
+  fontSize: '13px',
+  marginTop: '2px'
 }));
 
 const TotalBalanceItem = ({ amount, percentage }) => {
@@ -41,24 +31,18 @@ const TotalBalanceItem = ({ amount, percentage }) => {
 
   return (
     <Wrapper>
-      <StyledTotalBalanceText>
-        <Typography variant="body1">{t('myExpenses.totalBalance')}</Typography>
-      </StyledTotalBalanceText>
+      <TotalBalance>{t('transactions.totalBalance')}</TotalBalance>
 
-      <StyledAmountText>
-        <Typography variant="h2">{amount}</Typography>
-      </StyledAmountText>
+      <Typography variant="h2">{amount}</Typography>
 
-      <StyledPercentageText>
-        <Typography variant="body1">{percentage}</Typography>
-      </StyledPercentageText>
+      <Percentage>{percentage}</Percentage>
     </Wrapper>
   );
 };
 
 TotalBalanceItem.propTypes = {
   amount: PropTypes.string.isRequired,
-  percentage: PropTypes.string.isRequired,
+  percentage: PropTypes.string.isRequired
 };
 
 export default TotalBalanceItem;
