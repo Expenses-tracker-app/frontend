@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {useTranslation} from 'react-i18next'
 import {
     Button,
@@ -48,6 +49,10 @@ const Wrapper = styled(Container)(() => ({
     }
   }));
   
+  const StyledLink = styled(Link)(() => ({
+    textDecoration: 'none'
+  }));
+
   export const SettingsPage = () => {
     const { t } = useTranslation();
   
@@ -68,9 +73,13 @@ const Wrapper = styled(Container)(() => ({
               <Typography variant="h6">{t('settings.retypePassword')}</Typography>
             </FormLabel>
             <InputLine id="settings_retype_psw" />
-            <StyledButton href={paths.settings.path}>
-              <Typography variant="h6">{t('settings.save')}</Typography>
-            </StyledButton>
+
+            <StyledLink to={paths.settings.path}>
+              <StyledButton>
+                <Typography variant="h6">{t('settings.save')}</Typography>
+              </StyledButton>
+            </StyledLink>
+
           </FormGroup>
         </FormWrapper>
       </Wrapper>
