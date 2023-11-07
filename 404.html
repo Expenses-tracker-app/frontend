@@ -24,8 +24,12 @@
    
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        var path = window.location.pathname;
-        document.location.href = '/index.html#';
+        var redirectPath = window.location.pathname;
+        if (redirectPath && redirectPath !== '/frontend/') {
+          window.location.replace('/frontend/#' + redirectPath);
+        } else {
+          window.location.replace('/frontend/');
+        }
       });
     </script>
   </body>
