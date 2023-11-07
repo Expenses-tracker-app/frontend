@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - deployment # TODO: remove this after testing
 
 jobs:
   deploy:
