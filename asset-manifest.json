@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "https://expenses-tracker-app.github.io/frontend/static/css/main.c3f34624.css",
-    "main.js": "https://expenses-tracker-app.github.io/frontend/static/js/main.a3ec9cc9.js",
+    "main.js": "https://expenses-tracker-app.github.io/frontend/static/js/main.9fcaafac.js",
     "static/js/496.9c548530.chunk.js": "https://expenses-tracker-app.github.io/frontend/static/js/496.9c548530.chunk.js",
     "static/media/logo.png": "https://expenses-tracker-app.github.io/frontend/static/media/logo.c0207dad9bd7548653a9.png",
     "index.html": "https://expenses-tracker-app.github.io/frontend/index.html",
     "main.c3f34624.css.map": "https://expenses-tracker-app.github.io/frontend/static/css/main.c3f34624.css.map",
-    "main.a3ec9cc9.js.map": "https://expenses-tracker-app.github.io/frontend/static/js/main.a3ec9cc9.js.map",
+    "main.9fcaafac.js.map": "https://expenses-tracker-app.github.io/frontend/static/js/main.9fcaafac.js.map",
     "496.9c548530.chunk.js.map": "https://expenses-tracker-app.github.io/frontend/static/js/496.9c548530.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c3f34624.css",
-    "static/js/main.a3ec9cc9.js"
+    "static/js/main.9fcaafac.js"
   ]
 }
