@@ -66,7 +66,7 @@
     "@babel/plugin-transform-json-strings": "^7.22.11",
     "@babel/plugin-transform-nullish-coalescing-operator": "^7.22.11",
     "@babel/plugin-transform-numeric-separator": "^7.22.11",
-    "@babel/plugin-transform-private-methods": "^7.22.5",
+    "@babel/plugin-transform-private-methods": "^7.23.3",
     "@faker-js/faker": "^8.2.0",
     "@jridgewell/sourcemap-codec": "^1.4.15",
     "eslint": "^8.51.0",
