@@ -20,9 +20,10 @@ function App() {
             <Route element={<Layout />}>
               <Route path={paths.home.path} element={<MainPage />} />
               <Route path={paths.login.path} element={<LoginPage />} />
-              <Route path={paths.myExpenses.path} element={<MyExpensesPage />} />
+              <Route path={paths.transactions.path} element={<TransactionsPage />} />
               <Route path={paths.settings.path} element={<SettingsPage />} />
               <Route path={paths.registration.path} element={<RegistrationPage />} />
+              <Route path={paths.newExpense.path} element ={<NewExpensePage/>} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
