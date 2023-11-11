@@ -28,18 +28,24 @@ const StyledButton = styled(Button)(({ theme }) => ({
   }
 }));
 
+const StyledLink = styled(Link)(() => ({
+  textDecoration: 'none'
+}));
+
 const Header = () => {
   const { t } = useTranslation();
 
   return (
     <Wrapper container>
-      <Grid container item xs={2} href={paths.home.path}>
-        <Link to={paths.home.path}>
-          <img src={logo} height="50px" />
-        </Link>
+
+      <Grid container item xs={2} component={Link} to={paths.home.path}> 
+        <img src={logo} alt="Logo" height="50px" />
       </Grid>
 
-      <StyledButton href={paths.login.path}>{t('user.login')}</StyledButton>
+      <StyledLink to={paths.login.path}>
+        <StyledButton>{t('user.login')}</StyledButton>
+      </StyledLink>
+
     </Wrapper>
   );
 };
