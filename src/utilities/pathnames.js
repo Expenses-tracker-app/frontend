@@ -18,6 +18,10 @@ const pathnames = {
   registration: {
     path: '/register', 
     title: 'Register'
+  },
+  tags: {
+    path: '/tags',
+    title: 'Tags'
   }
 };
 
