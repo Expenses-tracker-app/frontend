@@ -23,13 +23,14 @@
     <div id="root"></div>
    
     <script>
-      (function() {
-        if (window.location.hash && window.location.hash.startsWith('#/')) {
-          var correctPath = window.location.hash.replace(/^#\/frontend\//, '');
-          window.history.replaceState({}, '', correctPath);
+      document.addEventListener('DOMContentLoaded', function() {
+        var redirectPath = window.location.pathname;
+        if (redirectPath && redirectPath !== '/frontend/') {
+          window.location.replace('/frontend/#' + redirectPath);
+        } else {
+          window.location.replace('/frontend/');
         }
-      })();
+      });
     </script>
-    
   </body>
 </html>
