@@ -4,6 +4,7 @@ import data from '../../data/data.json';
 import { useTranslation } from 'react-i18next';
 import { styled, Typography, Grid, List } from '@mui/material';
 
+
 const Wrapper = styled(Grid)(({ theme }) => ({
   justifyContent: 'space-between',
   width: '480px',
