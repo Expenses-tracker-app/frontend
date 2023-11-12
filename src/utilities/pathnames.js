@@ -22,6 +22,22 @@ const pathnames = {
   newExpense: {
     path: '/new-expense',
     title: 'New Expense'
+  }, 
+  navigation: {
+    path: '/navigation',
+    title: 'Navigation'
+  }, 
+  categories: {
+    path: '/categories', 
+    title: 'Categories'
+  }, 
+  reports: {
+    path: '/reports', 
+    title: 'Reports'
+  }, 
+  calendar: {
+    path: '/calendar', 
+    title: 'Calendar'
   }
 };
 
