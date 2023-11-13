@@ -10,11 +10,10 @@ import { SettingsPage } from './components/pages/SettingsPage';
 import { RegistrationPage } from './components/pages/RegistrationPage';
 import { NotFoundPage } from './components/pages/NotFoundPage';
 
-
 function App() {
   return (
     <>
-      <BrowserRouter  basename="/frontend">
+      <BrowserRouter basename="/frontend">
         <Providers>
           <Routes>
             <Route element={<Layout />}>
