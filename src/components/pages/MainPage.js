@@ -24,26 +24,26 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 const Wrapper = styled(Grid)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  width: '80%',
+  width: '800px',
   margin: 'auto',
   justifyContent: 'center',
   textAlign: 'center',
+  [theme.breakpoints.down('md')]: {
+    width: '100%',
+  },
   [`> div`]: {
-    width: 'fit-content',
     display: 'flex',
+    flexWrap: 'wrap'
+  },
+}));
+
+const Box = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'row',
+    justifyContent: 'center',
     margin: 'auto',
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      background: 'pink',
-      margin: 'auto'
-    },
-    [`> *`]: {
-      margin: '10px',
-      [theme.breakpoints.down('md')]: {
-        margin: '10px auto 10px auto'
-      }
-    }
   }
 }));
 
@@ -63,7 +63,11 @@ const MTitle = styled('div')(() => ({
 
 const MLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
-  color: theme.palette.primary.main
+  color: theme.palette.primary.main,
+  marginTop: '-270px',
+  [theme.breakpoints.down('md')]: {
+    margin: 'auto',
+  }
 }));
 
 export const MainPage = () => {
@@ -93,13 +97,13 @@ export const MainPage = () => {
       </MTitle>
       <div>
         <LineChart />
-        <MCalendar />
-      </div>
-      <div>
+        <Box>
+          <MCalendar />
+          <DoughnutChart />
+        </Box>
         <MLink to={paths.transactions.path}>
           <Transactions />
         </MLink>
-        <DoughnutChart />
       </div>
     </Wrapper>
   );

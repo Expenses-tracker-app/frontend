@@ -11,11 +11,12 @@ const CustomCalendar = styled(Calendar)(({ theme }) => ({
   backgroundColor: theme.palette.grey[600],
   borderRadius: '30px',
   border: 'none',
-  margin: 'auto',
+  margin: '5px',
   padding: '20px',
   fontSize: '14px',
   [theme.breakpoints.down('md')]: {
-    width: '70%'
+    width: '230px',
+    height: '240px',
   },
   '& .react-calendar__navigation__arrow': {
     display: 'none'

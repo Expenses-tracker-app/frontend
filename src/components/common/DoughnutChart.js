@@ -12,7 +12,12 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   width: '300px',
   height: '260px',
   borderRadius: '30px',
-  backgroundColor: theme.palette.grey[600]
+  margin: '5px',
+  backgroundColor: theme.palette.grey[600],
+  [theme.breakpoints.down('md')]: {
+    height: '240px',
+    width: '240px'
+  }
 }));
 
 const doughnutOptions = {
