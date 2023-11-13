@@ -21,8 +21,9 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 // Styles
-const Wrapper = styled(Grid)(() => ({
-  display: 'block',
+const Wrapper = styled(Grid)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
   width: '80%',
   margin: 'auto',
   justifyContent: 'center',
@@ -31,9 +32,18 @@ const Wrapper = styled(Grid)(() => ({
     width: 'fit-content',
     display: 'flex',
     margin: 'auto',
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      justifyContent: 'center',
+      background: 'pink',
+      margin: 'auto',
+    },
     [`> *`]: {
-      margin: '10px'
-    }
+      margin: '10px',
+      [theme.breakpoints.down('md')]: {
+        margin: '10px auto 10px auto',
+      },
+    },
   }
 }));
 

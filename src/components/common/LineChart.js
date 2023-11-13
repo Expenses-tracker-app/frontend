@@ -9,7 +9,10 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   width: '480px',
   height: '240px',
   borderRadius: '30px',
-  backgroundColor: theme.palette.grey[600]
+  backgroundColor: theme.palette.grey[600],
+  [theme.breakpoints.down('md')]: {
+    margin: 'auto',
+   },
 }));
 
 export const lineOptions = {

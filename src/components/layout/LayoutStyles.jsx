@@ -3,7 +3,8 @@ import purpleWaveImage from '../../assets/wave.png'; // Replace with the actual 
 
 export const LayoutContainer = styled('div')(() => ({
   height: `calc(100%)`,
-  backgroundColor: 'black'
+  backgroundColor: 'black',
+  overflow: 'auto', 
 }));
 
 export const ImageWave = styled('div')(() => ({
