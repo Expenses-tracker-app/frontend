@@ -6,13 +6,15 @@ import { LoginPage } from './components/pages/LoginPage';
 import { TransactionsPage } from './components/pages/TransactionsPage';
 import { Layout } from './components/layout/Layout';
 import { Providers } from './components/layout/Providers';
-import { SettingsPage } from './components/pages/SettingsPage';
-import { RegistrationPage } from './components/pages/RegistrationPage';
+import {SettingsPage} from './components/pages/SettingsPage';
+import {RegistrationPage} from './components/pages/RegistrationPage';
+import {NotFoundPage} from './components/pages/NotFoundPage';
+
 
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter  basename="/frontend">
         <Providers>
           <Routes>
             <Route element={<Layout />}>
@@ -21,6 +23,7 @@ function App() {
               <Route path={paths.transactions.path} element={<TransactionsPage />} />
               <Route path={paths.settings.path} element={<SettingsPage />} />
               <Route path={paths.registration.path} element={<RegistrationPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
         </Providers>
