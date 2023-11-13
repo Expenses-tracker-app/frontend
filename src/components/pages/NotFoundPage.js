@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, styled } from '@mui/material';
+import { Grid, styled, Typography } from '@mui/material';
+
 
 const Wrapper = styled(Grid)(() => ({
     display: 'flex',
@@ -9,17 +10,21 @@ const Wrapper = styled(Grid)(() => ({
 }));
 
 const Content = styled('div')(() => ({
-    textAlign: 'center'
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: '100px',
+    marginTop: '100px',
   }));
 
 export const NotFoundPage = () => {
     return (
         <Wrapper>
             <Content>
-                <div>
-                    <h1>404 - Not Found!</h1>
-                    <p>Sorry, the page you are looking for does not exist.</p>
-                </div>
+                    <Typography variant='h1'>404 - Not Found!</Typography>
+                    <Typography>Sorry, the page you are looking for does not exist.</Typography>
+          
             </Content>
         </Wrapper>
     );
