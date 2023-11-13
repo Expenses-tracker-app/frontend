@@ -10,6 +10,7 @@ import {SettingsPage} from './components/pages/SettingsPage';
 import {RegistrationPage} from './components/pages/RegistrationPage';
 import {NotFoundPage} from './components/pages/NotFoundPage';
 
+
 function App() {
   return (
     <>

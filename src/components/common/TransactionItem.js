@@ -18,12 +18,17 @@ const Date = styled(Typography)(({ theme }) => ({
   fontSize: '12px'
 }));
 
-const Amount = styled(Typography)(({ theme }) => ({
+const Expense = styled(Typography)(({ theme }) => ({
+  color: theme.palette.primary.red,
+  fontWeight: '600'
+}));
+
+const Income = styled(Typography)(({ theme }) => ({
   color: theme.palette.primary.green,
   fontWeight: '600'
 }));
 
-const ExpenseItem = ({ desc, date, amount }) => {
+const TransactionItem = ({ desc, date, amount, isExpense }) => {
   return (
     <StyledListItemButton>
       <div>
@@ -31,16 +36,21 @@ const ExpenseItem = ({ desc, date, amount }) => {
         <Date>{date}</Date>
       </div>
       <div>
-        <Amount variant="h5">{amount}€</Amount>
+        {isExpense ? (
+          <Expense variant="h5"> -{amount}€</Expense>
+        ) : (
+          <Income variant="h5">{amount}€</Income>
+        )}
       </div>
     </StyledListItemButton>
   );
 };
 
-ExpenseItem.propTypes = {
+TransactionItem.propTypes = {
   desc: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  amount: PropTypes.string.isRequired
+  amount: PropTypes.number.isRequired,
+  isExpense: PropTypes.bool.isRequired
 };
 
-export default ExpenseItem;
+export default TransactionItem;

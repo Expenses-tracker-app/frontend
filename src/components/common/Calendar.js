@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { styled } from '@mui/material';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import DateContext from '../layout/DataContext';
 
 // Styles
 const CustomCalendar = styled(Calendar)(({ theme }) => ({
   width: '300px',
+  height: '240px',
   backgroundColor: theme.palette.grey[600],
   borderRadius: '30px',
   border: 'none',
   margin: 'auto',
   padding: '20px',
   fontSize: '14px',
+  [theme.breakpoints.down('md')]: {
+   width: '70%',
+  },
   '& .react-calendar__navigation__arrow': {
     display: 'none'
   },
@@ -21,10 +26,13 @@ const CustomCalendar = styled(Calendar)(({ theme }) => ({
   '& .react-calendar__navigation__label': {
     color: 'white',
     fontFamily: 'Montserrat',
-    pointerEvents: 'none',
     fontSize: '18px',
     fontWeight: '500',
-    textAlign: 'left'
+    textAlign: 'left',
+    background: 'none !important'
+  },
+  '& .react-calendar__navigation__label:hover, & .react-calendar__navigation__label:active': {
+    background: 'none'
   },
   '& .react-calendar__navigation': {
     height: 'fit-content'
@@ -33,44 +41,48 @@ const CustomCalendar = styled(Calendar)(({ theme }) => ({
     color: 'white',
     height: 'fit-content',
     padding: '5px',
-    '&:enabled:hover': {
-      background: 'none',
-      pointerEvents: 'none'
-    },
-    '&:enabled:focus': {
-      background: 'none',
-      pointerEvents: 'none'
+    '&:enabled:hover, &:enabled:focus': {
+      background: theme.palette.grey[400],
+      borderRadius: '5px'
     }
   },
-  '& .react-calendar__month-view__days__day--neighboringMonth': {
-    color: theme.palette.grey[600],
-    pointerEvents: 'none'
-  },
   '& .react-calendar__tile--now': {
-    background: theme.palette.grey[500],
-    borderRadius: '50%',
+    background: theme.palette.primary.blue,
+    borderRadius: '5px',
     fontWeight: '700'
   },
   '& abbr[title]': {
     textDecoration: 'none'
+  },
+  '& .react-calendar__tile--hasActive, & .react-calendar__tile--active': {
+    background: theme.palette.grey[400],
+    borderRadius: '5px'
   }
 }));
 
 export const MCalendar = () => {
-  const [date, setDate] = useState(new Date());
+  const { selectedDate, setSelectedDate } = useContext(DateContext);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   return (
     <div className="app">
       <div className="calendar-container">
         <CustomCalendar
-          onChange={setDate}
-          value={date}
+          onChange={handleDateChange}
+          value={selectedDate}
           locale="en"
+          startDate={new Date(2021, 1, 1)}
+          defaultView="month"
+          minDetail="year"
           formatShortWeekday={(locale, date) =>
             date.toLocaleDateString(locale, { weekday: 'narrow' })
           }
-          formatMonth={(locale, date) => date.toLocaleDateString(locale, { month: 'long' })} // Display only the month name in the navigation label
-          formatMonthYear={(locale, date) => date.toLocaleDateString(locale, { month: 'long' })} // Display only the month name
+          formatMonth={(locale, date) => date.toLocaleDateString(locale, { month: 'long' })}
+          formatMonthYear={(locale, date) => date.toLocaleDateString(locale, { month: 'long' })}
+          showNeighboringMonth={false}
         />
       </div>
     </div>

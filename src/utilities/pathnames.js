@@ -10,13 +10,13 @@ const pathnames = {
   transactions: {
     path: '/transactions',
     title: 'Transactions'
-  }, 
+  },
   settings: {
     path: '/settings',
     title: 'Settings'
-  }, 
+  },
   registration: {
-    path: '/register', 
+    path: '/register',
     title: 'Register'
   }
 };
