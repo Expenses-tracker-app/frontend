@@ -36,14 +36,14 @@ const Wrapper = styled(Grid)(({ theme }) => ({
       flexDirection: 'column',
       justifyContent: 'center',
       background: 'pink',
-      margin: 'auto',
+      margin: 'auto'
     },
     [`> *`]: {
       margin: '10px',
       [theme.breakpoints.down('md')]: {
-        margin: '10px auto 10px auto',
-      },
-    },
+        margin: '10px auto 10px auto'
+      }
+    }
   }
 }));
 

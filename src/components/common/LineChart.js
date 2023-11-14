@@ -11,8 +11,8 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   borderRadius: '30px',
   backgroundColor: theme.palette.grey[600],
   [theme.breakpoints.down('md')]: {
-    margin: 'auto',
-   },
+    margin: 'auto'
+  }
 }));
 
 export const lineOptions = {

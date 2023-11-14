@@ -37,19 +37,17 @@ const Header = () => {
 
   return (
     <Wrapper container>
-
       <StyledLink to={paths.navigation.path}>
         <StyledButton>{t('navigation.button')}</StyledButton>
       </StyledLink>
 
-      <Grid container item xs={2} component={Link} to={paths.home.path}> 
+      <Grid container item xs={2} component={Link} to={paths.home.path}>
         <img src={logo} alt="Logo" height="50px" />
       </Grid>
 
       <StyledLink to={paths.login.path}>
         <StyledButton>{t('user.login')}</StyledButton>
       </StyledLink>
-
     </Wrapper>
   );
 };
