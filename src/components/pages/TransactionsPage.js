@@ -4,6 +4,8 @@ import TotalBalanceItem from '../common/TotalBalanceItem';
 import data from '../../data/data.json';
 import { useTranslation } from 'react-i18next';
 import { styled, Card, Typography, Container, Button, Grid, Box, List } from '@mui/material';
+import { Link } from 'react-router-dom';
+import paths from '../../utilities/pathnames'
 
 const Wrapper = styled(Container)(() => ({
   display: 'flex',
@@ -31,6 +33,10 @@ const MButton = styled(Button)(() => ({
   width: '100%'
 }));
 
+const StyledLink = styled(Link)(() => ({
+  textDecoration: 'none'
+}));
+
 export const TransactionsPage = () => {
   const { t } = useTranslation();
   const expenses = data.expenses;
@@ -45,7 +51,9 @@ export const TransactionsPage = () => {
           <Grid item xs={6}>
             <MCard>
               <MButton variant="text">
-                <Typography variant="h2">{t('transactions.addNew')}</Typography>
+               <StyledLink to={paths.newExpense.path}>
+                  <Typography variant="h2">{t('transactions.addNew')}</Typography>
+                </StyledLink>
               </MButton>
             </MCard>
           </Grid>
