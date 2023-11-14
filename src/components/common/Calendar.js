@@ -16,7 +16,7 @@ const CustomCalendar = styled(Calendar)(({ theme }) => ({
   fontSize: '14px',
   [theme.breakpoints.down('md')]: {
     width: '230px',
-    height: '240px',
+    height: '240px'
   },
   '& .react-calendar__navigation__arrow': {
     display: 'none'
