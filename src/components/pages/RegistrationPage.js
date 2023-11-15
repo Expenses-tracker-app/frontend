@@ -68,6 +68,19 @@ export const RegistrationPage = () => {
     setNewPerson({ ...newPerson, retypePassword: e.target.value });
   };
 
+    const handleSubmit = () => {
+      if (newPerson.password == newPerson.retypePassword) {
+        setPeople([...people, newPerson])
+        setNewPerson({email: '', password: '', retypePassword: ''})
+        setPasswordMismatch(false)
+        setRegistrationDone(true)
+        console.log('Submitting registration done')
+        localStorage.setItem('people', JSON.stringify(people))
+        console.log(people)
+      } else {
+        setPasswordMismatch(true)
+        setRegistrationDone(false)
+      }
   const handleSubmit = () => {
     if (newPerson.password == newPerson.retypePassword) {
       setPeople([...people, newPerson]);
@@ -80,42 +93,32 @@ export const RegistrationPage = () => {
       setPasswordMismatch(true);
       setRegistrationDone(false);
     }
+  
+    return (
+      <Wrapper>
+        <Typography variant="h1">{t('registration.title')}</Typography>
+        <FormWrapper>
+          <FormGroup>
+            <FormLabel>
+              <Typography variant="h6">{t('registration.email')}</Typography>
+            </FormLabel>
+            <InputLine id="settings_email" value={newPerson.email} onChange={handleEmailChange}/>
+            <FormLabel>
+              <Typography variant="h6">{t('registration.password')}</Typography>
+            </FormLabel>
+            <InputLine id="settings_psw" type="password" value={newPerson.password} onChange={handlePasswordChange}/>
+            <FormLabel>
+              <Typography variant="h6">{t('registration.retypePassword')}</Typography>
+            </FormLabel>
+            <InputLine id="settings_retype_psw" type="password" value={newPerson.retypePassword} onChange={handleRetypePasswordChange}/>
+            {passwordMismatch && <p style={{ color: 'red' }}>Passwords do not match.</p>}
+            <StyledButton onClick={handleSubmit}>
+              <Typography variant="h6">{t('registration.save')}</Typography>
+            </StyledButton>
+            {registrationDone && <p style={{ color: 'green' }}>Registration succesfull.</p>}
+          </FormGroup>
+        </FormWrapper>
+      </Wrapper>
+    );
   };
-
-  return (
-    <Wrapper>
-      <Typography variant="h1">{t('registration.title')}</Typography>
-      <FormWrapper>
-        <FormGroup>
-          <FormLabel>
-            <Typography variant="h6">{t('registration.email')}</Typography>
-          </FormLabel>
-          <InputLine id="settings_email" value={newPerson.email} onChange={handleEmailChange} />
-          <FormLabel>
-            <Typography variant="h6">{t('registration.password')}</Typography>
-          </FormLabel>
-          <InputLine
-            id="settings_psw"
-            type="password"
-            value={newPerson.password}
-            onChange={handlePasswordChange}
-          />
-          <FormLabel>
-            <Typography variant="h6">{t('registration.retypePassword')}</Typography>
-          </FormLabel>
-          <InputLine
-            id="settings_retype_psw"
-            type="password"
-            value={newPerson.retypePassword}
-            onChange={handleRetypePasswordChange}
-          />
-          {passwordMismatch && <p style={{ color: 'red' }}>Passwords do not match.</p>}
-          <StyledButton onClick={handleSubmit}>
-            <Typography variant="h6">{t('registration.save')}</Typography>
-          </StyledButton>
-          {registrationDone && <p style={{ color: 'green' }}>Registration succesfull.</p>}
-        </FormGroup>
-      </FormWrapper>
-    </Wrapper>
-  );
-};
+  

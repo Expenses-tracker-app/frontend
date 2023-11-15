@@ -37,7 +37,11 @@ const Header = () => {
 
   return (
     <Wrapper container>
-      <Grid container item xs={2} component={Link} to={paths.home.path}>
+      <StyledLink to={paths.navigation.path}>
+        <StyledButton>{t('navigation.button')}</StyledButton>
+      </StyledLink>
+
+      <Grid container item xs={2} component={Link} to={paths.home.path}> 
         <img src={logo} alt="Logo" height="50px" />
       </Grid>
 
