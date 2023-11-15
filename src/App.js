@@ -6,17 +6,18 @@ import { LoginPage } from './components/pages/LoginPage';
 import { TransactionsPage } from './components/pages/TransactionsPage';
 import { Layout } from './components/layout/Layout';
 import { Providers } from './components/layout/Providers';
-import {SettingsPage} from './components/pages/SettingsPage';
-import {RegistrationPage} from './components/pages/RegistrationPage';
-import {NotFoundPage} from './components/pages/NotFoundPage';
-import {TagsPage} from './components/pages/TagsPage';
+import { SettingsPage } from './components/pages/SettingsPage';
+import { RegistrationPage } from './components/pages/RegistrationPage';
+import { NotFoundPage } from './components/pages/NotFoundPage';
+import { TagsPage } from './components/pages/TagsPage';
 import { NewExpensePage } from './components/pages/NewExpense';
-import {NavigationPage} from './components/pages/NavigationPage';
+import { NavigationPage } from './components/pages/NavigationPage';
+
 
 function App() {
   return (
     <>
-      <BrowserRouter  basename="/frontend">
+      <BrowserRouter basename="/frontend">
         <Providers>
           <Routes>
             <Route element={<Layout />}>
@@ -28,6 +29,7 @@ function App() {
               <Route path={paths.tags.path} element={<TagsPage />} />
               <Route path={paths.newExpense.path} element ={<NewExpensePage/>} />
               <Route path={paths.navigation.path} element = {<NavigationPage/>} />
+
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
