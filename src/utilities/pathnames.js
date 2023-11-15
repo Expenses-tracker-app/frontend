@@ -10,18 +10,38 @@ const pathnames = {
   transactions: {
     path: '/transactions',
     title: 'Transactions'
-  }, 
+  },
   settings: {
     path: '/settings',
     title: 'Settings'
-  }, 
+  },
   registration: {
-    path: '/register', 
+    path: '/register',
     title: 'Register'
   },
   tags: {
     path: '/tags',
     title: 'Tags'
+  },
+  newExpense: {
+    path: '/new-expense',
+    title: 'New Expense'
+  }, 
+  navigation: {
+    path: '/navigation',
+    title: 'Navigation'
+  }, 
+  categories: {
+    path: '/categories', 
+    title: 'Categories'
+  }, 
+  reports: {
+    path: '/reports', 
+    title: 'Reports'
+  }, 
+  calendar: {
+    path: '/calendar', 
+    title: 'Calendar'
   }
 };
 

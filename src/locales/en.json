@@ -21,25 +21,36 @@
     "password": "Password"
   },
   "specific": {
-    "welcome": "Welcome back!"
+    "welcome": "Welcome Back"
   },
   "transactions": {
     "title": "Transactions",
     "addNew": "+ New",
     "totalBalance": "Total Balance"
-  }, 
+  },
   "settings": {
-    "title": "Settings", 
-    "changeEmail": "Change email", 
-    "changePassword": "Change password", 
-    "retypePassword": "Retype password", 
+    "title": "Settings",
+    "changeEmail": "Change email",
+    "changePassword": "Change password",
+    "retypePassword": "Retype password",
+    "save": "Save"
+  },
+  "registration": {
+    "title": "Register",
+    "email": "Email",
+    "password": "Password",
+    "retypePassword": "Retype password",
+    "save": "Register"
+  },
+  "newExpense": {
+    "title": "Add a new expense", 
+    "category": "New expense category",
+    "amount": "Amount used", 
+    "date": "Date", 
+    "description": "Description", 
     "save": "Save"
   }, 
-  "registration": {
-    "title": "Register", 
-    "email": "Email", 
-    "password": "Password", 
-    "retypePassword": "Retype password", 
-    "save": "Register"
+  "navigation": {
+    "button": "Menu"
   }
 }

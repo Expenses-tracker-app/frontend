@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Grid, styled } from '@mui/material';
-
 import { Line } from 'react-chartjs-2';
+import DateProvider from '../layout/DataContext';
 
 const Wrapper = styled(Grid)(({ theme }) => ({
   color: theme.palette.primary.main,
   padding: '15px',
   width: '480px',
-  height: 'auto',
+  height: '240px',
   borderRadius: '30px',
-  backgroundColor: theme.palette.grey[600]
+  backgroundColor: theme.palette.grey[600],
+  [theme.breakpoints.down('md')]: {
+    margin: 'auto',
+   },
 }));
 
 export const lineOptions = {
@@ -57,30 +60,61 @@ export const lineOptions = {
   }
 };
 
-const expenses = [550, 370, 550, 120, 350, 330, 770, 880, 360, 287, 440, 950];
-const incomes = [1500, 1500, 1500, 1500, 1500, 1800, 1800, 1800, 1800, 2200, 2200, 2200];
-
-const labels = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
-
-export const lineData = {
-  labels,
-  datasets: [
-    {
-      label: 'Incomes',
-      data: incomes,
-      borderColor: '#39d49b',
-      backgroundColor: '#39d49b'
-    },
-    {
-      label: 'Expenses',
-      data: expenses,
-      borderColor: '#f00a0a',
-      backgroundColor: '#f00a0a'
-    }
-  ]
+const generateRandomData = (numDays) => {
+  return Array.from({ length: numDays }, () => Math.floor(Math.random() * 2400));
 };
 
 export function LineChart() {
+  const { selectedDate } = useContext(DateProvider);
+
+  const [lineData, setLineData] = useState({ labels: [], datasets: [] });
+  const [length, setLength] = useState(12);
+  const [labels, setLabels] = useState([
+    'J',
+    'F',
+    'M',
+    'A',
+    'M',
+    'J',
+    'J',
+    'A',
+    'S',
+    'O',
+    'N',
+    'D'
+  ]);
+
+  useEffect(() => {
+    const expenses = generateRandomData(length);
+    const incomes = generateRandomData(length);
+
+    setLineData({
+      labels,
+      datasets: [
+        {
+          label: 'Incomes',
+          data: incomes,
+          borderColor: '#39d49b',
+          backgroundColor: '#39d49b'
+        },
+        {
+          label: 'Expenses',
+          data: expenses,
+          borderColor: '#f00a0a',
+          backgroundColor: '#f00a0a'
+        }
+      ]
+    });
+  }, [length, labels]);
+
+  useEffect(() => {
+    if (selectedDate.toDateString() !== new Date().toDateString()) {
+      setLength(7);
+      setLabels(['M', 'T', 'W', 'T', 'F', 'S', 'S']);
+      console.log(selectedDate);
+    }
+  }, [selectedDate]);
+
   return (
     <Wrapper>
       <Line options={lineOptions} data={lineData} unique={true} />

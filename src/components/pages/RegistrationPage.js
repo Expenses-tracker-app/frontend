@@ -1,74 +1,72 @@
-import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next'
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
-    Button,
-    Container, 
-    Grid,  
-    FormLabel, 
-    styled,
-    Input, 
-    FormGroup, 
-    Typography
+  Button,
+  Container,
+  Grid,
+  FormLabel,
+  styled,
+  Input,
+  FormGroup,
+  Typography
 } from '@mui/material';
 //import paths from '../../utilities/pathnames'
 
 // Styles
 const Wrapper = styled(Container)(() => ({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: '50px'
-  }));
-  
-  const FormWrapper = styled(Grid)(({ theme }) => ({
-    marginTop: '30px',
-    padding: '50px',
-    width: '50%',
-    boxShadow: theme.shadows[2],
-    color: theme.palette.primary.main,
-    background: theme.palette.grey[600],
-    borderRadius: 25
-  }));
-  
-  const InputLine = styled(Input)(({ theme }) => ({
-    padding: '10px 14px 10px 14px',
-    color: theme.palette.primary.main,
-    background: theme.palette.secondary.main,
-    margin: '10px 0 50px 0'
-  }));
-  
-  const StyledButton = styled(Button)(({ theme }) => ({
-    background: theme.palette.primary.blue,
-    borderRadius: 25,
-    width: '30%',
-    padding: '7px 0px 7px 0px',
-    margin: 'auto',
-    '&:hover': {
-      background: theme.palette.primary.blue
-    }
-  }));
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  marginTop: '50px'
+}));
 
+const FormWrapper = styled(Grid)(({ theme }) => ({
+  marginTop: '30px',
+  padding: '50px',
+  width: '50%',
+  boxShadow: theme.shadows[2],
+  color: theme.palette.primary.main,
+  background: theme.palette.grey[600],
+  borderRadius: 25
+}));
 
-  
-  export const RegistrationPage = () => {
-    const { t } = useTranslation();
+const InputLine = styled(Input)(({ theme }) => ({
+  padding: '10px 14px 10px 14px',
+  color: theme.palette.primary.main,
+  background: theme.palette.secondary.main,
+  margin: '10px 0 50px 0'
+}));
 
-    const [people, setPeople] = useState([])
-    const [newPerson, setNewPerson] = useState({email: '', password:'', retypePassword:''})
-    const [passwordMismatch, setPasswordMismatch] = useState(false)
-    const [registrationDone, setRegistrationDone] = useState(false)
+const StyledButton = styled(Button)(({ theme }) => ({
+  background: theme.palette.primary.blue,
+  borderRadius: 25,
+  width: '30%',
+  padding: '7px 0px 7px 0px',
+  margin: 'auto',
+  '&:hover': {
+    background: theme.palette.primary.blue
+  }
+}));
 
-    const handleEmailChange = (e) => {
-      setNewPerson({...newPerson, email: e.target.value})
-    }
+export const RegistrationPage = () => {
+  const { t } = useTranslation();
 
-    const handlePasswordChange = (e) => {
-      setNewPerson({...newPerson, password: e.target.value})
-    }
+  const [people, setPeople] = useState([]);
+  const [newPerson, setNewPerson] = useState({ email: '', password: '', retypePassword: '' });
+  const [passwordMismatch, setPasswordMismatch] = useState(false);
+  const [registrationDone, setRegistrationDone] = useState(false);
 
-    const handleRetypePasswordChange = (e) => {
-      setNewPerson({...newPerson, retypePassword: e.target.value})
-    }
+  const handleEmailChange = (e) => {
+    setNewPerson({ ...newPerson, email: e.target.value });
+  };
+
+  const handlePasswordChange = (e) => {
+    setNewPerson({ ...newPerson, password: e.target.value });
+  };
+
+  const handleRetypePasswordChange = (e) => {
+    setNewPerson({ ...newPerson, retypePassword: e.target.value });
+  };
 
     const handleSubmit = () => {
       if (newPerson.password == newPerson.retypePassword) {
@@ -78,10 +76,22 @@ const Wrapper = styled(Container)(() => ({
         setRegistrationDone(true)
         console.log('Submitting registration done')
         localStorage.setItem('people', JSON.stringify(people))
+        console.log(people)
       } else {
         setPasswordMismatch(true)
         setRegistrationDone(false)
       }
+  const handleSubmit = () => {
+    if (newPerson.password == newPerson.retypePassword) {
+      setPeople([...people, newPerson]);
+      setNewPerson({ email: '', password: '', retypePassword: '' });
+      setPasswordMismatch(false);
+      setRegistrationDone(true);
+      console.log('Submitting registration done');
+      localStorage.setItem('people', JSON.stringify(people));
+    } else {
+      setPasswordMismatch(true);
+      setRegistrationDone(false);
     }
   
     return (
