@@ -19,6 +19,10 @@ const pathnames = {
     path: '/register',
     title: 'Register'
   },
+  tags: {
+    path: '/tags',
+    title: 'Tags'
+  },
   newExpense: {
     path: '/new-expense',
     title: 'New Expense'

@@ -9,8 +9,10 @@ import { Providers } from './components/layout/Providers';
 import { SettingsPage } from './components/pages/SettingsPage';
 import { RegistrationPage } from './components/pages/RegistrationPage';
 import { NotFoundPage } from './components/pages/NotFoundPage';
+import { TagsPage } from './components/pages/TagsPage';
 import { NewExpensePage } from './components/pages/NewExpense';
 import { NavigationPage } from './components/pages/NavigationPage';
+
 
 function App() {
   return (
@@ -24,8 +26,10 @@ function App() {
               <Route path={paths.transactions.path} element={<TransactionsPage />} />
               <Route path={paths.settings.path} element={<SettingsPage />} />
               <Route path={paths.registration.path} element={<RegistrationPage />} />
-              <Route path={paths.newExpense.path} element={<NewExpensePage />} />
-              <Route path={paths.navigation.path} element={<NavigationPage />} />
+              <Route path={paths.tags.path} element={<TagsPage />} />
+              <Route path={paths.newExpense.path} element ={<NewExpensePage/>} />
+              <Route path={paths.navigation.path} element = {<NavigationPage/>} />
+
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
