@@ -9,9 +9,10 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   width: '480px',
   height: '240px',
   borderRadius: '30px',
+  margin: '5px',
   backgroundColor: theme.palette.grey[600],
   [theme.breakpoints.down('md')]: {
-    margin: 'auto'
+   margin: '5px auto 5px auto'
   }
 }));
 

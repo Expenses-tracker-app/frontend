@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import paths from '../../utilities/pathnames';
+import { Link } from 'react-router-dom';
 import {
   Button,
   Container,
@@ -8,9 +10,9 @@ import {
   FormLabel,
   Input,
   FormGroup,
-  Typography
+  Typography,
+  Alert as MuiAlert
 } from '@mui/material';
-//import paths from '../../utilities/pathnames';
 
 // Styles
 const Wrapper = styled(Container)(() => ({
@@ -37,7 +39,13 @@ const InputLine = styled(Input)(({ theme }) => ({
   margin: '10px 0 50px 0'
 }));
 
-const StyledButton = styled(Button)(({ theme }) => ({
+const Text = styled(Typography)(() => ({
+  weight: 100,
+  fontSize: '12px',
+  margin: '20px auto 0px auto'
+}));
+
+const LoginButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.blue,
   borderRadius: 25,
   width: '30%',
@@ -48,12 +56,18 @@ const StyledButton = styled(Button)(({ theme }) => ({
   }
 }));
 
+const MLink = styled(Link)(({ theme }) => ({
+  textDecoration: 'underlined',
+  fontWeight: 400,
+  cursor: 'pointer',
+  color: theme.palette.primary.main
+}));
+
 export const LoginPage = () => {
   const { t } = useTranslation();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null);
 
   const handleLogin = () => {
     const storedPeople = JSON.parse(localStorage.getItem('people')) || [];
@@ -61,11 +75,10 @@ export const LoginPage = () => {
       (person) => person.email === email && person.password === password
     );
     if (user) {
-      setError('');
-      console.log('Login succesfull');
+      console.log('Login successful');
     } else {
-      setError('Invalid email or password');
-      console.log('login failed');
+      setError('The password is not correct.');
+      console.log('Login failed');
     }
   };
 
@@ -92,10 +105,19 @@ export const LoginPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <StyledButton onClick={handleLogin}>
+          <LoginButton onClick={handleLogin}>
             <Typography variant="h6">{t('user.login')}</Typography>
-          </StyledButton>
-          {error && <p>{error}</p>}
+          </LoginButton>
+
+          <Text>
+            Dont have an account? <MLink to={paths.registration.path}>Create</MLink>
+          </Text>
+
+          {error && (
+            <MuiAlert severity="error" sx={{ marginTop: 2 }} variant="filled">
+              {error}
+            </MuiAlert>
+          )}
         </FormGroup>
       </FormWrapper>
     </Wrapper>

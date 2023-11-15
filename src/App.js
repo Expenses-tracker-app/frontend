@@ -13,7 +13,6 @@ import { TagsPage } from './components/pages/TagsPage';
 import { NewExpensePage } from './components/pages/NewExpense';
 import { NavigationPage } from './components/pages/NavigationPage';
 
-
 function App() {
   return (
     <>

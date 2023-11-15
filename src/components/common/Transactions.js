@@ -10,7 +10,8 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   width: '480px',
   background: theme.palette.grey[600],
   borderRadius: '35px',
-  padding: '15px'
+  padding: '15px',
+  margin: '5px'
 }));
 
 const Title = styled(Typography)(() => ({
