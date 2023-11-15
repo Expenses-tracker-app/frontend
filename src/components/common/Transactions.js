@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { styled, Typography, Grid, List } from '@mui/material';
 import DateProvider from '../layout/DataContext';
 
-
 const Wrapper = styled(Grid)(({ theme }) => ({
   justifyContent: 'space-between',
   width: '480px',

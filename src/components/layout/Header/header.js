@@ -41,7 +41,7 @@ const Header = () => {
         <StyledButton>{t('navigation.button')}</StyledButton>
       </StyledLink>
 
-      <Grid container item xs={2} component={Link} to={paths.home.path}> 
+      <Grid container item xs={2} component={Link} to={paths.home.path}>
         <img src={logo} alt="Logo" height="50px" />
       </Grid>
 
