@@ -52,5 +52,12 @@
   },
   "navigation": {
     "button": "Menu"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "transactions": "My Transactions",
+    "categories": "Categories",
+    "settings": "Settings",
+    "logout": "Logout"
   }
 }

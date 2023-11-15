@@ -1,7 +1,7 @@
 //This is an example for the api calls we won't need it later on
 
 import React, { useState, useEffect } from 'react';
-import { getAllTag } from '../../services/apiService'; 
+import { getAllTag } from '../../services/apiService';
 
 export const TagsPage = () => {
   const [tags, setTags] = useState([]);
@@ -28,8 +28,10 @@ export const TagsPage = () => {
     <div>
       <h2>Tags</h2>
       <ul>
-        {tags.map(tag => (
-          <li key={tag.tag_id}>tag_id: {tag.tag_id} - tag_name: {tag.tag_name}</li>
+        {tags.map((tag) => (
+          <li key={tag.tag_id}>
+            tag_id: {tag.tag_id} - tag_name: {tag.tag_name}
+          </li>
         ))}
       </ul>
     </div>
