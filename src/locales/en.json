@@ -43,13 +43,13 @@
     "save": "Register"
   },
   "newExpense": {
-    "title": "Add a new expense", 
+    "title": "Add a new expense",
     "category": "New expense category",
-    "amount": "Amount used", 
-    "date": "Date", 
-    "description": "Description", 
+    "amount": "Amount used",
+    "date": "Date",
+    "description": "Description",
     "save": "Save"
-  }, 
+  },
   "navigation": {
     "button": "Menu"
   }

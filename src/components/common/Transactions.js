@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { styled, Typography, Grid, List } from '@mui/material';
 import DateProvider from '../layout/DataContext';
 
-
 const Wrapper = styled(Grid)(({ theme }) => ({
   justifyContent: 'space-between',
   width: '480px',
@@ -23,14 +22,13 @@ export const Transactions = () => {
   const { t } = useTranslation();
   const { selectedDate } = useContext(DateProvider);
   const [filteredData, setFilteredData] = useState([]);
-  
 
   useEffect(() => {
     const currentDate = new Date();
 
-  const combinedData = [...data.expenses, ...data.incomes];
+    const combinedData = [...data.expenses, ...data.incomes];
 
-  if (selectedDate.toDateString() !== currentDate.toDateString()) {
+    if (selectedDate.toDateString() !== currentDate.toDateString()) {
       const filteredTransactions = combinedData.filter((item) => {
         const itemDate = new Date(item.date.split('-').reverse().join('-'));
         return itemDate.toDateString() === selectedDate.toDateString();
@@ -58,7 +56,7 @@ export const Transactions = () => {
     <Wrapper>
       <Title variant="h5">{t('transactions.title')}</Title>
       <List>
-      {filteredData.map((item, index) => (
+        {filteredData.map((item, index) => (
           <TransactionItem
             key={index}
             desc={item.desc}

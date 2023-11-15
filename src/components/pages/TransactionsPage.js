@@ -5,7 +5,7 @@ import data from '../../data/data.json';
 import { useTranslation } from 'react-i18next';
 import { styled, Card, Typography, Container, Button, Grid, Box, List } from '@mui/material';
 import { Link } from 'react-router-dom';
-import paths from '../../utilities/pathnames'
+import paths from '../../utilities/pathnames';
 
 const Wrapper = styled(Container)(() => ({
   display: 'flex',
@@ -51,7 +51,7 @@ export const TransactionsPage = () => {
           <Grid item xs={6}>
             <MCard>
               <MButton variant="text">
-               <StyledLink to={paths.newExpense.path}>
+                <StyledLink to={paths.newExpense.path}>
                   <Typography variant="h2">{t('transactions.addNew')}</Typography>
                 </StyledLink>
               </MButton>

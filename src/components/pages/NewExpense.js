@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
@@ -51,42 +51,42 @@ const StyledButton = styled(Button)(({ theme }) => ({
 export const NewExpensePage = () => {
   const { t } = useTranslation();
 
-  const [category, setCategory] = useState('')
-  const[amount, setAmount] = useState('')
-  const [date, setDate] = useState('')
-  const [description, setDesciption] = useState('')
-  const [expenses, setExpenses] = useState([])
+  const [category, setCategory] = useState('');
+  const [amount, setAmount] = useState('');
+  const [date, setDate] = useState('');
+  const [description, setDesciption] = useState('');
+  const [expenses, setExpenses] = useState([]);
 
   const handleCategoryChange = (category) => {
-    setCategory(category.target.value)
-  }
+    setCategory(category.target.value);
+  };
 
   const handleAmountChange = (amount) => {
-    setAmount(amount.target.value)
-  }
+    setAmount(amount.target.value);
+  };
 
   const handleDateChange = (date) => {
-    setDate(date.target.value)
-  }
+    setDate(date.target.value);
+  };
 
   const handleDescriptionChange = (description) => {
-    setDesciption(description.target.value)
-  }
+    setDesciption(description.target.value);
+  };
 
   const handleSubmit = () => {
     const newExpense = {
-        name: description, 
-        date: date, 
-        amount: amount,
-    }
-    setExpenses(expenses.concat(newExpense))
-    localStorage.setItem('expense', JSON.stringify(expenses))
-    setCategory("")
-    setAmount("")
-    setDate("")
-    setDesciption("")
-    console.log(expenses)
-  }
+      name: description,
+      date: date,
+      amount: amount
+    };
+    setExpenses(expenses.concat(newExpense));
+    localStorage.setItem('expense', JSON.stringify(expenses));
+    setCategory('');
+    setAmount('');
+    setDate('');
+    setDesciption('');
+    console.log(expenses);
+  };
 
   return (
     <Wrapper>
@@ -96,19 +96,19 @@ export const NewExpensePage = () => {
           <FormLabel>
             <Typography variant="h6">{t('newExpense.category')}</Typography>
           </FormLabel>
-          <InputLine id="new_cat" value={category} onChange={handleCategoryChange}/>
+          <InputLine id="new_cat" value={category} onChange={handleCategoryChange} />
           <FormLabel>
             <Typography variant="h6">{t('newExpense.amount')} </Typography>
           </FormLabel>
-          <InputLine id="amount" value={amount} onChange={handleAmountChange}/>
+          <InputLine id="amount" value={amount} onChange={handleAmountChange} />
           <FormLabel>
-            <Typography variant="h6" >{t('newExpense.date')} </Typography>
+            <Typography variant="h6">{t('newExpense.date')} </Typography>
           </FormLabel>
-          <InputLine id="date" value={date} onChange={handleDateChange}/>
+          <InputLine id="date" value={date} onChange={handleDateChange} />
           <FormLabel>
-            <Typography variant="h6" >{t('newExpense.description')} </Typography>
+            <Typography variant="h6">{t('newExpense.description')} </Typography>
           </FormLabel>
-          <InputLine id="description" value={description} onChange={handleDescriptionChange}/>
+          <InputLine id="description" value={description} onChange={handleDescriptionChange} />
           <StyledButton onClick={handleSubmit}>
             <Typography variant="h6">{t('newExpense.save')}</Typography>
           </StyledButton>
