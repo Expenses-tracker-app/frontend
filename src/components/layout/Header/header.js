@@ -12,7 +12,7 @@ import {
   ListItem,
   ListItemText
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu'; 
+import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../../../assets/logo.png';
 
 // Styles
@@ -57,7 +57,7 @@ const MenuDrawer = styled(Drawer)(({ theme }) => ({
 const MLink = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main,
   '&:hover, &:focus': {
-    borderBottom: '0.5px solid white' 
+    borderBottom: `0.5px solid ${theme.palette.primary.blue}`
   },
   [theme.breakpoints.down('sm')]: {
     display: 'flex',

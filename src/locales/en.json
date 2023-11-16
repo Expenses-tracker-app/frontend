@@ -8,7 +8,10 @@
     "ok": "Ok",
     "repair": "Repair",
     "version": "Version: ",
-    "yes": "Yes"
+    "yes": "Yes",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save"
   },
   "errors": {
     "required": "Required information"
@@ -59,5 +62,8 @@
     "categories": "Categories",
     "settings": "Settings",
     "logout": "Logout"
+  },
+  "categories": {
+    "title": "Categories"
   }
 }

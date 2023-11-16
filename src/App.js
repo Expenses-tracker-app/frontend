@@ -9,7 +9,7 @@ import { Providers } from './components/layout/Providers';
 import { SettingsPage } from './components/pages/SettingsPage';
 import { RegistrationPage } from './components/pages/RegistrationPage';
 import { NotFoundPage } from './components/pages/NotFoundPage';
-import { TagsPage } from './components/pages/TagsPage';
+import { CategoriesPage } from './components/pages/CategoriesPage';
 import { NewExpensePage } from './components/pages/NewExpense';
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
               <Route path={paths.transactions.path} element={<TransactionsPage />} />
               <Route path={paths.settings.path} element={<SettingsPage />} />
               <Route path={paths.registration.path} element={<RegistrationPage />} />
-              <Route path={paths.tags.path} element={<TagsPage />} />
+              <Route path={paths.categories.path} element={<CategoriesPage />} />
               <Route path={paths.newExpense.path} element={<NewExpensePage />} />
 
               <Route path="*" element={<NotFoundPage />} />

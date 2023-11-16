@@ -3,9 +3,9 @@ import ExpenseItem from '../common/TransactionItem';
 import TotalBalanceItem from '../common/TotalBalanceItem';
 import data from '../../data/data.json';
 import { useTranslation } from 'react-i18next';
-import { styled, Card, Typography, Container, Button, Grid, Box, List } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { styled, Card, Typography, Container, Grid, Box, List } from '@mui/material';
 import paths from '../../utilities/pathnames';
+import MyButton from '../common/Button';
 
 const Wrapper = styled(Container)(() => ({
   display: 'flex',
@@ -28,15 +28,6 @@ const MCard = styled(Card)(({ theme }) => ({
   marginBottom: '20px'
 }));
 
-const MButton = styled(Button)(() => ({
-  height: '120px',
-  width: '100%'
-}));
-
-const StyledLink = styled(Link)(() => ({
-  textDecoration: 'none'
-}));
-
 export const TransactionsPage = () => {
   const { t } = useTranslation();
   const expenses = data.expenses;
@@ -50,11 +41,7 @@ export const TransactionsPage = () => {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <MCard>
-              <MButton variant="text">
-                <StyledLink to={paths.newExpense.path}>
-                  <Typography variant="h2">{t('transactions.addNew')}</Typography>
-                </StyledLink>
-              </MButton>
+              <MyButton path={paths.newExpense.path} text={t('transactions.addNew')} />
             </MCard>
           </Grid>
 
