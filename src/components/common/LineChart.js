@@ -12,7 +12,7 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   margin: '5px',
   backgroundColor: theme.palette.grey[600],
   [theme.breakpoints.down('md')]: {
-   margin: '5px auto 5px auto'
+    margin: '5px auto 5px auto'
   }
 }));
 
