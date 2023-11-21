@@ -216,6 +216,11 @@ export const theme = createTheme({
       fontSize: '16px',
       lineHeight: '18.75px',
       fontFamily: 'Montserrat'
+    },
+    title: {
+      fontWeight: 200,
+      fontSize: '25px',
+      fontFamily: 'Montserrat'
     }
   }
 });

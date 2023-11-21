@@ -4,8 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { getAllTag } from '../../services/apiService';
 import { Button, styled, Typography, Container, Card, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import AddNewButton from '../common/Button';
-import paths from '../../utilities/pathnames';
 import EditCategoryModal from '../modals/EditCategoryModal';
 
 const Wrapper = styled(Container)(() => ({
@@ -68,6 +66,7 @@ export const CategoriesPage = () => {
   const [tags, setTags] = useState([]);
   const [error, setError] = useState('');
   const [category, setCategory] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,8 +80,6 @@ export const CategoriesPage = () => {
 
     fetchData();
   }, []);
-
-  const [openModal, setOpenModal] = useState(false);
 
   const handleOpenModal = (tag) => {
     setCategory(tag);
@@ -128,7 +125,9 @@ export const CategoriesPage = () => {
         <EditCategoryModal open={openModal} onClose={handleCloseModal} tag={category} />
 
         <AddNewCard>
-          <AddNewButton path={paths.categories.path} text={t('transactions.addNew')} />
+          <MButton variant="text" onClick={handleOpenModal}>
+            <Typography variant="h2">{t('transactions.addNew')}</Typography>
+          </MButton>
         </AddNewCard>
       </ContentContainer>
     </Wrapper>

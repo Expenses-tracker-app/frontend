@@ -10,7 +10,6 @@ import { SettingsPage } from './components/pages/SettingsPage';
 import { RegistrationPage } from './components/pages/RegistrationPage';
 import { NotFoundPage } from './components/pages/NotFoundPage';
 import { CategoriesPage } from './components/pages/CategoriesPage';
-import { NewExpensePage } from './components/pages/NewExpense';
 
 function App() {
   return (
@@ -25,7 +24,6 @@ function App() {
               <Route path={paths.settings.path} element={<SettingsPage />} />
               <Route path={paths.registration.path} element={<RegistrationPage />} />
               <Route path={paths.categories.path} element={<CategoriesPage />} />
-              <Route path={paths.newExpense.path} element={<NewExpensePage />} />
 
               <Route path="*" element={<NotFoundPage />} />
             </Route>

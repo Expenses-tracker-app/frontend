@@ -45,10 +45,12 @@
     "retypePassword": "Retype password",
     "save": "Register"
   },
-  "newExpense": {
+  "newTransaction": {
+    "income": "Income",
+    "expense": "Expense",
     "title": "Add a new expense",
-    "category": "New expense category",
-    "amount": "Amount used",
+    "category": "Category",
+    "amount": "Amount",
     "date": "Date",
     "description": "Description",
     "save": "Save"
