@@ -169,6 +169,13 @@ const AddNewExpenseModal = ({ open, onClose }) => {
     });
   };
 
+  const handleCategoryChange = (event) => {
+    setFormData({
+      ...formData,
+      category: event.target.value
+    });
+  };
+
   const handleButtonClick = (type) => {
     setFormData({
       ...formData,
@@ -226,7 +233,11 @@ const AddNewExpenseModal = ({ open, onClose }) => {
           <FormLabel>
             <Typography variant="h6">{t('newTransaction.category')}</Typography>
           </FormLabel>
-          <StyledSelect value={handleChange} onChange={handleChange} style={{ width: '100%' }}>
+          <StyledSelect
+            value={formData.category}
+            onChange={handleCategoryChange}
+            style={{ width: '100%' }}
+          >
             {categories.map((category) => (
               <StyledMenu key={category.tag_id} value={category.tag_id}>
                 {category.tag_name}
