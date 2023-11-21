@@ -55,6 +55,11 @@
     "description": "Description",
     "save": "Save"
   },
+  "newCategory": {
+    "title": "Add new category",
+    "name": "Name",
+    "save": "Save"
+  },
   "navigation": {
     "button": "Menu"
   },

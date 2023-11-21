@@ -5,6 +5,7 @@ import { getAllTag } from '../../services/apiService';
 import { Button, styled, Typography, Container, Card, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import EditCategoryModal from '../modals/EditCategoryModal';
+import AddNewCategoryModal from '../modals/AddNewCategoryModal';
 
 const Wrapper = styled(Container)(() => ({
   display: 'flex',
@@ -72,7 +73,8 @@ export const CategoriesPage = () => {
   const [tags, setTags] = useState([]);
   const [error, setError] = useState('');
   const [category, setCategory] = useState(null);
-  const [openModal, setOpenModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -104,13 +106,14 @@ export const CategoriesPage = () => {
     fetchData();
   }, []);
 
-  const handleOpenModal = (tag) => {
+  const handleOpenEditModal = (tag) => {
     setCategory(tag);
-    setOpenModal(true);
+    setOpenEditModal(true);
   };
 
   const handleCloseModal = () => {
-    setOpenModal(false);
+    setOpenEditModal(false);
+    setOpenAddModal(false);
   };
 
   return (
@@ -122,19 +125,21 @@ export const CategoriesPage = () => {
           <MBox>
             {tags.map((tag) => (
               <div key={tag.tag_id}>
-                <MButton onClick={() => handleOpenModal(tag)}>{tag.tag_name}</MButton>
+                <MButton onClick={() => handleOpenEditModal(tag)}>{tag.tag_name}</MButton>
               </div>
             ))}
           </MBox>
         </MCard>
         {category !== null && (
-          <EditCategoryModal open={openModal} onClose={handleCloseModal} tag={category} />
+          <EditCategoryModal open={openEditModal} onClose={handleCloseModal} tag={category} />
         )}
         <AddNewCard>
-          <SButton variant="text" onClick={handleOpenModal}>
+          <SButton variant="text" onClick={() => setOpenAddModal(true)}>
             <Typography variant="h2">{t('transactions.addNew')}</Typography>
           </SButton>
         </AddNewCard>
+
+        <AddNewCategoryModal open={openAddModal} onClose={handleCloseModal} />
       </ContentContainer>
     </Wrapper>
   );

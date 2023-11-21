@@ -248,15 +248,15 @@ const AddNewExpenseModal = ({ open, onClose }) => {
           <FormLabel>
             <Typography variant="h6">{t('newTransaction.amount')} </Typography>
           </FormLabel>
-          <InputLine id="amount" type="number" onClick={handleChange} />
+          <InputLine type="number" onClick={handleChange} />
           <FormLabel>
             <Typography variant="h6">{t('newTransaction.date')} </Typography>
           </FormLabel>
-          <InputLine id="date" type="date" onClick={handleChange} />
+          <InputLine type="date" onClick={handleChange} />
           <FormLabel>
             <Typography variant="h6">{t('newTransaction.description')} </Typography>
           </FormLabel>
-          <InputLine id="description" type="text" onClick={handleChange} />
+          <InputLine type="text" onClick={handleChange} />
         </FormGroup>
       </MContent>
       <DialogActions>
