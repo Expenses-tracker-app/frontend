@@ -62,11 +62,34 @@ const MButton = styled(Button)(({ theme }) => ({
   }
 }));
 
+const SButton = styled(Button)(() => ({
+  borderRadius: 35,
+  width: '100%',
+  height: '90px'
+}));
+
 export const CategoriesPage = () => {
   const [tags, setTags] = useState([]);
   const [error, setError] = useState('');
   const [category, setCategory] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    if (error) {
+      setError('');
+      setTags([
+        { tag_id: 1, tag_name: 'School' },
+        { tag_id: 2, tag_name: 'Food' },
+        { tag_id: 3, tag_name: 'Sport' },
+        { tag_id: 4, tag_name: 'Cloths' },
+        { tag_id: 5, tag_name: 'School' },
+        { tag_id: 6, tag_name: 'Food' },
+        { tag_id: 7, tag_name: 'Sport' },
+        { tag_id: 8, tag_name: 'Cloths' }
+      ]);
+    }
+  }, [error]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -90,24 +113,6 @@ export const CategoriesPage = () => {
     setOpenModal(false);
   };
 
-  useEffect(() => {
-    if (error) {
-      setError('');
-      setTags([
-        { tag_id: 1, tag_name: 'School' },
-        { tag_id: 2, tag_name: 'Food' },
-        { tag_id: 3, tag_name: 'Sport' },
-        { tag_id: 4, tag_name: 'Cloths' },
-        { tag_id: 5, tag_name: 'School' },
-        { tag_id: 6, tag_name: 'Food' },
-        { tag_id: 7, tag_name: 'Sport' },
-        { tag_id: 8, tag_name: 'Cloths' }
-      ]);
-    }
-  }, [error]);
-
-  const { t } = useTranslation();
-
   return (
     <Wrapper>
       <ContentContainer>
@@ -122,12 +127,13 @@ export const CategoriesPage = () => {
             ))}
           </MBox>
         </MCard>
-        <EditCategoryModal open={openModal} onClose={handleCloseModal} tag={category} />
-
+        {category !== null && (
+          <EditCategoryModal open={openModal} onClose={handleCloseModal} tag={category} />
+        )}
         <AddNewCard>
-          <MButton variant="text" onClick={handleOpenModal}>
+          <SButton variant="text" onClick={handleOpenModal}>
             <Typography variant="h2">{t('transactions.addNew')}</Typography>
-          </MButton>
+          </SButton>
         </AddNewCard>
       </ContentContainer>
     </Wrapper>
