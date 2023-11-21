@@ -5,6 +5,7 @@ import { getAllTag } from '../../services/apiService';
 import { Button, styled, Typography, Container, Card, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import EditCategoryModal from '../modals/EditCategoryModal';
+import AddNewCategoryModal from '../modals/AddNewCategoryModal';
 
 const Wrapper = styled(Container)(() => ({
   display: 'flex',
@@ -62,33 +63,19 @@ const MButton = styled(Button)(({ theme }) => ({
   }
 }));
 
+const SButton = styled(Button)(() => ({
+  borderRadius: 35,
+  width: '100%',
+  height: '90px'
+}));
+
 export const CategoriesPage = () => {
   const [tags, setTags] = useState([]);
   const [error, setError] = useState('');
   const [category, setCategory] = useState(null);
-  const [openModal, setOpenModal] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getAllTag();
-        setTags(data);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const handleOpenModal = (tag) => {
-    setCategory(tag);
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (error) {
@@ -106,7 +93,28 @@ export const CategoriesPage = () => {
     }
   }, [error]);
 
-  const { t } = useTranslation();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllTag();
+        setTags(data);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleOpenEditModal = (tag) => {
+    setCategory(tag);
+    setOpenEditModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenEditModal(false);
+    setOpenAddModal(false);
+  };
 
   return (
     <Wrapper>
@@ -117,18 +125,21 @@ export const CategoriesPage = () => {
           <MBox>
             {tags.map((tag) => (
               <div key={tag.tag_id}>
-                <MButton onClick={() => handleOpenModal(tag)}>{tag.tag_name}</MButton>
+                <MButton onClick={() => handleOpenEditModal(tag)}>{tag.tag_name}</MButton>
               </div>
             ))}
           </MBox>
         </MCard>
-        <EditCategoryModal open={openModal} onClose={handleCloseModal} tag={category} />
-
+        {category !== null && (
+          <EditCategoryModal open={openEditModal} onClose={handleCloseModal} tag={category} />
+        )}
         <AddNewCard>
-          <MButton variant="text" onClick={handleOpenModal}>
+          <SButton variant="text" onClick={() => setOpenAddModal(true)}>
             <Typography variant="h2">{t('transactions.addNew')}</Typography>
-          </MButton>
+          </SButton>
         </AddNewCard>
+
+        <AddNewCategoryModal open={openAddModal} onClose={handleCloseModal} />
       </ContentContainer>
     </Wrapper>
   );
