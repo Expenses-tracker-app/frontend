@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import paths from '../../../utilities/pathnames';
 import { useTranslation } from 'react-i18next';
-import { Grid, styled, Button } from '@mui/material';
+import {
+  Grid,
+  styled,
+  Button,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../../../assets/logo.png';
 
 // Styles
@@ -32,14 +42,76 @@ const StyledLink = styled(Link)(() => ({
   textDecoration: 'none'
 }));
 
+const MenuDrawer = styled(Drawer)(({ theme }) => ({
+  '& .MuiDrawer-paper': {
+    alignItems: 'center',
+    width: '200px',
+    background: theme.palette.primary.contrastText,
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      textAlign: 'center'
+    }
+  }
+}));
+
+const MLink = styled(Link)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  '&:hover, &:focus': {
+    borderBottom: `0.5px solid ${theme.palette.primary.blue}`
+  },
+  [theme.breakpoints.down('sm')]: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center'
+  }
+}));
+
 const Header = () => {
   const { t } = useTranslation();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const handleDrawerOpen = () => {
+    setDrawerOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setDrawerOpen(false);
+  };
 
   return (
     <Wrapper container>
-      <StyledLink to={paths.navigation.path}>
-        <StyledButton>{t('navigation.button')}</StyledButton>
-      </StyledLink>
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
+        onClick={handleDrawerOpen}
+        sx={{ mr: 2 }}
+      >
+        <MenuIcon />
+      </IconButton>
+
+      <MenuDrawer anchor="left" open={drawerOpen} onClose={handleDrawerClose}>
+        <Link to={paths.home.path}>
+          <img src={logo} alt="Logo" height="50px" />
+        </Link>
+        <List>
+          <ListItem component={MLink} to={paths.home.path} onClick={handleDrawerClose}>
+            <ListItemText primary={t('menu.dashboard')} />
+          </ListItem>
+          <ListItem component={MLink} to={paths.transactions.path} onClick={handleDrawerClose}>
+            <ListItemText primary={t('menu.transactions')} />
+          </ListItem>
+          <ListItem component={MLink} to={paths.categories.path} onClick={handleDrawerClose}>
+            <ListItemText primary={t('menu.categories')} />
+          </ListItem>
+          <ListItem component={MLink} to={paths.settings.path} onClick={handleDrawerClose}>
+            <ListItemText primary={t('menu.settings')} />
+          </ListItem>
+          <ListItem component={MLink} to={paths.login.path} onClick={handleDrawerClose}>
+            <ListItemText primary={t('menu.logout')} />
+          </ListItem>
+        </List>
+      </MenuDrawer>
 
       <Grid container item xs={2} component={Link} to={paths.home.path}>
         <img src={logo} alt="Logo" height="50px" />

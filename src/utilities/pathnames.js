@@ -23,14 +23,6 @@ const pathnames = {
     path: '/tags',
     title: 'Tags'
   },
-  newExpense: {
-    path: '/new-expense',
-    title: 'New Expense'
-  },
-  navigation: {
-    path: '/navigation',
-    title: 'Navigation'
-  },
   categories: {
     path: '/categories',
     title: 'Categories'

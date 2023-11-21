@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ExpenseItem from '../common/TransactionItem';
 import TotalBalanceItem from '../common/TotalBalanceItem';
 import data from '../../data/data.json';
 import { useTranslation } from 'react-i18next';
-import { styled, Card, Typography, Container, Button, Grid, Box, List } from '@mui/material';
-import { Link } from 'react-router-dom';
-import paths from '../../utilities/pathnames';
+import { styled, Card, Button, Typography, Container, Grid, Box, List } from '@mui/material';
+import AddNewExpenseModal from '../modals/AddNewExpenseModal';
 
 const Wrapper = styled(Container)(() => ({
   display: 'flex',
@@ -33,15 +32,21 @@ const MButton = styled(Button)(() => ({
   width: '100%'
 }));
 
-const StyledLink = styled(Link)(() => ({
-  textDecoration: 'none'
-}));
-
 export const TransactionsPage = () => {
+  const [openModal, setOpenModal] = useState(false);
+
   const { t } = useTranslation();
   const expenses = data.expenses;
   const amount = '100.000.000€';
   const percentage = '+10%';
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   return (
     <Wrapper>
@@ -50,13 +55,13 @@ export const TransactionsPage = () => {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <MCard>
-              <MButton variant="text">
-                <StyledLink to={paths.newExpense.path}>
-                  <Typography variant="h2">{t('transactions.addNew')}</Typography>
-                </StyledLink>
+              <MButton variant="text" onClick={handleOpenModal}>
+                <Typography variant="h2">{t('transactions.addNew')}</Typography>
               </MButton>
             </MCard>
           </Grid>
+
+          <AddNewExpenseModal open={openModal} onClose={handleCloseModal} />
 
           <Grid item xs={6}>
             <MCard>
