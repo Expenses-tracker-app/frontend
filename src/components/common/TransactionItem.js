@@ -10,7 +10,9 @@ const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
   background: theme.palette.grey[600],
   display: 'flex',
   justifyContent: 'space-between',
-  margin: '0 10px 0 10px'
+  [theme.breakpoints.down('sm')]: {
+    width: '100%'
+  }
 }));
 
 const Date = styled(Typography)(({ theme }) => ({

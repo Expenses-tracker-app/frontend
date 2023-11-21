@@ -4,6 +4,8 @@ import paths from '../../../utilities/pathnames';
 import { useTranslation } from 'react-i18next';
 import { Grid, styled, Button } from '@mui/material';
 import logo from '../../../assets/logo.png';
+import { useContext } from 'react';
+import { AuthContext } from '../../../utilities/AuthContext';
 
 // Styles
 
@@ -33,6 +35,7 @@ const StyledLink = styled(Link)(() => ({
 }));
 
 const Header = () => {
+  const { isLoggedIn, handleLogout } = useContext(AuthContext);
   const { t } = useTranslation();
 
   return (
@@ -45,9 +48,15 @@ const Header = () => {
         <img src={logo} alt="Logo" height="50px" />
       </Grid>
 
-      <StyledLink to={paths.login.path}>
-        <StyledButton>{t('user.login')}</StyledButton>
-      </StyledLink>
+      {isLoggedIn ? (
+        <StyledLink>
+          <StyledButton onClick={handleLogout}>{t('user.logout')}</StyledButton>
+        </StyledLink>
+      ) : (
+        <StyledLink to={paths.login.path}>
+          <StyledButton>{t('user.login')}</StyledButton>
+        </StyledLink>
+      )}
     </Wrapper>
   );
 };

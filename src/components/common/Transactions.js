@@ -6,12 +6,18 @@ import { styled, Typography, Grid, List } from '@mui/material';
 import DateProvider from '../layout/DataContext';
 
 const Wrapper = styled(Grid)(({ theme }) => ({
-  justifyContent: 'space-between',
+  justifyContent: 'center',
   width: '480px',
   background: theme.palette.grey[600],
   borderRadius: '35px',
   padding: '15px',
-  margin: '5px'
+  margin: '5px',
+  [theme.breakpoints.down('md')]: {
+    margin: 'auto',
+    maxWidth: '480px',
+    width: '90%',
+    justifyContent: 'center'
+  }
 }));
 
 const Title = styled(Typography)(() => ({

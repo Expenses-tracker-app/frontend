@@ -13,6 +13,9 @@ import {
   Typography,
   Alert as MuiAlert
 } from '@mui/material';
+import { login } from '../../services/apiService';
+import { useContext } from 'react';
+import { AuthContext } from '../../utilities/AuthContext';
 
 // Styles
 const Wrapper = styled(Container)(() => ({
@@ -26,6 +29,10 @@ const FormWrapper = styled(Grid)(({ theme }) => ({
   marginTop: '30px',
   padding: '50px',
   width: '50%',
+  [theme.breakpoints.down('sm')]: {
+    width: '90%',
+    padding: '20px'
+  },
   boxShadow: theme.shadows[2],
   color: theme.palette.primary.main,
   background: theme.palette.grey[600],
@@ -64,21 +71,24 @@ const MLink = styled(Link)(({ theme }) => ({
 }));
 
 export const LoginPage = () => {
+  const { handleLogin } = useContext(AuthContext);
+
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  const handleLogin = () => {
-    const storedPeople = JSON.parse(localStorage.getItem('people')) || [];
-    const user = storedPeople.find(
-      (person) => person.email === email && person.password === password
-    );
-    if (user) {
-      console.log('Login successful');
-    } else {
-      setError('The password is not correct.');
-      console.log('Login failed');
+  const submitLogin = async () => {
+    try {
+      const credentials = { email, password };
+      const { status, message } = await login(credentials);
+      if (status === 200) {
+        handleLogin();
+      } else {
+        setError(message || t('errors.loginFailed'));
+      }
+    } catch (err) {
+      setError(err.message || t('errors.loginError'));
     }
   };
 
@@ -105,7 +115,7 @@ export const LoginPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <LoginButton onClick={handleLogin}>
+          <LoginButton onClick={submitLogin}>
             <Typography variant="h6">{t('user.login')}</Typography>
           </LoginButton>
 

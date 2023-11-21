@@ -8,9 +8,12 @@ import {
   styled,
   Input,
   FormGroup,
-  Typography
+  Typography,
+  Alert as MuiAlert
 } from '@mui/material';
-//import paths from '../../utilities/pathnames'
+import { createUser } from '../../services/apiService';
+import { useNavigate } from 'react-router-dom';
+import paths from '../../utilities/pathnames';
 
 // Styles
 const Wrapper = styled(Container)(() => ({
@@ -24,6 +27,10 @@ const FormWrapper = styled(Grid)(({ theme }) => ({
   marginTop: '30px',
   padding: '50px',
   width: '50%',
+  [theme.breakpoints.down('sm')]: {
+    width: '90%',
+    padding: '20px'
+  },
   boxShadow: theme.shadows[2],
   color: theme.palette.primary.main,
   background: theme.palette.grey[600],
@@ -31,17 +38,17 @@ const FormWrapper = styled(Grid)(({ theme }) => ({
 }));
 
 const InputLine = styled(Input)(({ theme }) => ({
-  padding: '10px 14px 10px 14px',
+  padding: '10px 15px 10px 15px',
   color: theme.palette.primary.main,
   background: theme.palette.secondary.main,
-  margin: '10px 0 50px 0'
+  margin: '15px 0 15px 0'
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.blue,
   borderRadius: 25,
   width: '30%',
-  padding: '7px 0px 7px 0px',
+  padding: '10px 0px 10px 0px',
   margin: 'auto',
   '&:hover': {
     background: theme.palette.primary.blue
@@ -49,9 +56,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 export const RegistrationPage = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
-
-  const [people, setPeople] = useState([]);
+  const [alert, setAlert] = useState(null);
+  const [error, setError] = useState(null);
   const [newPerson, setNewPerson] = useState({ email: '', password: '', retypePassword: '' });
   const [passwordMismatch, setPasswordMismatch] = useState(false);
   const [registrationDone, setRegistrationDone] = useState(false);
@@ -68,17 +76,33 @@ export const RegistrationPage = () => {
     setNewPerson({ ...newPerson, retypePassword: e.target.value });
   };
 
-  const handleSubmit = () => {
-    if (newPerson.password == newPerson.retypePassword) {
-      setPeople([...people, newPerson]);
-      setNewPerson({ email: '', password: '', retypePassword: '' });
-      setPasswordMismatch(false);
-      setRegistrationDone(true);
-      console.log('Submitting registration done');
-      localStorage.setItem('people', JSON.stringify(people));
-    } else {
-      setPasswordMismatch(true);
-      setRegistrationDone(false);
+  const handleSubmit = async () => {
+    try {
+      if (newPerson.password === newPerson.retypePassword && newPerson.password !== '') {
+        setNewPerson({ email: '', password: '', retypePassword: '' });
+        setPasswordMismatch(false);
+
+        const email = newPerson.email;
+        const password = newPerson.password;
+        const username = newPerson.email;
+
+        const user = { email, password, username };
+        const { status, message } = await createUser(user);
+
+        if (status === 200) {
+          setRegistrationDone(true);
+          setAlert(message || t('registration.success'));
+          navigate(paths.login.path);
+        } else {
+          setError(message || t('errors.registrationFailed'));
+        }
+      } else {
+        setPasswordMismatch(true);
+        setRegistrationDone(false);
+        setAlert(t('errors.passwordMismatch'));
+      }
+    } catch (err) {
+      setError(err.message || t('errors.registrationError'));
     }
   };
 
@@ -109,11 +133,28 @@ export const RegistrationPage = () => {
             value={newPerson.retypePassword}
             onChange={handleRetypePasswordChange}
           />
-          {passwordMismatch && <p style={{ color: 'red' }}>Passwords do not match.</p>}
+
           <StyledButton onClick={handleSubmit}>
             <Typography variant="h6">{t('registration.save')}</Typography>
           </StyledButton>
-          {registrationDone && <p style={{ color: 'green' }}>Registration succesfull.</p>}
+
+          {registrationDone && (
+            <MuiAlert severity="success" sx={{ marginTop: 2 }} variant="filled">
+              {alert}
+            </MuiAlert>
+          )}
+
+          {passwordMismatch && (
+            <MuiAlert severity="warning" sx={{ marginTop: 2 }} variant="filled">
+              {alert}
+            </MuiAlert>
+          )}
+
+          {error && (
+            <MuiAlert severity="error" sx={{ marginTop: 2 }} variant="filled">
+              {error}
+            </MuiAlert>
+          )}
         </FormGroup>
       </FormWrapper>
     </Wrapper>
