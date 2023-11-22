@@ -20,7 +20,9 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   },
   [theme.breakpoints.down('sm')]: {
     height: '200px',
-    width: '200px'
+    width: '50%',
+    maxWidth: '235px',
+    marginLeft: '5px'
   }
 }));
 
