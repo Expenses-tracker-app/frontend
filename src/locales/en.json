@@ -19,7 +19,9 @@
     "loginFailed": "Login failed",
     "registrationFailed": "Registration failed",
     "registrationError": "An error occured",
-    "passwordMismatch": "Passwords do not match"
+    "passwordMismatch": "Passwords do not match",
+    "pageNotFound": "404 - Not Found!",
+    "pageDoesNotExist": "Sorry, the page you are looking for does not exist."
   },
   "user": {
     "login": "Login",
