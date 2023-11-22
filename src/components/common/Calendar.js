@@ -21,8 +21,10 @@ const CustomCalendar = styled(Calendar)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     padding: '15px',
     fontSize: '12px',
-    width: '200px',
-    height: '200px'
+    width: '100%',
+    maxWidth: '235px',
+    height: '200px',
+    marginRight: '5px'
   },
   '& .react-calendar__navigation__arrow': {
     display: 'none'

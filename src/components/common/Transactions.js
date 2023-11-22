@@ -13,16 +13,20 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   padding: '15px',
   margin: '5px',
   [theme.breakpoints.down('md')]: {
-    margin: 'auto',
+    margin: '5px auto auto auto',
     maxWidth: '480px',
-    width: '90%',
+    width: '100%',
     justifyContent: 'center'
+  },
+  [theme.breakpoints.down('sm')]: {
+    with: '100%'
   }
 }));
 
 const Title = styled(Typography)(() => ({
   fontWeight: '600',
-  padding: '15px'
+  padding: '15px',
+  fontSize: '18px'
 }));
 
 export const Transactions = () => {
@@ -61,7 +65,7 @@ export const Transactions = () => {
 
   return (
     <Wrapper>
-      <Title variant="h5">{t('transactions.title')}</Title>
+      <Title>{t('transactions.title')}</Title>
       <List>
         {filteredData.map((item, index) => (
           <TransactionItem
