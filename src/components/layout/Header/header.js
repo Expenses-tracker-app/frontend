@@ -14,6 +14,8 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../../../assets/logo.png';
+import { useContext } from 'react';
+import { AuthContext } from '../../../utilities/AuthContext';
 
 // Styles
 
@@ -67,6 +69,7 @@ const MLink = styled(Link)(({ theme }) => ({
 }));
 
 const Header = () => {
+  const { isLoggedIn, handleLogout } = useContext(AuthContext);
   const { t } = useTranslation();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -116,9 +119,15 @@ const Header = () => {
         <img src={logo} alt="Logo" height="50px" />
       </Grid>
 
-      <StyledLink to={paths.login.path}>
-        <StyledButton>{t('user.login')}</StyledButton>
-      </StyledLink>
+      {isLoggedIn ? (
+        <StyledLink>
+          <StyledButton onClick={handleLogout}>{t('user.logout')}</StyledButton>
+        </StyledLink>
+      ) : (
+        <StyledLink to={paths.login.path}>
+          <StyledButton>{t('user.login')}</StyledButton>
+        </StyledLink>
+      )}
     </Wrapper>
   );
 };

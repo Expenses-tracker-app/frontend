@@ -17,6 +17,10 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     height: '240px',
     width: '240px'
+  },
+  [theme.breakpoints.down('sm')]: {
+    height: '200px',
+    width: '200px'
   }
 }));
 
@@ -77,7 +81,7 @@ export const DoughnutChart = () => {
 
   return (
     <Wrapper>
-      <Doughnut data={doughnutData} options={doughnutOptions} unique={true} />
+      <Doughnut data={doughnutData} options={doughnutOptions} />
     </Wrapper>
   );
 };

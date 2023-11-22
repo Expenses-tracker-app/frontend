@@ -14,7 +14,12 @@
     "save": "Save"
   },
   "errors": {
-    "required": "Required information"
+    "required": "Required information",
+    "loginError": "An error occured",
+    "loginFailed": "Login failed",
+    "registrationFailed": "Registration failed",
+    "registrationError": "An error occured",
+    "passwordMismatch": "Passwords do not match"
   },
   "user": {
     "login": "Login",
@@ -43,7 +48,8 @@
     "email": "Email",
     "password": "Password",
     "retypePassword": "Retype password",
-    "save": "Register"
+    "save": "Register",
+    "success": "Registration successful"
   },
   "newTransaction": {
     "income": "Income",

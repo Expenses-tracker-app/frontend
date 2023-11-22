@@ -11,8 +11,10 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   borderRadius: '30px',
   margin: '5px',
   backgroundColor: theme.palette.grey[600],
-  [theme.breakpoints.down('md')]: {
-    margin: '5px auto 5px auto'
+  [theme.breakpoints.down('sm')]: {
+    margin: 'auto',
+    padding: '10px',
+    width: '90%'
   }
 }));
 
@@ -118,7 +120,7 @@ export function LineChart() {
 
   return (
     <Wrapper>
-      <Line options={lineOptions} data={lineData} unique={true} />
+      <Line options={lineOptions} data={lineData} />
     </Wrapper>
   );
 }

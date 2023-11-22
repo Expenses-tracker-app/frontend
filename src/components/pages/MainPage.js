@@ -29,11 +29,16 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   justifyContent: 'center',
   textAlign: 'center',
   [theme.breakpoints.down('md')]: {
-    width: '100%'
+    width: '100%',
+    justifyContent: 'center'
   },
   [`> div`]: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      justifyContent: 'center'
+    }
   }
 }));
 
@@ -43,7 +48,8 @@ const Box = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     flexDirection: 'row',
     justifyContent: 'center',
-    margin: 'auto'
+    margin: 'auto',
+    width: '100%'
   }
 }));
 
@@ -66,7 +72,9 @@ const MLink = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main,
   marginTop: '-270px',
   [theme.breakpoints.down('md')]: {
-    margin: 'auto'
+    margin: 'auto',
+    width: '100%',
+    justifyContent: 'center'
   }
 }));
 
