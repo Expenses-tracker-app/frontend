@@ -18,7 +18,6 @@ import { useContext } from 'react';
 import { AuthContext } from '../../../utilities/AuthContext';
 
 // Styles
-
 const Wrapper = styled(Grid)(({ theme }) => ({
   padding: '0px 14px 0px 10px',
   height: '50px',
