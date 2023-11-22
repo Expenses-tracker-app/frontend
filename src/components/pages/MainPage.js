@@ -35,6 +35,7 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   [`> div`]: {
     display: 'flex',
     flexWrap: 'wrap',
+    marginBottom: '40px',
     [theme.breakpoints.down('md')]: {
       width: '100%',
       justifyContent: 'center'

@@ -23,35 +23,45 @@ const Wrapper = styled(Container)(() => ({
 }));
 
 const FormWrapper = styled(Grid)(({ theme }) => ({
-  marginTop: '30px',
-  padding: '50px',
+  marginTop: '50px',
+  padding: '50px 50px 30px 50px',
   width: '50%',
   boxShadow: theme.shadows[2],
   color: theme.palette.primary.main,
   background: theme.palette.grey[600],
-  borderRadius: 25
+  borderRadius: 25,
+  [theme.breakpoints.down('md')]: {
+    width: '80%'
+  },
+  [theme.breakpoints.down('sm')]: {
+    justifyContent: 'center',
+    width: '100%'
+  }
 }));
 
 const InputLine = styled(Input)(({ theme }) => ({
   padding: '10px 14px 10px 14px',
   color: theme.palette.primary.main,
   background: theme.palette.secondary.main,
-  margin: '10px 0 50px 0'
+  margin: '10px 0 30px 0'
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.blue,
+  color: theme.palette.primary.main,
   borderRadius: 25,
-  width: '30%',
-  padding: '7px 0px 7px 0px',
-  margin: 'auto',
+  padding: '5px 20px 5px 20px',
+  margin: '8px',
+  fontSize: '14px',
+  border: `1px solid ${theme.palette.primary.blue}`,
   '&:hover': {
     background: theme.palette.primary.blue
   }
 }));
 
 const StyledLink = styled(Link)(() => ({
-  textDecoration: 'none'
+  textDecoration: 'none',
+  margin: 'auto'
 }));
 
 export const SettingsPage = () => {

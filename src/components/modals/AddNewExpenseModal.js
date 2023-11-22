@@ -58,6 +58,10 @@ const MContent = styled(DialogContent)(() => ({
   textAlign: 'left'
 }));
 
+const MDialogActions = styled(DialogActions)(() => ({
+  justifyContent: 'center'
+}));
+
 const InputLine = styled(Input)(({ theme }) => ({
   padding: '10px 14px 10px 14px',
   background: theme.palette.primary.main,
@@ -67,14 +71,12 @@ const InputLine = styled(Input)(({ theme }) => ({
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.primary.blue,
-  border: '1px solid white',
-  borderRadius: 25,
-  width: '50%',
-  padding: '7px 0px 7px 0px',
-  margin: 'auto',
+  borderRadius: '35px',
+  border: `1px solid ${theme.palette.grey[300]}`,
+  width: '30%',
+  fontSize: '12px',
   '&:hover': {
-    background: theme.palette.primary.blue
+    background: 'none'
   }
 }));
 
@@ -256,11 +258,14 @@ const AddNewExpenseModal = ({ open, onClose }) => {
           <InputLine type="text" onClick={handleChange} />
         </FormGroup>
       </MContent>
-      <DialogActions>
+      <MDialogActions>
         <StyledButton onClick={handleSubmit}>
           <Typography variant="h6">{t('newTransaction.save')}</Typography>
         </StyledButton>
-      </DialogActions>
+        <StyledButton onClick={onClose}>
+          <Typography variant="h6">{t('common.cancel')}</Typography>
+        </StyledButton>
+      </MDialogActions>
     </MDialog>
   );
 };
