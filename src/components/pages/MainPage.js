@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, styled, Typography } from '@mui/material';
+import { Grid, styled, Typography, Container } from '@mui/material';
 import 'react-calendar/dist/Calendar.css';
 import { LineChart } from '../common/LineChart';
 import { MCalendar } from '../common/Calendar';
@@ -61,7 +61,9 @@ const Welcome = styled(Typography)(() => ({
   fontWeight: 200
 }));
 
-const MTitle = styled('div')(() => ({
+const MTitle = styled(Container)(() => ({
+  margin: 'auto',
+  justifyContent: 'center',
   padding: '20px',
   display: 'flex',
   flexDirection: 'column'
