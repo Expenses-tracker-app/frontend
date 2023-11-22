@@ -115,9 +115,9 @@ const Header = () => {
         </List>
       </MenuDrawer>
 
-      <Grid container item xs={2} component={Link} to={paths.home.path}>
+      <Link to={paths.home.path}>
         <img src={logo} alt="Logo" height="50px" />
-      </Grid>
+      </Link>
 
       {isLoggedIn ? (
         <StyledLink>
