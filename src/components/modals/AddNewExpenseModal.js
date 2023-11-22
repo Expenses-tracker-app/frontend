@@ -219,13 +219,15 @@ const AddNewExpenseModal = ({ open, onClose }) => {
           <MBox>
             <MButton
               onClick={() => handleButtonClick('income')}
-              isActive={activeButton === 'income'}>
+              isActive={activeButton === 'income'}
+            >
               <AddCircleOutlineIcon />
               <Text>{t('newTransaction.income')}</Text>
             </MButton>
             <MButton
               onClick={() => handleButtonClick('expense')}
-              isActive={activeButton === 'expense'}>
+              isActive={activeButton === 'expense'}
+            >
               <RemoveCircleOutlineIcon />
               <Text>{t('newTransaction.expense')}</Text>
             </MButton>
@@ -236,7 +238,8 @@ const AddNewExpenseModal = ({ open, onClose }) => {
           <StyledSelect
             value={formData.category}
             onChange={handleCategoryChange}
-            style={{ width: '100%' }}>
+            style={{ width: '100%' }}
+          >
             {categories.map((category) => (
               <StyledMenu key={category.tag_id} value={category.tag_id}>
                 {category.tag_name}

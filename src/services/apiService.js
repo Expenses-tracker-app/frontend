@@ -3,7 +3,7 @@ This is a generated file. Do not edit it directly!
 To change the contents of this file, edit api/apiServiceGenerator.js instead.
 */
 
-const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
+const API_URL = process.env.REACT_APP_BACKEND_URL || 'https://expense-tracker-app-backend.fly.dev';
 
 export async function createExpense(data) {
   try {

@@ -89,7 +89,8 @@ const Header = () => {
         aria-label="open drawer"
         edge="start"
         onClick={handleDrawerOpen}
-        sx={{ mr: 2 }}>
+        sx={{ mr: 2 }}
+      >
         <MenuIcon />
       </IconButton>
 
