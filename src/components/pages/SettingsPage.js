@@ -30,6 +30,9 @@ const FormWrapper = styled(Grid)(({ theme }) => ({
   color: theme.palette.primary.main,
   background: theme.palette.grey[600],
   borderRadius: 25,
+  [theme.breakpoints.down('md')]: {
+    width: '80%'
+  },
   [theme.breakpoints.down('sm')]: {
     justifyContent: 'center',
     width: '100%'

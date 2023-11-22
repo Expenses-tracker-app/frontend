@@ -29,13 +29,16 @@ const FormWrapper = styled(Grid)(({ theme }) => ({
   marginTop: '50px',
   padding: '50px 50px 30px 50px',
   width: '50%',
-  [theme.breakpoints.down('sm')]: {
-    width: '100%'
-  },
   boxShadow: theme.shadows[2],
   color: theme.palette.primary.main,
   background: theme.palette.grey[600],
-  borderRadius: 25
+  borderRadius: 25,
+  [theme.breakpoints.down('md')]: {
+    width: '80%'
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '100%'
+  }
 }));
 
 const InputLine = styled(Input)(({ theme }) => ({
