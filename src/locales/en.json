@@ -8,7 +8,10 @@
     "ok": "Ok",
     "repair": "Repair",
     "version": "Version: ",
-    "yes": "Yes"
+    "yes": "Yes",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save"
   },
   "errors": {
     "required": "Required information",
@@ -48,15 +51,32 @@
     "save": "Register",
     "success": "Registration successful"
   },
-  "newExpense": {
+  "newTransaction": {
+    "income": "Income",
+    "expense": "Expense",
     "title": "Add a new expense",
-    "category": "New expense category",
-    "amount": "Amount used",
+    "category": "Category",
+    "amount": "Amount",
     "date": "Date",
     "description": "Description",
     "save": "Save"
   },
+  "newCategory": {
+    "title": "Add new category",
+    "name": "Name",
+    "save": "Save"
+  },
   "navigation": {
     "button": "Menu"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "transactions": "My Transactions",
+    "categories": "Categories",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "categories": {
+    "title": "Categories"
   }
 }
