@@ -26,12 +26,11 @@ const Wrapper = styled(Container)(() => ({
 }));
 
 const FormWrapper = styled(Grid)(({ theme }) => ({
-  marginTop: '30px',
-  padding: '50px',
+  marginTop: '50px',
+  padding: '50px 50px 30px 50px',
   width: '50%',
   [theme.breakpoints.down('sm')]: {
-    width: '90%',
-    padding: '20px'
+    width: '100%'
   },
   boxShadow: theme.shadows[2],
   color: theme.palette.primary.main,
@@ -43,7 +42,7 @@ const InputLine = styled(Input)(({ theme }) => ({
   padding: '10px 14px 10px 14px',
   color: theme.palette.primary.main,
   background: theme.palette.secondary.main,
-  margin: '10px 0 50px 0'
+  margin: '10px 0 40px 0'
 }));
 
 const Text = styled(Typography)(() => ({
