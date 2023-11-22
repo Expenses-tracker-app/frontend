@@ -1,9 +1,9 @@
 import React, { useEffect, useContext, useState } from 'react';
 import TransactionItem from './TransactionItem';
-import data from '../../data/data.json';
 import { useTranslation } from 'react-i18next';
 import { styled, Typography, Grid, List } from '@mui/material';
 import DateProvider from '../layout/DataContext';
+import { getExpense } from '../../services/apiService';
 
 const Wrapper = styled(Grid)(({ theme }) => ({
   justifyContent: 'center',
@@ -36,32 +36,40 @@ export const Transactions = () => {
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
-    const currentDate = new Date();
+    const fetchTransactions = async () => {
+      try {
+        const userId = '123';
+        const response = await getExpense({ id: userId });
+        const combinedData = response.data;
 
-    const combinedData = [...data.expenses, ...data.incomes];
+        if (selectedDate) {
+          const filteredTransactions = combinedData.filter((item) => {
+            const itemDate = new Date(item.date.split('-').reverse().join('-'));
+            return itemDate.toDateString() === selectedDate.toDateString();
+          });
 
-    if (selectedDate.toDateString() !== currentDate.toDateString()) {
-      const filteredTransactions = combinedData.filter((item) => {
-        const itemDate = new Date(item.date.split('-').reverse().join('-'));
-        return itemDate.toDateString() === selectedDate.toDateString();
-      });
+          filteredTransactions.sort((a, b) => {
+            const dateA = new Date(a.date.split('-').reverse().join('-'));
+            const dateB = new Date(b.date.split('-').reverse().join('-'));
+            return dateB - dateA;
+          });
 
-      filteredTransactions.sort((a, b) => {
-        const dateA = new Date(a.date.split('-').reverse().join('-'));
-        const dateB = new Date(b.date.split('-').reverse().join('-'));
-        return dateB - dateA;
-      });
+          setFilteredData(filteredTransactions);
+        } else {
+          combinedData.sort((a, b) => {
+            const dateA = new Date(a.date.split('-').reverse().join('-'));
+            const dateB = new Date(b.date.split('-').reverse().join('-'));
+            return dateB - dateA;
+          });
 
-      setFilteredData(filteredTransactions);
-    } else {
-      combinedData.sort((a, b) => {
-        const dateA = new Date(a.date.split('-').reverse().join('-'));
-        const dateB = new Date(b.date.split('-').reverse().join('-'));
-        return dateB - dateA;
-      });
+          setFilteredData(combinedData);
+        }
+      } catch (error) {
+        console.error('Error fetching transactions:', error);
+      }
+    };
 
-      setFilteredData(combinedData);
-    }
+    fetchTransactions();
   }, [selectedDate]);
 
   return (

@@ -71,35 +71,18 @@ const SButton = styled(Button)(() => ({
 
 export const CategoriesPage = () => {
   const [tags, setTags] = useState([]);
-  const [error, setError] = useState('');
   const [category, setCategory] = useState(null);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (error) {
-      setError('');
-      setTags([
-        { tag_id: 1, tag_name: 'School' },
-        { tag_id: 2, tag_name: 'Food' },
-        { tag_id: 3, tag_name: 'Sport' },
-        { tag_id: 4, tag_name: 'Cloths' },
-        { tag_id: 5, tag_name: 'School' },
-        { tag_id: 6, tag_name: 'Food' },
-        { tag_id: 7, tag_name: 'Sport' },
-        { tag_id: 8, tag_name: 'Cloths' }
-      ]);
-    }
-  }, [error]);
-
-  useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getAllTag();
+        const { data } = await getAllTag();
         setTags(data);
       } catch (err) {
-        setError(err.message);
+        console.log(err.message);
       }
     };
 
