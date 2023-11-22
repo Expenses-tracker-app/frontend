@@ -15,11 +15,12 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     margin: '5px auto auto auto',
     maxWidth: '480px',
-    width: '100%',
+    width: '98%',
     justifyContent: 'center'
   },
   [theme.breakpoints.down('sm')]: {
-    with: '100%'
+    with: '100%',
+    margin: 'auto'
   }
 }));
 
