@@ -33,10 +33,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
   padding: '5px 20px 5px 20px',
   margin: '8px',
   fontSize: '14px',
+  border: '1px solid white',
   '&:hover': {
     background: 'none',
-    color: theme.palette.primary.main,
-    border: '1px solid white'
+    color: theme.palette.primary.main
   }
 }));
 
