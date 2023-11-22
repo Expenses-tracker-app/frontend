@@ -30,7 +30,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.main,
   color: theme.palette.primary.blue,
   borderRadius: 25,
-  padding: '0px 20px 0px 20px',
+  padding: '5px 20px 5px 20px',
   margin: '8px',
   fontSize: '14px',
   '&:hover': {
@@ -41,7 +41,8 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const StyledLink = styled(Link)(() => ({
-  textDecoration: 'none'
+  textDecoration: 'none',
+  marginTop: '3px'
 }));
 
 const MenuDrawer = styled(Drawer)(({ theme }) => ({
@@ -115,9 +116,9 @@ const Header = () => {
         </List>
       </MenuDrawer>
 
-      <Link to={paths.home.path}>
+      <StyledLink to={paths.home.path}>
         <img src={logo} alt="Logo" height="50px" />
-      </Link>
+      </StyledLink>
 
       {isLoggedIn ? (
         <StyledLink>
