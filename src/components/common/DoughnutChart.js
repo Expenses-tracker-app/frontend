@@ -4,6 +4,7 @@ import { Grid, styled } from '@mui/material';
 import { ArcElement } from 'chart.js';
 import { Chart as ChartJS } from 'chart.js';
 import DateProvider from '../layout/DataContext';
+import { getExpense, getIncome } from '../../services/apiService';
 ChartJS.register(ArcElement);
 
 const Wrapper = styled(Grid)(({ theme }) => ({
@@ -51,15 +52,61 @@ const doughnutOptions = {
 
 export const DoughnutChart = () => {
   const { selectedDate } = useContext(DateProvider);
+  const [expenses, setExpenses] = useState([]);
+  const [incomes, setIncomes] = useState([]);
 
-  // get summary of expenses and summary of incomes in that date from BE
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        // Replace 'userId' with the actual user ID or a variable holding the user ID
+        const userId = '123';
+
+        // Fetch expenses
+        const expensesResponse = await getExpense({ id: userId });
+        const sortedExpenses = expensesResponse.data.sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
+        const groupedExpenses = groupAndSumByDate(sortedExpenses);
+        setExpenses(groupedExpenses);
+
+        // Fetch incomes
+        const incomesResponse = await getIncome({ id: userId });
+        const sortedIncomes = incomesResponse.data.sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
+        const groupedIncomes = groupAndSumByDate(sortedIncomes);
+        setIncomes(groupedIncomes);
+      } catch (error) {
+        console.error('Error fetching transactions:', error);
+      }
+    };
+
+    fetchTransactions();
+  }, []);
+
+  const groupAndSumByDate = (transactions) => {
+    const groupedTransactions = {};
+
+    transactions.forEach((transaction) => {
+      const date = transaction.date.split('T')[0]; // Extracting only the date part
+      if (!groupedTransactions[date]) {
+        groupedTransactions[date] = {
+          date,
+          totalAmount: 0
+        };
+      }
+
+      groupedTransactions[date].totalAmount += transaction.amount;
+    });
+
+    return Object.values(groupedTransactions);
+  };
 
   //so far I put there random number generator just to see it working
   const [doughnutData, setDoughnutData] = useState({
     labels: ['Incomes', 'Expenses'],
     datasets: [
       {
-        data: [0, 0],
         backgroundColor: ['#39d49b', '#f00a0a'],
         borderColor: ['#39d49b', '#f00a0a']
       }
@@ -67,13 +114,11 @@ export const DoughnutChart = () => {
   });
 
   useEffect(() => {
-    const randomNumbers = Array.from({ length: 2 }, () => Math.floor(Math.random() * 1000));
-
     setDoughnutData((prevData) => ({
       ...prevData,
       datasets: [
         {
-          data: randomNumbers,
+          data: [incomes, expenses],
           backgroundColor: ['#39d49b', '#f00a0a'],
           borderColor: ['#39d49b', '#f00a0a']
         }
