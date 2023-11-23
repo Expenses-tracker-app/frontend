@@ -35,7 +35,7 @@ const TotalBalanceItem = ({ amount, percentage }) => {
 
       <Typography variant="h2">{amount}</Typography>
 
-      <Percentage>{percentage}</Percentage>
+      <Percentage>{percentage}%</Percentage>
     </Wrapper>
   );
 };
