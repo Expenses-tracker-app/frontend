@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Dialog, DialogTitle, DialogActions, Button, styled, Input } from '@mui/material';
+import { updateTag, deleteTag } from '../../services/apiService';
 
 const CustomDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialog-paper': {
@@ -59,14 +60,36 @@ const EditCategoryModal = ({ tag, open, onClose }) => {
   };
 
   const handleSave = () => {
-    console.log('Saving:', editedName);
-    // handle saving of new tag name
+    if (tag) {
+      const tagData = {
+        id: tag.tag_id,
+        name: editedName
+      };
+
+      updateTag(tagData)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
     setEditMode(false);
     onClose();
   };
 
   const handleDelete = () => {
-    // handle deletation of tag
+    if (tag.tag_id) {
+      deleteTag(tag.tag_id)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
     onClose();
   };
 

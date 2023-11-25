@@ -271,7 +271,8 @@ export async function getTag(data) {
 
 export async function updateTag(data) {
   try {
-    const response = await fetch(`${API_URL}/tag/update/:id`, {
+    const { tag_id } = data; // Destructure the ID from data
+    const response = await fetch(`${API_URL}/tag/update/${tag_id}`, {
       method: 'PUT',
       credentials: 'include',
       headers: {
@@ -295,7 +296,8 @@ export async function updateTag(data) {
 
 export async function deleteTag(data) {
   try {
-    const response = await fetch(`${API_URL}/tag/delete/:id`, {
+    const { tag_id } = data; // Destructure the ID from data
+    const response = await fetch(`${API_URL}/tag/delete/${tag_id}`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {
