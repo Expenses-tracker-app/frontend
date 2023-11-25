@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Select, MenuItem } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import axios from 'axios';
+import { createIncome, createExpense } from '../../services/apiService';
 
 import {
   Dialog,
@@ -120,6 +120,9 @@ const AddNewExpenseModal = ({ open, onClose }) => {
   const handleSubmit = () => {
     event.preventDefault();
 
+    // get a real uderId
+    const userId = '123';
+
     if (
       formData.type &&
       formData.name &&
@@ -128,15 +131,17 @@ const AddNewExpenseModal = ({ open, onClose }) => {
       formData.date &&
       formData.description
     ) {
-      if (formData.type == 'income') {
-        axios
-          .post('http://localhost:5001/incomes', {
-            name: formData.name,
-            description: formData.description,
-            category: formData.category,
-            date: formData.date,
-            amount: formData.amount
-          })
+      const transactionData = {
+        userId: userId,
+        name: formData.name,
+        date: formData.date,
+        amount: formData.amount,
+        desc: formData.description,
+        tagId: formData.category
+      };
+
+      if (formData.type === 'income') {
+        createIncome(transactionData)
           .then((res) => {
             console.log(res);
           })
@@ -144,14 +149,7 @@ const AddNewExpenseModal = ({ open, onClose }) => {
             console.log(err);
           });
       } else {
-        axios
-          .post('http://localhost:5001/expenses', {
-            name: formData.name,
-            description: formData.description,
-            category: formData.category,
-            date: formData.date,
-            amount: formData.amount
-          })
+        createExpense(transactionData)
           .then((res) => {
             console.log(res);
           })

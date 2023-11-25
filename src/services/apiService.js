@@ -333,7 +333,6 @@ export async function createUser(data) {
     if (responseData.error) {
       throw new Error(responseData.error);
     }
-
     return { status: response.status, ...responseData };
   } catch (err) {
     console.error(err.message);
