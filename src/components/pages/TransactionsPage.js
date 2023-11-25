@@ -3,7 +3,7 @@ import ExpenseItem from '../common/TransactionItem';
 import TotalBalanceItem from '../common/TotalBalanceItem';
 import { useTranslation } from 'react-i18next';
 import { styled, Card, Button, Typography, Container, Grid, Box, List } from '@mui/material';
-import AddNewExpenseModal from '../modals/AddNewExpenseModal';
+import AddNewExpenseModal from '../modals/AddNewTransactionModal';
 import { getExpense, getIncome } from '../../services/apiService';
 
 const Wrapper = styled(Container)(() => ({
