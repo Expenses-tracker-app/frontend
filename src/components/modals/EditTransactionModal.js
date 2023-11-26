@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Select, MenuItem } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { createIncome, createExpense, getAllTag } from '../../services/apiService';
+import { updateIncome, updateExpense, getAllTag, deleteExpense } from '../../services/apiService';
 
 import {
   Dialog,
@@ -58,26 +58,22 @@ const MContent = styled(DialogContent)(() => ({
   textAlign: 'left'
 }));
 
-const MDialogActions = styled(DialogActions)(() => ({
-  justifyContent: 'center'
+const MActions = styled(DialogActions)(() => ({
+  display: 'flex',
+  justifyContent: 'space-between'
 }));
 
-const InputLine = styled(Input)(({ theme }) => ({
+const InputLine = styled(Input)(({ theme, editMode }) => ({
   padding: '10px 14px 10px 14px',
-  background: theme.palette.primary.main,
-  color: theme.palette.primary.blue,
+  background: editMode ? theme.palette.primary.blue : theme.palette.primary.main,
+  color: editMode ? theme.palette.primary.main : theme.palette.primary.blue,
   borderRadius: '5px',
-  margin: '10px 0 10px 0'
-}));
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  borderRadius: '35px',
-  border: `1px solid ${theme.palette.grey[300]}`,
-  width: '30%',
-  fontSize: '12px',
-  '&:hover': {
-    background: 'none'
-  }
+  margin: '10px 0 10px 0',
+  ...(editMode && {
+    fontSize: '25px',
+    fontWeight: 200,
+    cursor: 'default'
+  })
 }));
 
 const MBox = styled('div')(() => ({
@@ -89,35 +85,30 @@ const Text = styled('div')(() => ({
   marginLeft: '5px'
 }));
 
-const MButton = styled(Button)(({ theme, isActive }) => ({
-  background: isActive ? theme.palette.primary.blue : theme.palette.primary.main,
-  color: isActive ? theme.palette.primary.main : theme.palette.primary.blue,
-  fontSize: '15px',
-  borderRadius: 25,
-  width: '49%',
-  padding: '20px',
-  margin: 'auto',
-  border: '1px solid white',
-  '&:hover, &:active': {
-    background: theme.palette.primary.blue,
-    color: theme.palette.primary.main
+const MButton = styled(Button)(({ theme }) => ({
+  borderRadius: '35px',
+  border: `1px solid ${theme.palette.grey[300]}`,
+  width: '30%',
+  fontSize: '12px',
+  '&:hover': {
+    background: 'none'
   }
 }));
 
-const AddNewExpenseModal = ({ open, onClose }) => {
+const AddNewExpenseModal = ({ transaction, open, onClose }) => {
   const { t } = useTranslation();
+  const [editMode, setEditMode] = useState(false);
 
   const [categories, setCategories] = useState([]);
-  const [activeButton, setActiveButton] = useState(null);
   const [formData, setFormData] = useState({
-    type: '',
-    category: '',
-    amount: '',
-    date: '',
-    desc: ''
+    type: transaction.type,
+    category: transaction.tag,
+    amount: transaction.amount,
+    date: transaction.date,
+    desc: transaction.desc
   });
 
-  const handleSubmit = () => {
+  const handleSave = () => {
     event.preventDefault();
 
     // get a real uderId
@@ -141,7 +132,7 @@ const AddNewExpenseModal = ({ open, onClose }) => {
       };
 
       if (formData.type === 'income') {
-        createIncome(transactionData)
+        updateIncome(transactionData)
           .then((res) => {
             console.log(res);
           })
@@ -149,7 +140,7 @@ const AddNewExpenseModal = ({ open, onClose }) => {
             console.log(err);
           });
       } else {
-        createExpense(transactionData)
+        updateExpense(transactionData)
           .then((res) => {
             console.log(res);
           })
@@ -176,12 +167,29 @@ const AddNewExpenseModal = ({ open, onClose }) => {
     });
   };
 
+  const handleToggleEditMode = () => {
+    setEditMode(!editMode);
+  };
+
   const handleButtonClick = (type) => {
     setFormData({
       ...formData,
       type
     });
-    setActiveButton(type);
+  };
+
+  const handleDelete = () => {
+    if (transaction.transaction_id) {
+      deleteExpense(transaction.transaction_id)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    onClose();
   };
 
   useEffect(() => {
@@ -205,17 +213,18 @@ const AddNewExpenseModal = ({ open, onClose }) => {
           <MBox>
             <MButton
               onClick={() => handleButtonClick('income')}
-              isActive={activeButton === 'income'}>
+              isActive={transaction.type === 'income'}>
               <AddCircleOutlineIcon />
               <Text>{t('newTransaction.income')}</Text>
             </MButton>
             <MButton
               onClick={() => handleButtonClick('expense')}
-              isActive={activeButton === 'expense'}>
+              isActive={transaction.type === 'expense'}>
               <RemoveCircleOutlineIcon />
               <Text>{t('newTransaction.expense')}</Text>
             </MButton>
           </MBox>
+
           <FormLabel>
             <Typography variant="h6">{t('newTransaction.category')}</Typography>
           </FormLabel>
@@ -233,30 +242,45 @@ const AddNewExpenseModal = ({ open, onClose }) => {
           <FormLabel>
             <Typography variant="h6">{t('newTransaction.amount')} </Typography>
           </FormLabel>
-          <InputLine type="number" onClick={handleChange} />
+          <InputLine
+            type="number"
+            value={editMode ? formData.amount : transaction.amount}
+            onChange={handleChange}
+            editMode={editMode}
+          />
           <FormLabel>
             <Typography variant="h6">{t('newTransaction.date')} </Typography>
           </FormLabel>
-          <InputLine type="date" onClick={handleChange} />
+          <InputLine
+            type="date"
+            value={editMode ? formData.date : transaction.date}
+            onChange={handleChange}
+            editMode={editMode}
+          />
           <FormLabel>
             <Typography variant="h6">{t('newTransaction.description')} </Typography>
           </FormLabel>
-          <InputLine type="text" onClick={handleChange} />
+          <InputLine
+            type="text"
+            value={editMode ? formData.description : transaction.description}
+            onChange={handleChange}
+            editMode={editMode}
+          />
         </FormGroup>
       </MContent>
-      <MDialogActions>
-        <StyledButton onClick={handleSubmit}>
-          <Typography variant="h6">{t('newTransaction.save')}</Typography>
-        </StyledButton>
-        <StyledButton onClick={onClose}>
-          <Typography variant="h6">{t('common.cancel')}</Typography>
-        </StyledButton>
-      </MDialogActions>
+      <MActions>
+        <MButton onClick={editMode ? handleSave : handleToggleEditMode}>
+          {editMode ? t('common.save') : t('common.edit')}
+        </MButton>
+        <MButton onClick={handleDelete}>{t('common.delete')}</MButton>
+        <MButton onClick={onClose}>{t('common.cancel')}</MButton>
+      </MActions>
     </MDialog>
   );
 };
 
 AddNewExpenseModal.propTypes = {
+  transaction: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired
 };
