@@ -13,7 +13,7 @@ import {
   ListItemText
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import logo from '../../../assets/logo.png';
+import logo from '../../../assets/logo-transparent.png';
 import { useContext } from 'react';
 import { AuthContext } from '../../../utilities/AuthContext';
 
