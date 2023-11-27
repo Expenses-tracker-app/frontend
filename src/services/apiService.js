@@ -3,7 +3,7 @@ This is a generated file. Do not edit it directly!
 To change the contents of this file, edit api/apiServiceGenerator.js instead.
 */
 
-const API_URL = process.env.REACT_APP_BACKEND_URL || 'https://expense-tracker-app-backend.fly.dev';
+const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
 export async function createExpense(data) {
   try {
@@ -295,8 +295,7 @@ export async function updateTag(data) {
 
 export async function deleteTag(data) {
   try {
-    const { tag_id } = data; // Destructure the ID from data
-    const response = await fetch(`${API_URL}/tag/delete/${tag_id}`, {
+    const response = await fetch(`${API_URL}/tag/delete`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {

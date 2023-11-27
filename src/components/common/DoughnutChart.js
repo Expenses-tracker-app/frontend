@@ -58,22 +58,19 @@ export const DoughnutChart = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        // Replace 'userId' with the actual user ID or a variable holding the user ID
-        const userId = '123';
-
-        // Fetch expenses
-        const expensesResponse = await getExpense({ id: userId });
+        const expensesResponse = await getExpense();
         const sortedExpenses = expensesResponse.data.sort(
           (a, b) => new Date(b.date) - new Date(a.date)
         );
+
         const groupedExpenses = groupAndSumByDate(sortedExpenses);
         setExpenses(groupedExpenses);
 
-        // Fetch incomes
-        const incomesResponse = await getIncome({ id: userId });
+        const incomesResponse = await getIncome();
         const sortedIncomes = incomesResponse.data.sort(
           (a, b) => new Date(b.date) - new Date(a.date)
         );
+
         const groupedIncomes = groupAndSumByDate(sortedIncomes);
         setIncomes(groupedIncomes);
       } catch (error) {
@@ -88,7 +85,7 @@ export const DoughnutChart = () => {
     const groupedTransactions = {};
 
     transactions.forEach((transaction) => {
-      const date = transaction.date.split('T')[0]; // Extracting only the date part
+      const date = transaction.date.split('T')[0];
       if (!groupedTransactions[date]) {
         groupedTransactions[date] = {
           date,
@@ -102,7 +99,6 @@ export const DoughnutChart = () => {
     return Object.values(groupedTransactions);
   };
 
-  //so far I put there random number generator just to see it working
   const [doughnutData, setDoughnutData] = useState({
     labels: ['Incomes', 'Expenses'],
     datasets: [

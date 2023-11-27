@@ -47,12 +47,10 @@ export const TransactionsPage = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        // Replace 'userId' with the actual user ID or a variable holding the user ID
-        const userId = '123';
-        const expenses = await getExpense({ id: userId });
+        const expenses = await getExpense();
         calculateTotal(expenses.data, setTotalExpenses);
 
-        const incomes = await getIncome({ id: userId });
+        const incomes = await getIncome();
         calculateTotal(incomes.data, setTotalIncomes);
 
         const allTransactions = [...expenses.data, ...incomes.data];

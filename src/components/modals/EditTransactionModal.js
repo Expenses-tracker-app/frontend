@@ -98,7 +98,6 @@ const MButton = styled(Button)(({ theme }) => ({
 const AddNewExpenseModal = ({ transaction, open, onClose }) => {
   const { t } = useTranslation();
   const [editMode, setEditMode] = useState(false);
-
   const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     type: transaction.type,
@@ -111,9 +110,6 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
   const handleSave = () => {
     event.preventDefault();
 
-    // get a real uderId
-    const userId = '123';
-
     if (
       formData.type &&
       formData.name &&
@@ -123,7 +119,6 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
       formData.desc
     ) {
       const transactionData = {
-        userId: userId,
         name: formData.name,
         date: formData.date,
         amount: formData.amount,

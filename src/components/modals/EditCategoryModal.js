@@ -61,12 +61,7 @@ const EditCategoryModal = ({ tag, open, onClose }) => {
 
   const handleSave = () => {
     if (tag) {
-      const tagData = {
-        id: tag.tag_id,
-        name: editedName
-      };
-
-      updateTag(tagData)
+      updateTag(tag)
         .then((res) => {
           console.log(res);
         })
@@ -81,7 +76,7 @@ const EditCategoryModal = ({ tag, open, onClose }) => {
 
   const handleDelete = () => {
     if (tag.tag_id) {
-      deleteTag(tag.tag_id)
+      deleteTag(tag)
         .then((res) => {
           console.log(res);
         })

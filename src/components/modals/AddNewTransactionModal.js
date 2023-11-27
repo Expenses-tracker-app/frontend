@@ -111,6 +111,7 @@ const AddNewExpenseModal = ({ open, onClose }) => {
   const [activeButton, setActiveButton] = useState(null);
   const [formData, setFormData] = useState({
     type: '',
+    name: '',
     category: '',
     amount: '',
     date: '',
@@ -119,9 +120,6 @@ const AddNewExpenseModal = ({ open, onClose }) => {
 
   const handleSubmit = () => {
     event.preventDefault();
-
-    // get a real uderId
-    const userId = '123';
 
     if (
       formData.type &&
@@ -132,7 +130,6 @@ const AddNewExpenseModal = ({ open, onClose }) => {
       formData.desc
     ) {
       const transactionData = {
-        userId: userId,
         name: formData.name,
         date: formData.date,
         amount: formData.amount,
@@ -238,6 +235,10 @@ const AddNewExpenseModal = ({ open, onClose }) => {
             <Typography variant="h6">{t('newTransaction.date')} </Typography>
           </FormLabel>
           <InputLine type="date" onClick={handleChange} />
+          <FormLabel>
+            <Typography variant="h6">{t('newTransaction.name')} </Typography>
+          </FormLabel>
+          <InputLine type="text" onClick={handleChange} />
           <FormLabel>
             <Typography variant="h6">{t('newTransaction.description')} </Typography>
           </FormLabel>

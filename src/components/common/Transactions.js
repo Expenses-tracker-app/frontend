@@ -38,8 +38,7 @@ export const Transactions = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const userId = '123';
-        const response = await getExpense({ id: userId });
+        const response = await getExpense();
         const combinedData = response.data;
 
         if (selectedDate) {

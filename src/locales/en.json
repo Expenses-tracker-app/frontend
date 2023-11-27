@@ -63,7 +63,8 @@
     "amount": "Amount",
     "date": "Date",
     "description": "Description",
-    "save": "Save"
+    "save": "Save",
+    "name": "Name"
   },
   "newCategory": {
     "title": "Add new category",
