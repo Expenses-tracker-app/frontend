@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Grid, styled } from '@mui/material';
 import { Line } from 'react-chartjs-2';
-import DateProvider from '../layout/DataContext';
+import DateProvider from '../layout/DateContext';
 import { getExpense, getIncome } from '../../services/apiService';
 
 const Wrapper = styled(Grid)(({ theme }) => ({
@@ -70,8 +70,7 @@ export const lineOptions = {
 };
 
 export function LineChart() {
-  const { selectedDate } = useContext(DateProvider);
-
+  const { selectedDate, selectedCategory } = useContext(DateProvider);
   const [lineData, setLineData] = useState({ labels: [], datasets: [] });
   const [length, setLength] = useState(12);
   const [labels, setLabels] = useState([
@@ -99,8 +98,16 @@ export function LineChart() {
         if (!expensesResponse.data) {
           return;
         }
-        const sortedExpenses = expensesResponse.data.sort(
-          (a, b) => new Date(b.date) - new Date(a.date)
+        let filteredExpenses = expensesResponse.data;
+        if (selectedCategory) {
+          filteredExpenses = filteredExpenses.filter(
+            (expense) => expense.tag_id === selectedCategory
+          );
+        }
+        const sortedExpenses = filteredExpenses.sort((a, b) =>
+          selectedCategory
+            ? new Date(b.date) - new Date(a.date)
+            : a.category.localeCompare(b.category)
         );
         const groupedExpenses = groupAndSumByDate(sortedExpenses);
         setExpenses(groupedExpenses);
@@ -109,8 +116,14 @@ export function LineChart() {
         if (!incomesResponse.data) {
           return;
         }
-        const sortedIncomes = incomesResponse.data.sort(
-          (a, b) => new Date(b.date) - new Date(a.date)
+        let filteredIncomes = incomesResponse.data;
+        if (selectedCategory) {
+          filteredIncomes = filteredIncomes.filter((income) => income.tag_id === selectedCategory);
+        }
+        const sortedIncomes = filteredIncomes.sort((a, b) =>
+          selectedCategory
+            ? new Date(b.date) - new Date(a.date)
+            : a.category.localeCompare(b.category)
         );
         const groupedIncomes = groupAndSumByDate(sortedIncomes);
         setIncomes(groupedIncomes);
@@ -120,7 +133,7 @@ export function LineChart() {
     };
 
     fetchTransactions();
-  }, []);
+  }, [selectedCategory]);
 
   const groupAndSumByDate = (transactions) => {
     const groupedTransactions = {};
@@ -158,7 +171,7 @@ export function LineChart() {
         }
       ]
     });
-  }, [length, labels, expenses, incomes]);
+  }, [length, labels, incomes, expenses]);
 
   useEffect(() => {
     if (selectedDate.toDateString() !== new Date().toDateString()) {

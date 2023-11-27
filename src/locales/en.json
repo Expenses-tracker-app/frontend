@@ -12,7 +12,8 @@
     "edit": "Edit",
     "delete": "Delete",
     "save": "Save",
-    "create": "Create"
+    "create": "Create",
+    "today": "Today"
   },
   "errors": {
     "required": "Required information",
