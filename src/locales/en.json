@@ -11,7 +11,8 @@
     "yes": "Yes",
     "edit": "Edit",
     "delete": "Delete",
-    "save": "Save"
+    "save": "Save",
+    "create": "Create"
   },
   "errors": {
     "required": "Required information",
@@ -19,14 +20,17 @@
     "loginFailed": "Login failed",
     "registrationFailed": "Registration failed",
     "registrationError": "An error occured",
-    "passwordMismatch": "Passwords do not match"
+    "passwordMismatch": "Passwords do not match",
+    "pageNotFound": "404 - Not Found!",
+    "pageDoesNotExist": "Sorry, the page you are looking for does not exist."
   },
   "user": {
     "login": "Login",
     "logout": "Logout",
     "register": "Register",
     "email": "Email",
-    "password": "Password"
+    "password": "Password",
+    "question": "Do you have an account?"
   },
   "specific": {
     "welcome": "Welcome Back"
@@ -59,7 +63,8 @@
     "amount": "Amount",
     "date": "Date",
     "description": "Description",
-    "save": "Save"
+    "save": "Save",
+    "name": "Name"
   },
   "newCategory": {
     "title": "Add new category",

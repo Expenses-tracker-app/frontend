@@ -3,7 +3,7 @@ This is a generated file. Do not edit it directly!
 To change the contents of this file, edit api/apiServiceGenerator.js instead.
 */
 
-const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
+const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
 export async function createExpense(data) {
   try {
@@ -333,7 +333,6 @@ export async function createUser(data) {
     if (responseData.error) {
       throw new Error(responseData.error);
     }
-
     return { status: response.status, ...responseData };
   } catch (err) {
     console.error(err.message);

@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Header from './Header/header';
 import { LayoutContainer, LowerLeftWave, UpperRightWave } from './LayoutStyles';
 import { DateProvider } from './DataContext';
-import purpleWaveImage from '../../assets/wave.png'; // Replace with the actual path to your wave image
+import purpleWaveImage from '../../assets/wave.png';
 
 export const Layout = () => {
   return (

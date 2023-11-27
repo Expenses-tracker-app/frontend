@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ExpenseItem from '../common/TransactionItem';
 import TotalBalanceItem from '../common/TotalBalanceItem';
-import data from '../../data/data.json';
 import { useTranslation } from 'react-i18next';
 import { styled, Card, Button, Typography, Container, Grid, Box, List } from '@mui/material';
-import AddNewExpenseModal from '../modals/AddNewExpenseModal';
+import AddNewExpenseModal from '../modals/AddNewTransactionModal';
+import { getExpense, getIncome } from '../../services/apiService';
 
 const Wrapper = styled(Container)(() => ({
   display: 'flex',
@@ -34,11 +34,34 @@ const MButton = styled(Button)(() => ({
 
 export const TransactionsPage = () => {
   const [openModal, setOpenModal] = useState(false);
-
+  const [transactions, setTransactions] = useState([]);
+  const [totalExpenses, setTotalExpenses] = useState(0);
+  const [totalIncomes, setTotalIncomes] = useState(0);
   const { t } = useTranslation();
-  const expenses = data.expenses;
-  const amount = '100.000.000€';
-  const percentage = '+10%';
+
+  const calculateTotal = (transactions, setTotal) => {
+    const total = transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+    setTotal(total);
+  };
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const expenses = await getExpense();
+        calculateTotal(expenses.data, setTotalExpenses);
+
+        const incomes = await getIncome();
+        calculateTotal(incomes.data, setTotalIncomes);
+
+        const allTransactions = [...expenses.data, ...incomes.data];
+        setTransactions(allTransactions);
+      } catch (error) {
+        console.error('Error fetching expenses:', error);
+      }
+    };
+
+    fetchTransactions();
+  }, []);
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -47,6 +70,9 @@ export const TransactionsPage = () => {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+
+  const amount = totalIncomes - totalExpenses;
+  const percentage = totalIncomes / totalExpenses;
 
   return (
     <Wrapper>
@@ -74,12 +100,12 @@ export const TransactionsPage = () => {
           <Grid item xs={12}>
             <MCard>
               <List>
-                {expenses.map((expense, index) => (
+                {transactions.map((transaction, index) => (
                   <ExpenseItem
                     key={index}
-                    desc={expense.desc}
-                    date={expense.date}
-                    amount={expense.amount}
+                    desc={transaction.desc}
+                    date={transaction.date}
+                    amount={transaction.amount}
                   />
                 ))}
               </List>

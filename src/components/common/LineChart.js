@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Grid, styled } from '@mui/material';
 import { Line } from 'react-chartjs-2';
 import DateProvider from '../layout/DataContext';
+import { getExpense, getIncome } from '../../services/apiService';
 
 const Wrapper = styled(Grid)(({ theme }) => ({
   color: theme.palette.primary.main,
@@ -68,10 +69,6 @@ export const lineOptions = {
   }
 };
 
-const generateRandomData = (numDays) => {
-  return Array.from({ length: numDays }, () => Math.floor(Math.random() * 2400));
-};
-
 export function LineChart() {
   const { selectedDate } = useContext(DateProvider);
 
@@ -92,10 +89,52 @@ export function LineChart() {
     'D'
   ]);
 
-  useEffect(() => {
-    const expenses = generateRandomData(length);
-    const incomes = generateRandomData(length);
+  const [expenses, setExpenses] = useState([]);
+  const [incomes, setIncomes] = useState([]);
 
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const expensesResponse = await getExpense();
+        const sortedExpenses = expensesResponse.data.sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
+        const groupedExpenses = groupAndSumByDate(sortedExpenses);
+        setExpenses(groupedExpenses);
+
+        const incomesResponse = await getIncome();
+        const sortedIncomes = incomesResponse.data.sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
+        const groupedIncomes = groupAndSumByDate(sortedIncomes);
+        setIncomes(groupedIncomes);
+      } catch (error) {
+        console.error('Error fetching transactions:', error);
+      }
+    };
+
+    fetchTransactions();
+  }, []);
+
+  const groupAndSumByDate = (transactions) => {
+    const groupedTransactions = {};
+
+    transactions.forEach((transaction) => {
+      const date = transaction.date.split('T')[0];
+      if (!groupedTransactions[date]) {
+        groupedTransactions[date] = {
+          date,
+          totalAmount: 0
+        };
+      }
+
+      groupedTransactions[date].totalAmount += transaction.amount;
+    });
+
+    return Object.values(groupedTransactions);
+  };
+
+  useEffect(() => {
     setLineData({
       labels,
       datasets: [

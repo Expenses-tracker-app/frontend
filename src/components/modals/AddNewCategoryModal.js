@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import { createTag } from '../../services/apiService';
 
 import {
   Dialog,
@@ -63,13 +63,12 @@ const AddNewCategoryModal = ({ open, onClose }) => {
   });
 
   const handleSubmit = () => {
-    event.preventDefault();
-
     if (formData.name) {
-      axios
-        .post('http://localhost:5001/tags', {
-          name: formData.name
-        })
+      const tagData = {
+        name: formData.name
+      };
+
+      createTag(tagData)
         .then((res) => {
           console.log(res);
         })

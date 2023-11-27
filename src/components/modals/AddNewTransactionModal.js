@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Select, MenuItem } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import axios from 'axios';
+import { createIncome, createExpense, getAllTag } from '../../services/apiService';
 
 import {
   Dialog,
@@ -111,10 +111,11 @@ const AddNewExpenseModal = ({ open, onClose }) => {
   const [activeButton, setActiveButton] = useState(null);
   const [formData, setFormData] = useState({
     type: '',
+    name: '',
     category: '',
     amount: '',
     date: '',
-    description: ''
+    desc: ''
   });
 
   const handleSubmit = () => {
@@ -126,17 +127,18 @@ const AddNewExpenseModal = ({ open, onClose }) => {
       formData.category &&
       formData.amount &&
       formData.date &&
-      formData.description
+      formData.desc
     ) {
-      if (formData.type == 'income') {
-        axios
-          .post('http://localhost:5001/incomes', {
-            name: formData.name,
-            description: formData.description,
-            category: formData.category,
-            date: formData.date,
-            amount: formData.amount
-          })
+      const transactionData = {
+        name: formData.name,
+        date: formData.date,
+        amount: formData.amount,
+        desc: formData.desc,
+        tagId: formData.category
+      };
+
+      if (formData.type === 'income') {
+        createIncome(transactionData)
           .then((res) => {
             console.log(res);
           })
@@ -144,14 +146,7 @@ const AddNewExpenseModal = ({ open, onClose }) => {
             console.log(err);
           });
       } else {
-        axios
-          .post('http://localhost:5001/expenses', {
-            name: formData.name,
-            description: formData.description,
-            category: formData.category,
-            date: formData.date,
-            amount: formData.amount
-          })
+        createExpense(transactionData)
           .then((res) => {
             console.log(res);
           })
@@ -187,28 +182,16 @@ const AddNewExpenseModal = ({ open, onClose }) => {
   };
 
   useEffect(() => {
-    // Fetch categories from the backend and set them in the state
-    const fetchCategories = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('your_backend_endpoint');
-        const data = await response.json();
-        setCategories(data.categories);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-        setCategories([
-          { tag_id: 1, tag_name: 'School' },
-          { tag_id: 2, tag_name: 'Food' },
-          { tag_id: 3, tag_name: 'Sport' },
-          { tag_id: 4, tag_name: 'Cloths' },
-          { tag_id: 5, tag_name: 'School' },
-          { tag_id: 6, tag_name: 'Food' },
-          { tag_id: 7, tag_name: 'Sport' },
-          { tag_id: 8, tag_name: 'Cloths' }
-        ]);
+        const { data } = await getAllTag();
+        setCategories(data);
+      } catch (err) {
+        console.log(err.message);
       }
     };
 
-    fetchCategories();
+    fetchData();
   }, []);
 
   return (
@@ -252,6 +235,10 @@ const AddNewExpenseModal = ({ open, onClose }) => {
             <Typography variant="h6">{t('newTransaction.date')} </Typography>
           </FormLabel>
           <InputLine type="date" onClick={handleChange} />
+          <FormLabel>
+            <Typography variant="h6">{t('newTransaction.name')} </Typography>
+          </FormLabel>
+          <InputLine type="text" onClick={handleChange} />
           <FormLabel>
             <Typography variant="h6">{t('newTransaction.description')} </Typography>
           </FormLabel>

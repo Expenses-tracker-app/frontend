@@ -122,7 +122,8 @@ export const LoginPage = () => {
           </LoginButton>
 
           <Text>
-            Dont have an account? <MLink to={paths.registration.path}>Create</MLink>
+            {t('user.question')}
+            <MLink to={paths.registration.path}>{t('common.create')}</MLink>
           </Text>
 
           {error && (

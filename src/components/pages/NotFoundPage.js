@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, styled, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const Wrapper = styled(Grid)(() => ({
   display: 'flex',
@@ -18,11 +19,13 @@ const Content = styled('div')(() => ({
 }));
 
 export const NotFoundPage = () => {
+  const { t } = useTranslation();
+
   return (
     <Wrapper>
       <Content>
-        <Typography variant="h1">404 - Not Found!</Typography>
-        <Typography>Sorry, the page you are looking for does not exist.</Typography>
+        <Typography variant="h1">{t('errors.pageNotFound')}</Typography>
+        <Typography>{t('errors.pageDoesNotExist')}</Typography>
       </Content>
     </Wrapper>
   );
