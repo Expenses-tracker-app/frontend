@@ -120,7 +120,7 @@ export const DoughnutChart = () => {
         }
       ]
     }));
-  }, [selectedDate]);
+  }, [selectedDate, incomes, expenses]);
 
   return (
     <Wrapper>

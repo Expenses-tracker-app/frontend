@@ -152,7 +152,7 @@ export function LineChart() {
         }
       ]
     });
-  }, [length, labels]);
+  }, [length, labels, incomes, expenses]);
 
   useEffect(() => {
     if (selectedDate.toDateString() !== new Date().toDateString()) {

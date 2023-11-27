@@ -8,6 +8,7 @@ import { DoughnutChart } from '../common/DoughnutChart';
 import { Transactions } from '../common/Transactions';
 import { Link } from 'react-router-dom';
 import paths from '../../utilities/pathnames';
+import ActionButtons from '../common/ActionButtons';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -54,6 +55,17 @@ const Box = styled('div')(({ theme }) => ({
   }
 }));
 
+const MBox = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  marginTop: '-270px',
+  [theme.breakpoints.down('md')]: {
+    margin: 'auto',
+    width: '100%',
+    justifyContent: 'center'
+  }
+}));
+
 const Greeting = styled(Typography)(() => ({
   fontWeight: 500
 }));
@@ -73,7 +85,6 @@ const MTitle = styled(Container)(() => ({
 const MLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
   color: theme.palette.primary.main,
-  marginTop: '-270px',
   [theme.breakpoints.down('md')]: {
     margin: 'auto',
     width: '100%',
@@ -112,9 +123,12 @@ export const MainPage = () => {
           <MCalendar />
           <DoughnutChart />
         </Box>
-        <MLink to={paths.transactions.path}>
-          <Transactions />
-        </MLink>
+        <MBox>
+          <ActionButtons />
+          <MLink to={paths.transactions.path}>
+            <Transactions />
+          </MLink>
+        </MBox>
       </div>
     </Wrapper>
   );
