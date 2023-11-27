@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Grid, styled } from '@mui/material';
 import { Line } from 'react-chartjs-2';
-import DateProvider from '../layout/DataContext';
+import DateProvider from '../layout/DateContext';
 import { getExpense, getIncome } from '../../services/apiService';
 
 const Wrapper = styled(Grid)(({ theme }) => ({

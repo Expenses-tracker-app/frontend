@@ -3,7 +3,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { Grid, styled } from '@mui/material';
 import { ArcElement } from 'chart.js';
 import { Chart as ChartJS } from 'chart.js';
-import DateProvider from '../layout/DataContext';
+import DateProvider from '../layout/DateContext';
 import { getExpense, getIncome } from '../../services/apiService';
 ChartJS.register(ArcElement);
 
