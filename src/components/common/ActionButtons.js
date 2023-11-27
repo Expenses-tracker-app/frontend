@@ -46,7 +46,7 @@ const MButton = styled(Button)(({ theme }) => ({
 
 const ActionButtons = () => {
   const [categories, setCategories] = useState([]);
-  const [activeCategory, setActiveCategory] = useState();
+  const { selectedCategory, setSelectedCategory } = useState(DateContext);
   const { selectedDate, setSelectedDate } = useContext(DateContext);
   const { t } = useTranslation();
 
@@ -57,7 +57,7 @@ const ActionButtons = () => {
   };
 
   const handleCategoryChange = (event) => {
-    setActiveCategory(event.target.value);
+    setSelectedCategory(event.target.value);
   };
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const ActionButtons = () => {
   return (
     <Wrapper>
       <MLabel>{t('menu.categories')}</MLabel>
-      <StyledSelect value={activeCategory} onChange={handleCategoryChange}>
+      <StyledSelect value={selectedCategory} onChange={handleCategoryChange}>
         {categories.map((category) => (
           <StyledMenu key={category.tag_id} value={category.tag_id}>
             {category.tag_name}
