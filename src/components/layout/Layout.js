@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './Header/header';
 import { LayoutContainer, LowerLeftWave, UpperRightWave } from './LayoutStyles';
-import { DateProvider } from './DataContext';
+import { DateProvider } from './DateContext';
 import purpleWaveImage from '../../assets/wave.png';
 
 export const Layout = () => {

@@ -3,7 +3,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { Grid, styled } from '@mui/material';
 import { ArcElement } from 'chart.js';
 import { Chart as ChartJS } from 'chart.js';
-import DateProvider from '../layout/DataContext';
+import DateProvider from '../layout/DateContext';
 import { getExpense, getIncome } from '../../services/apiService';
 ChartJS.register(ArcElement);
 
@@ -51,27 +51,39 @@ const doughnutOptions = {
 };
 
 export const DoughnutChart = () => {
-  const { selectedDate } = useContext(DateProvider);
+  const { selectedDate, selectedCategory } = useContext(DateProvider);
   const [expenses, setExpenses] = useState([]);
   const [incomes, setIncomes] = useState([]);
+  const [filteredExpenses, setFilteredExpenses] = useState();
+  const [filteredIncomes, setFilteredIncomes] = useState();
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
         const expensesResponse = await getExpense();
-        const sortedExpenses = expensesResponse.data.sort(
-          (a, b) => new Date(b.date) - new Date(a.date)
+        setFilteredExpenses(
+          expensesResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date))
         );
 
-        const groupedExpenses = groupAndSumByDate(sortedExpenses);
+        if (selectedCategory) {
+          setFilteredExpenses(
+            filteredExpenses.filter((expense) => expense.tag_id === selectedCategory)
+          );
+        }
+        const groupedExpenses = groupAndSumByDate(filteredExpenses);
         setExpenses(groupedExpenses);
 
         const incomesResponse = await getIncome();
-        const sortedIncomes = incomesResponse.data.sort(
-          (a, b) => new Date(b.date) - new Date(a.date)
+        setFilteredIncomes(
+          incomesResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date))
         );
 
-        const groupedIncomes = groupAndSumByDate(sortedIncomes);
+        if (selectedCategory) {
+          setFilteredIncomes(
+            filteredIncomes.filter((income) => income.tag_id === selectedCategory)
+          );
+        }
+        const groupedIncomes = groupAndSumByDate(filteredIncomes);
         setIncomes(groupedIncomes);
       } catch (error) {
         console.error('Error fetching transactions:', error);
@@ -79,7 +91,7 @@ export const DoughnutChart = () => {
     };
 
     fetchTransactions();
-  }, []);
+  }, [selectedCategory, filteredExpenses, filteredIncomes]);
 
   const groupAndSumByDate = (transactions) => {
     const groupedTransactions = {};
@@ -120,7 +132,7 @@ export const DoughnutChart = () => {
         }
       ]
     }));
-  }, [selectedDate]);
+  }, [selectedDate, incomes, expenses]);
 
   return (
     <Wrapper>

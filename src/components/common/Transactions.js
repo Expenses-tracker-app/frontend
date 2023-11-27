@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import TransactionItem from './TransactionItem';
 import { useTranslation } from 'react-i18next';
 import { styled, Typography, Grid, List } from '@mui/material';
-import DateProvider from '../layout/DataContext';
+import DateProvider from '../layout/DateContext';
 import { getExpense } from '../../services/apiService';
 
 const Wrapper = styled(Grid)(({ theme }) => ({
