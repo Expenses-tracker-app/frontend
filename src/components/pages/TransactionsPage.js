@@ -2,7 +2,17 @@ import React, { useState, useEffect } from 'react';
 import ExpenseItem from '../common/TransactionItem';
 import TotalBalanceItem from '../common/TotalBalanceItem';
 import { useTranslation } from 'react-i18next';
-import { styled, Card, Button, Typography, Container, Grid, Box, List } from '@mui/material';
+import {
+  styled,
+  Card,
+  Button,
+  Typography,
+  Container,
+  Grid,
+  Box,
+  List,
+  Alert as MuiAlert
+} from '@mui/material';
 import AddNewExpenseModal from '../modals/AddNewTransactionModal';
 import { getExpense, getIncome } from '../../services/apiService';
 
@@ -33,6 +43,7 @@ const MButton = styled(Button)(() => ({
 }));
 
 export const TransactionsPage = () => {
+  const [error, setError] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [transactions, setTransactions] = useState([]);
   const [totalExpenses, setTotalExpenses] = useState(0);
@@ -47,14 +58,25 @@ export const TransactionsPage = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
+        setError(null);
         const expenses = await getExpense();
-        calculateTotal(expenses.data, setTotalExpenses);
+        if (!expenses.ok) {
+          setError(expenses.message);
+        } else {
+          calculateTotal(expenses.data, setTotalExpenses);
+        }
 
         const incomes = await getIncome();
-        calculateTotal(incomes.data, setTotalIncomes);
+        if (!incomes.ok) {
+          setError(incomes.message);
+        } else {
+          calculateTotal(incomes.data, setTotalIncomes);
+        }
 
-        const allTransactions = [...expenses.data, ...incomes.data];
-        setTransactions(allTransactions);
+        if (expenses.data && incomes.data) {
+          const allTransactions = [...expenses.data, ...incomes.data];
+          setTransactions(allTransactions);
+        }
       } catch (error) {
         console.error('Error fetching expenses:', error);
       }
@@ -78,6 +100,11 @@ export const TransactionsPage = () => {
     <Wrapper>
       <Typography variant="h1">{t('transactions.title')}</Typography>
       <ContentContainer>
+        {error && (
+          <MuiAlert severity="error" sx={{ marginTop: 2 }} variant="filled">
+            {error}
+          </MuiAlert>
+        )}
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <MCard>

@@ -96,6 +96,9 @@ export function LineChart() {
     const fetchTransactions = async () => {
       try {
         const expensesResponse = await getExpense();
+        if (!expensesResponse.data) {
+          return;
+        }
         const sortedExpenses = expensesResponse.data.sort(
           (a, b) => new Date(b.date) - new Date(a.date)
         );
@@ -103,6 +106,9 @@ export function LineChart() {
         setExpenses(groupedExpenses);
 
         const incomesResponse = await getIncome();
+        if (!incomesResponse.data) {
+          return;
+        }
         const sortedIncomes = incomesResponse.data.sort(
           (a, b) => new Date(b.date) - new Date(a.date)
         );
@@ -152,7 +158,7 @@ export function LineChart() {
         }
       ]
     });
-  }, [length, labels]);
+  }, [length, labels, expenses, incomes]);
 
   useEffect(() => {
     if (selectedDate.toDateString() !== new Date().toDateString()) {
