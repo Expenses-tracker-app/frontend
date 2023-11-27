@@ -39,6 +39,9 @@ export const Transactions = () => {
     const fetchTransactions = async () => {
       try {
         const response = await getExpense();
+        if (!response.data) {
+          return;
+        }
         const combinedData = response.data;
 
         if (selectedDate) {

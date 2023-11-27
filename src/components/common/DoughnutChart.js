@@ -61,6 +61,9 @@ export const DoughnutChart = () => {
     const fetchTransactions = async () => {
       try {
         const expensesResponse = await getExpense();
+        if (!expensesResponse.data) {
+          return;
+        }
         setFilteredExpenses(
           expensesResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date))
         );
@@ -74,6 +77,9 @@ export const DoughnutChart = () => {
         setExpenses(groupedExpenses);
 
         const incomesResponse = await getIncome();
+        if (!incomesResponse.data) {
+          return;
+        }
         setFilteredIncomes(
           incomesResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date))
         );

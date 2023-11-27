@@ -41,8 +41,8 @@ const TotalBalanceItem = ({ amount, percentage }) => {
 };
 
 TotalBalanceItem.propTypes = {
-  amount: PropTypes.string.isRequired,
-  percentage: PropTypes.string.isRequired
+  amount: PropTypes.number.isRequired,
+  percentage: PropTypes.number.isRequired
 };
 
 export default TotalBalanceItem;
