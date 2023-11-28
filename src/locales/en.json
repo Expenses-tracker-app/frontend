@@ -23,7 +23,13 @@
     "registrationError": "An error occured",
     "passwordMismatch": "Passwords do not match",
     "pageNotFound": "404 - Not Found!",
-    "pageDoesNotExist": "Sorry, the page you are looking for does not exist."
+    "pageDoesNotExist": "Sorry, the page you are looking for does not exist.",
+    "incomeError": "Saving the income failed",
+    "incomeDelete": "Deleting of the income failed",
+    "expenseError": "Saving the expense failed",
+    "expenseDelete": "Deleting of the expense failed",
+    "categoryError": "Saving the category failed",
+    "categoryDelete": "Deleting the category failed"
   },
   "user": {
     "login": "Login",
@@ -31,7 +37,7 @@
     "register": "Register",
     "email": "Email",
     "password": "Password",
-    "question": "Do you have an account?"
+    "question": "You don't have an account?"
   },
   "specific": {
     "welcome": "Welcome Back"

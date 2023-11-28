@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Select, MenuItem } from '@mui/material';
+import { Select, MenuItem, Alert as MuiAlert } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { createIncome, createExpense, getAllTag } from '../../services/apiService';
@@ -106,9 +106,9 @@ const MButton = styled(Button)(({ theme, isActive }) => ({
 
 const AddNewExpenseModal = ({ open, onClose }) => {
   const { t } = useTranslation();
-
   const [categories, setCategories] = useState([]);
   const [activeButton, setActiveButton] = useState(null);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     type: '',
     name: '',
@@ -143,7 +143,7 @@ const AddNewExpenseModal = ({ open, onClose }) => {
             console.log(res);
           })
           .catch((err) => {
-            console.log(err);
+            setError(err.message || t('errors.incomeError'));
           });
       } else {
         createExpense(transactionData)
@@ -151,7 +151,7 @@ const AddNewExpenseModal = ({ open, onClose }) => {
             console.log(res);
           })
           .catch((err) => {
-            console.log(err);
+            setError(err.message || t('errors.expenseError'));
           });
       }
     }
@@ -253,6 +253,12 @@ const AddNewExpenseModal = ({ open, onClose }) => {
           <Typography variant="h6">{t('common.cancel')}</Typography>
         </StyledButton>
       </MDialogActions>
+
+      {error && (
+        <MuiAlert severity="error" sx={{ marginTop: 2 }} variant="filled">
+          {error}
+        </MuiAlert>
+      )}
     </MDialog>
   );
 };
