@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Select, MenuItem } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { updateIncome, updateExpense, getAllTag, deleteExpense } from '../../services/apiService';
-
+import {
+  updateIncome,
+  updateExpense,
+  getAllTag,
+  deleteExpense,
+  deleteIncome
+} from '../../services/apiService';
+import PropTypes from 'prop-types';
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   Button,
-  Typography
+  Typography,
+  Select,
+  MenuItem,
+  Alert as MuiAlert,
+  styled,
+  FormLabel,
+  Input,
+  FormGroup
 } from '@mui/material';
-import PropTypes from 'prop-types';
-import { styled, FormLabel, Input, FormGroup } from '@mui/material';
 
 // Styles
 const MDialog = styled(Dialog)(({ theme }) => ({
@@ -99,6 +109,7 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
   const { t } = useTranslation();
   const [editMode, setEditMode] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     type: transaction.type,
     category: transaction.tag,
@@ -132,7 +143,7 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
             console.log(res);
           })
           .catch((err) => {
-            console.log(err);
+            setError(err.message || t('errors.incomesError'));
           });
       } else {
         updateExpense(transactionData)
@@ -140,7 +151,7 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
             console.log(res);
           })
           .catch((err) => {
-            console.log(err);
+            setError(err.message || t('errors.expensesError'));
           });
       }
     }
@@ -175,13 +186,23 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
 
   const handleDelete = () => {
     if (transaction.transaction_id) {
-      deleteExpense(transaction.transaction_id)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if (formData.type === 'income') {
+        deleteIncome(transaction)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            setError(err.message || t('errors.incomeDelete'));
+          });
+      } else {
+        deleteExpense(transaction)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            setError(err.message || t('errors.expenseDelete'));
+          });
+      }
     }
 
     onClose();
@@ -270,6 +291,12 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
         <MButton onClick={handleDelete}>{t('common.delete')}</MButton>
         <MButton onClick={onClose}>{t('common.cancel')}</MButton>
       </MActions>
+
+      {error && (
+        <MuiAlert severity="error" sx={{ marginTop: 2 }} variant="filled">
+          {error}
+        </MuiAlert>
+      )}
     </MDialog>
   );
 };

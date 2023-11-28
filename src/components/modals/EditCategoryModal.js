@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Dialog, DialogTitle, DialogActions, Button, styled, Input } from '@mui/material';
+import {
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  Button,
+  styled,
+  Input,
+  Alert as MuiAlert
+} from '@mui/material';
 import { updateTag, deleteTag } from '../../services/apiService';
 
 const CustomDialog = styled(Dialog)(({ theme }) => ({
@@ -46,14 +54,14 @@ const MButton = styled(Button)(({ theme }) => ({
 const EditCategoryModal = ({ tag, open, onClose }) => {
   const [editMode, setEditMode] = useState(false);
   const [editedName, setEditedName] = useState(tag.tag_name);
+  const [error, setError] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (tag) {
       setEditedName(tag.tag_name);
     }
   }, [tag]);
-
-  const { t } = useTranslation();
 
   const handleToggleEditMode = () => {
     setEditMode(!editMode);
@@ -66,7 +74,7 @@ const EditCategoryModal = ({ tag, open, onClose }) => {
           console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          setError(err.message || t('errors.categoryError'));
         });
     }
 
@@ -81,7 +89,7 @@ const EditCategoryModal = ({ tag, open, onClose }) => {
           console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          setError(err.message || t('errors.categoryDelete'));
         });
     }
 
@@ -114,6 +122,12 @@ const EditCategoryModal = ({ tag, open, onClose }) => {
         <MButton onClick={handleDelete}>{t('common.delete')}</MButton>
         <MButton onClick={onClose}>{t('common.cancel')}</MButton>
       </MActions>
+
+      {error && (
+        <MuiAlert severity="error" sx={{ marginTop: 2 }} variant="filled">
+          {error}
+        </MuiAlert>
+      )}
     </CustomDialog>
   );
 };

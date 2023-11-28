@@ -8,7 +8,8 @@ import {
   DialogContent,
   DialogActions,
   Button,
-  Typography
+  Typography,
+  Alert as MuiAlert
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import { styled, FormLabel, Input, FormGroup } from '@mui/material';
@@ -57,7 +58,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
 const AddNewCategoryModal = ({ open, onClose }) => {
   const { t } = useTranslation();
-
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     name: ''
   });
@@ -67,13 +68,12 @@ const AddNewCategoryModal = ({ open, onClose }) => {
       const tagData = {
         name: formData.name
       };
-
       createTag(tagData)
         .then((res) => {
           console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          setError(err.message || t('errors.categoryError'));
         });
     }
     onClose();
@@ -105,6 +105,12 @@ const AddNewCategoryModal = ({ open, onClose }) => {
           <Typography variant="h6">{t('common.cancel')}</Typography>
         </StyledButton>
       </MDialogActions>
+
+      {error && (
+        <MuiAlert severity="error" sx={{ marginTop: 2 }} variant="filled">
+          {error}
+        </MuiAlert>
+      )}
     </MDialog>
   );
 };
