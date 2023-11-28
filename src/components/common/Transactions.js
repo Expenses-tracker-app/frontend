@@ -68,6 +68,7 @@ export const Transactions = () => {
           }
         } else {
           console.log('No data received from the server.');
+          return;
         }
       } catch (error) {
         console.error('Error fetching transactions:', error);
