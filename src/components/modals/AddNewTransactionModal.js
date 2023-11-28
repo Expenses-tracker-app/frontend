@@ -111,7 +111,6 @@ const AddNewExpenseModal = ({ open, onClose }) => {
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     type: '',
-    name: '',
     category: '',
     amount: '',
     date: '',
@@ -121,16 +120,8 @@ const AddNewExpenseModal = ({ open, onClose }) => {
   const handleSubmit = () => {
     event.preventDefault();
 
-    if (
-      formData.type &&
-      formData.name &&
-      formData.category &&
-      formData.amount &&
-      formData.date &&
-      formData.desc
-    ) {
+    if (formData.type && formData.category && formData.amount && formData.date && formData.desc) {
       const transactionData = {
-        name: formData.name,
         date: formData.date,
         amount: formData.amount,
         desc: formData.desc,
@@ -220,11 +211,15 @@ const AddNewExpenseModal = ({ open, onClose }) => {
             value={formData.category}
             onChange={handleCategoryChange}
             style={{ width: '100%' }}>
-            {categories.map((category) => (
-              <StyledMenu key={category.tag_id} value={category.tag_id}>
-                {category.tag_name}
-              </StyledMenu>
-            ))}
+            {categories ? (
+              categories.map((category) => (
+                <StyledMenu key={category.tag_id} value={category.tag_id}>
+                  {category.tag_name}
+                </StyledMenu>
+              ))
+            ) : (
+              <StyledMenu disabled>{t('categories.noCategories')}</StyledMenu>
+            )}
           </StyledSelect>
 
           <FormLabel>
@@ -235,10 +230,6 @@ const AddNewExpenseModal = ({ open, onClose }) => {
             <Typography variant="h6">{t('newTransaction.date')} </Typography>
           </FormLabel>
           <InputLine type="date" onClick={handleChange} />
-          <FormLabel>
-            <Typography variant="h6">{t('newTransaction.name')} </Typography>
-          </FormLabel>
-          <InputLine type="text" onClick={handleChange} />
           <FormLabel>
             <Typography variant="h6">{t('newTransaction.description')} </Typography>
           </FormLabel>

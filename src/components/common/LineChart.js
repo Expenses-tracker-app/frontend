@@ -97,7 +97,7 @@ export function LineChart() {
     const fetchTransactions = async () => {
       try {
         const expensesResponse = await getExpense();
-        if (expensesResponse) {
+        if (expensesResponse.data !== undefined) {
           setFilteredExpenses(expensesResponse.data);
           if (selectedCategory) {
             setFilteredExpenses(
@@ -112,10 +112,12 @@ export function LineChart() {
           );
           const groupedExpenses = groupAndSumByDate(sortedExpenses);
           setExpenses(groupedExpenses);
+        } else {
+          console.log('No expenses received from the server.');
         }
 
         const incomesResponse = await getIncome();
-        if (incomesResponse) {
+        if (incomesResponse.data !== undefined) {
           setFilteredIncomes(incomesResponse.data);
           if (selectedCategory) {
             setFilteredIncomes(
@@ -129,6 +131,8 @@ export function LineChart() {
           );
           const groupedIncomes = groupAndSumByDate(sortedIncomes);
           setIncomes(groupedIncomes);
+        } else {
+          console.log('No incomes received from the server.');
         }
       } catch (error) {
         console.error('Error fetching transactions:', error);

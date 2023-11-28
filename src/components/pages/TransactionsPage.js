@@ -60,14 +60,14 @@ export const TransactionsPage = () => {
       try {
         setError(null);
         const expenses = await getExpense();
-        if (expenses) {
+        if (expenses.data !== undefined) {
           calculateTotal(expenses.data, setTotalExpenses);
         } else {
           console.log('No expenses received from the server.');
         }
 
         const incomes = await getIncome();
-        if (incomes) {
+        if (incomes.data !== undefined) {
           calculateTotal(incomes.data, setTotalIncomes);
         } else {
           console.log('No expenses received from the server.');

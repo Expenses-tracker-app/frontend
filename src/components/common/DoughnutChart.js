@@ -61,7 +61,7 @@ export const DoughnutChart = () => {
     const fetchTransactions = async () => {
       try {
         const expensesResponse = await getExpense();
-        if (expensesResponse) {
+        if (expensesResponse.data !== undefined) {
           const sortedExpenses = expensesResponse.data.sort(
             (a, b) => new Date(b.date) - new Date(a.date)
 
@@ -84,10 +84,12 @@ export const DoughnutChart = () => {
           }
           const groupedExpenses = groupAndSumByDate(filteredExpenses);
           setExpenses(groupedExpenses);
+        } else {
+          console.log('No expenses received from the server.');
         }
 
         const incomesResponse = await getIncome();
-        if (incomesResponse) {
+        if (incomesResponse.data !== undefined) {
           const sortedIncomes = incomesResponse.data.sort(
             (a, b) => new Date(b.date) - new Date(a.date)
           );
@@ -108,6 +110,8 @@ export const DoughnutChart = () => {
           }
           const groupedIncomes = groupAndSumByDate(filteredIncomes);
           setIncomes(groupedIncomes);
+        } else {
+          console.log('No incomes received from the server.');
         }
       } catch (error) {
         console.error('Error fetching transactions:', error);
