@@ -83,7 +83,7 @@ const ActionButtons = () => {
     <Wrapper>
       <MLabel>{t('menu.categories')}</MLabel>
       <StyledSelect value={selectedCategory} onChange={handleCategoryChange}>
-        {categories.length > 0 ? (
+        {categories ? (
           categories.map((category) => (
             <StyledMenu key={category.tag_id} value={category.tag_id}>
               {category.tag_name}

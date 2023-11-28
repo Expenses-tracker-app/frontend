@@ -82,7 +82,7 @@ export const Transactions = () => {
     <Wrapper>
       <Title>{t('transactions.title')}</Title>
       <List>
-        {filteredData.length > 0 ? (
+        {filteredData.length ? (
           filteredData.map((item, index) => (
             <TransactionItem
               key={index}

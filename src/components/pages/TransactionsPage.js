@@ -126,7 +126,7 @@ export const TransactionsPage = () => {
           <Grid item xs={12}>
             <MCard>
               <List>
-                {transactions.length > 0 &&
+                {transactions &&
                   transactions.map((transaction, index) => (
                     <ExpenseItem
                       key={index}
