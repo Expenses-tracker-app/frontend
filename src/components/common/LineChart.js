@@ -108,6 +108,7 @@ export function LineChart() {
             selectedCategory
               ? new Date(b.date) - new Date(a.date)
               : a.category.localeCompare(b.category)
+
           );
           const groupedExpenses = groupAndSumByDate(sortedExpenses);
           setExpenses(groupedExpenses);
