@@ -3,7 +3,7 @@ import TransactionItem from './TransactionItem';
 import { useTranslation } from 'react-i18next';
 import { styled, Typography, Grid, List } from '@mui/material';
 import DateProvider from '../layout/DateContext';
-import { getExpense } from '../../services/apiService';
+import { getExpense, getIncome } from '../../services/apiService';
 
 const Wrapper = styled(Grid)(({ theme }) => ({
   justifyContent: 'center',
@@ -34,12 +34,18 @@ export const Transactions = () => {
   const { t } = useTranslation();
   const { selectedDate } = useContext(DateProvider);
   const [filteredData, setFilteredData] = useState([]);
+  const [combinedData, setCombinedData] = useState([]);
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await getExpense();
-        const combinedData = response.data;
+        const response = await Promise.all([getExpense(), getIncome()]);
+
+        if (response.data) {
+          setCombinedData(response.data);
+        } else {
+          console.log('No data received from the server.');
+        }
 
         if (selectedDate) {
           const filteredTransactions = combinedData.filter((item) => {
@@ -69,21 +75,25 @@ export const Transactions = () => {
     };
 
     fetchTransactions();
-  }, [selectedDate]);
+  }, [selectedDate, combinedData]);
 
   return (
     <Wrapper>
       <Title>{t('transactions.title')}</Title>
       <List>
-        {filteredData.map((item, index) => (
-          <TransactionItem
-            key={index}
-            desc={item.desc}
-            date={item.date}
-            amount={item.amount}
-            isExpense={item.expense_id !== undefined}
-          />
-        ))}
+        {filteredData.length > 0 ? (
+          filteredData.map((item, index) => (
+            <TransactionItem
+              key={index}
+              desc={item.desc}
+              date={item.date}
+              amount={item.amount}
+              isExpense={item.expense_id !== undefined}
+            />
+          ))
+        ) : (
+          <Typography>{t('transactions.noTransactions')}</Typography>
+        )}
       </List>
     </Wrapper>
   );

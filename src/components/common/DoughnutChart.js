@@ -61,11 +61,20 @@ export const DoughnutChart = () => {
     const fetchTransactions = async () => {
       try {
         const expensesResponse = await getExpense();
-        setFilteredExpenses(
-          expensesResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date))
-        );
+        const sortedExpenses =
+          expensesResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date)) || [];
+        setFilteredExpenses(sortedExpenses);
 
-        if (selectedCategory) {
+        if (selectedDate && filteredExpenses !== []) {
+          setFilteredExpenses(
+            filteredExpenses.filter((expense) => {
+              const expenseDate = new Date(expense.date.split('T')[0]);
+              return expenseDate.toDateString() === selectedDate.toDateString();
+            })
+          );
+        }
+
+        if (selectedCategory && filteredExpenses !== []) {
           setFilteredExpenses(
             filteredExpenses.filter((expense) => expense.tag_id === selectedCategory)
           );
@@ -74,11 +83,20 @@ export const DoughnutChart = () => {
         setExpenses(groupedExpenses);
 
         const incomesResponse = await getIncome();
-        setFilteredIncomes(
-          incomesResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date))
-        );
+        const sortedIncomes =
+          incomesResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date)) || [];
+        setFilteredIncomes(sortedIncomes);
 
-        if (selectedCategory) {
+        if (selectedDate && filteredIncomes !== []) {
+          setFilteredIncomes(
+            filteredIncomes.filter((income) => {
+              const incomeDate = new Date(income.date.split('T')[0]);
+              return incomeDate.toDateString() === selectedDate.toDateString();
+            })
+          );
+        }
+
+        if (selectedCategory && filteredIncomes !== []) {
           setFilteredIncomes(
             filteredIncomes.filter((income) => income.tag_id === selectedCategory)
           );
@@ -91,7 +109,7 @@ export const DoughnutChart = () => {
     };
 
     fetchTransactions();
-  }, [selectedCategory, filteredExpenses, filteredIncomes]);
+  }, [selectedCategory, filteredExpenses, filteredIncomes, selectedDate]);
 
   const groupAndSumByDate = (transactions) => {
     const groupedTransactions = {};
@@ -132,7 +150,7 @@ export const DoughnutChart = () => {
         }
       ]
     }));
-  }, [selectedDate, incomes, expenses]);
+  }, [incomes, expenses]);
 
   return (
     <Wrapper>

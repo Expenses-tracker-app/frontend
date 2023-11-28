@@ -80,7 +80,11 @@ export const CategoriesPage = () => {
     const fetchData = async () => {
       try {
         const { data } = await getAllTag();
-        setTags(data);
+        if (data) {
+          setTags(data);
+        } else {
+          console.log('No data received from the server.');
+        }
       } catch (err) {
         console.log(err.message);
       }
@@ -106,11 +110,12 @@ export const CategoriesPage = () => {
 
         <MCard>
           <MBox>
-            {tags.map((tag) => (
-              <div key={tag.tag_id}>
-                <MButton onClick={() => handleOpenEditModal(tag)}>{tag.tag_name}</MButton>
-              </div>
-            ))}
+            {tags.length > 0 &&
+              tags.map((tag) => (
+                <div key={tag.tag_id}>
+                  <MButton onClick={() => handleOpenEditModal(tag)}>{tag.tag_name}</MButton>
+                </div>
+              ))}
           </MBox>
         </MCard>
         {category !== null && (

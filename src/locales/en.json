@@ -39,7 +39,8 @@
   "transactions": {
     "title": "Transactions",
     "addNew": "+ New",
-    "totalBalance": "Total Balance"
+    "totalBalance": "Total Balance",
+    "noTransactions": "No transactions found"
   },
   "settings": {
     "title": "Settings",
@@ -83,6 +84,7 @@
     "logout": "Logout"
   },
   "categories": {
-    "title": "Categories"
+    "title": "Categories",
+    "noCategories": "No categories found"
   }
 }

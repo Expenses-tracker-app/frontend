@@ -48,10 +48,18 @@ export const TransactionsPage = () => {
     const fetchTransactions = async () => {
       try {
         const expenses = await getExpense();
-        calculateTotal(expenses.data, setTotalExpenses);
+        if (expenses) {
+          calculateTotal(expenses.data, setTotalExpenses);
+        } else {
+          console.log('No expenses received from the server.');
+        }
 
         const incomes = await getIncome();
-        calculateTotal(incomes.data, setTotalIncomes);
+        if (incomes) {
+          calculateTotal(incomes.data, setTotalIncomes);
+        } else {
+          console.log('No expenses received from the server.');
+        }
 
         const allTransactions = [...expenses.data, ...incomes.data];
         setTransactions(allTransactions);
@@ -100,14 +108,15 @@ export const TransactionsPage = () => {
           <Grid item xs={12}>
             <MCard>
               <List>
-                {transactions.map((transaction, index) => (
-                  <ExpenseItem
-                    key={index}
-                    desc={transaction.desc}
-                    date={transaction.date}
-                    amount={transaction.amount}
-                  />
-                ))}
+                {transactions.length > 0 &&
+                  transactions.map((transaction, index) => (
+                    <ExpenseItem
+                      key={index}
+                      desc={transaction.desc}
+                      date={transaction.date}
+                      amount={transaction.amount}
+                    />
+                  ))}
               </List>
             </MCard>
           </Grid>
