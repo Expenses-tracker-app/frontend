@@ -95,6 +95,9 @@ export function LineChart() {
     const fetchTransactions = async () => {
       try {
         const expensesResponse = await getExpense();
+        if (!expensesResponse.data) {
+          return;
+        }
         let filteredExpenses = expensesResponse.data;
         if (selectedCategory) {
           filteredExpenses = filteredExpenses.filter(
@@ -110,6 +113,9 @@ export function LineChart() {
         setExpenses(groupedExpenses);
 
         const incomesResponse = await getIncome();
+        if (!incomesResponse.data) {
+          return;
+        }
         let filteredIncomes = incomesResponse.data;
         if (selectedCategory) {
           filteredIncomes = filteredIncomes.filter((income) => income.tag_id === selectedCategory);

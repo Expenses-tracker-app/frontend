@@ -65,6 +65,7 @@ export const DoughnutChart = () => {
           expensesResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date)) || [];
         setFilteredExpenses(sortedExpenses);
 
+
         if (selectedDate && filteredExpenses !== []) {
           setFilteredExpenses(
             filteredExpenses.filter((expense) => {
