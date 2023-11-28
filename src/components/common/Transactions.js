@@ -45,6 +45,7 @@ export const Transactions = () => {
           setCombinedData(response.data);
         } else {
           console.log('No data received from the server.');
+          return;
         }
 
         if (selectedDate) {
