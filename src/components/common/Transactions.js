@@ -41,33 +41,33 @@ export const Transactions = () => {
       try {
         const response = await Promise.all([getExpense(), getIncome()]);
 
-        if (response.data) {
+        if (response.data !== undefined) {
           setCombinedData(response.data);
+
+          if (selectedDate) {
+            const filteredTransactions = combinedData.filter((item) => {
+              const itemDate = new Date(item.date.split('-').reverse().join('-'));
+              return itemDate.toDateString() === selectedDate.toDateString();
+            });
+
+            filteredTransactions.sort((a, b) => {
+              const dateA = new Date(a.date.split('-').reverse().join('-'));
+              const dateB = new Date(b.date.split('-').reverse().join('-'));
+              return dateB - dateA;
+            });
+
+            setFilteredData(filteredTransactions);
+          } else {
+            combinedData.sort((a, b) => {
+              const dateA = new Date(a.date.split('-').reverse().join('-'));
+              const dateB = new Date(b.date.split('-').reverse().join('-'));
+              return dateB - dateA;
+            });
+
+            setFilteredData(combinedData);
+          }
         } else {
           console.log('No data received from the server.');
-        }
-
-        if (selectedDate) {
-          const filteredTransactions = combinedData.filter((item) => {
-            const itemDate = new Date(item.date.split('-').reverse().join('-'));
-            return itemDate.toDateString() === selectedDate.toDateString();
-          });
-
-          filteredTransactions.sort((a, b) => {
-            const dateA = new Date(a.date.split('-').reverse().join('-'));
-            const dateB = new Date(b.date.split('-').reverse().join('-'));
-            return dateB - dateA;
-          });
-
-          setFilteredData(filteredTransactions);
-        } else {
-          combinedData.sort((a, b) => {
-            const dateA = new Date(a.date.split('-').reverse().join('-'));
-            const dateB = new Date(b.date.split('-').reverse().join('-'));
-            return dateB - dateA;
-          });
-
-          setFilteredData(combinedData);
         }
       } catch (error) {
         console.error('Error fetching transactions:', error);

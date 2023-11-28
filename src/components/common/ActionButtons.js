@@ -64,7 +64,6 @@ const ActionButtons = () => {
     const fetchData = async () => {
       try {
         const { data } = await getAllTag();
-        setCategories(data);
 
         if (data) {
           setCategories(data);
