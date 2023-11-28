@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import AddNewExpenseModal from '../modals/AddNewTransactionModal';
 import { getExpense, getIncome } from '../../services/apiService';
+import { convertResponseToArray } from '../../utilities/helper';
 
 const Wrapper = styled(Container)(() => ({
   display: 'flex',
@@ -42,6 +43,14 @@ const MButton = styled(Button)(() => ({
   width: '100%'
 }));
 
+const calculateTotal = (transactions) =>
+  transactions.reduce((sum, transaction) => {
+    const amount = Object.prototype.hasOwnProperty.call(transaction, 'expense_amount')
+      ? transaction.expense_amount
+      : transaction.income_amount;
+    return sum + amount;
+  }, 0);
+
 export const TransactionsPage = () => {
   const [error, setError] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -50,50 +59,39 @@ export const TransactionsPage = () => {
   const [totalIncomes, setTotalIncomes] = useState(0);
   const { t } = useTranslation();
 
-  const calculateTotal = (transactions, setTotal) => {
-    const total = transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
-    setTotal(total);
-  };
-
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
         setError(null);
-        const expenses = await getExpense();
-        if (expenses) {
-          calculateTotal(expenses.data, setTotalExpenses);
-        } else {
-          console.log('No expenses received from the server.');
-        }
+        const [expensesResponse, incomesResponse] = await Promise.all([getExpense(), getIncome()]);
 
-        const incomes = await getIncome();
-        if (incomes) {
-          calculateTotal(incomes.data, setTotalIncomes);
-        } else {
-          console.log('No expenses received from the server.');
-        }
+        const expensesData =
+          expensesResponse && expensesResponse.status !== 404
+            ? convertResponseToArray(expensesResponse)
+            : [];
 
-        const allTransactions = [...expenses.data, ...incomes.data];
-        setTransactions(allTransactions);
+        const incomesData =
+          incomesResponse && incomesResponse.status !== 404
+            ? convertResponseToArray(incomesResponse)
+            : [];
 
-      } catch (error) {
-        console.error('Error fetching expenses:', error);
+        setTotalExpenses(calculateTotal(expensesData));
+        setTotalIncomes(calculateTotal(incomesData));
+
+        setTransactions([...expensesData, ...incomesData]);
+      } catch (fetchError) {
+        setError(fetchError.message || 'Error fetching transactions');
+        console.error(fetchError);
       }
     };
 
     fetchTransactions();
   }, []);
 
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
+  const toggleModal = () => setOpenModal(!openModal);
 
   const amount = totalIncomes - totalExpenses;
-  const percentage = totalIncomes / totalExpenses;
+  const percentage = totalExpenses ? totalIncomes / totalExpenses : 0;
 
   return (
     <Wrapper>
@@ -107,13 +105,13 @@ export const TransactionsPage = () => {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <MCard>
-              <MButton variant="text" onClick={handleOpenModal}>
+              <MButton variant="text" onClick={toggleModal}>
                 <Typography variant="h2">{t('transactions.addNew')}</Typography>
               </MButton>
             </MCard>
           </Grid>
 
-          <AddNewExpenseModal open={openModal} onClose={handleCloseModal} />
+          <AddNewExpenseModal open={openModal} onClose={toggleModal} />
 
           <Grid item xs={6}>
             <MCard>
@@ -127,14 +125,30 @@ export const TransactionsPage = () => {
             <MCard>
               <List>
                 {transactions.length > 0 &&
-                  transactions.map((transaction, index) => (
-                    <ExpenseItem
-                      key={index}
-                      desc={transaction.desc}
-                      date={transaction.date}
-                      amount={transaction.amount}
-                    />
-                  ))}
+                  transactions.map((transaction) => {
+                    const isExpense = Object.prototype.hasOwnProperty.call(
+                      transaction,
+                      'expense_id'
+                    );
+                    const id = isExpense ? transaction.expense_id : transaction.income_id;
+                    const desc = isExpense
+                      ? transaction.expense_description
+                      : transaction.income_description;
+                    const date = isExpense ? transaction.expense_date : transaction.income_date;
+                    const amount = isExpense
+                      ? transaction.expense_amount
+                      : transaction.income_amount;
+
+                    return (
+                      <ExpenseItem
+                        key={id}
+                        desc={desc}
+                        date={date}
+                        amount={amount}
+                        isExpense={isExpense}
+                      />
+                    );
+                  })}
               </List>
             </MCard>
           </Grid>

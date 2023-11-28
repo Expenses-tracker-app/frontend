@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import { styled, FormLabel, Input, FormGroup } from '@mui/material';
+import { convertResponseToArray } from '../../utilities/helper';
 
 // Styles
 const MDialog = styled(Dialog)(({ theme }) => ({
@@ -111,52 +112,61 @@ const AddNewExpenseModal = ({ open, onClose }) => {
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     type: '',
-    name: '',
     category: '',
     amount: '',
     date: '',
     desc: ''
   });
 
-  const handleSubmit = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAllTag();
+        if (response.status === 404) {
+          console.log('No categories found.');
+          setCategories([]);
+          return;
+        } else if (response) {
+          const tagsArray = convertResponseToArray(response);
+          setCategories(tagsArray);
+        } else {
+          setCategories(response.data || []);
+        }
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (
-      formData.type &&
-      formData.name &&
-      formData.category &&
-      formData.amount &&
-      formData.date &&
-      formData.desc
-    ) {
+    if (formData.type && formData.category && formData.amount && formData.date && formData.desc) {
       const transactionData = {
-        name: formData.name,
         date: formData.date,
         amount: formData.amount,
         desc: formData.desc,
         tagId: formData.category
       };
 
-      if (formData.type === 'income') {
-        createIncome(transactionData)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            setError(err.message || t('errors.incomeError'));
-          });
-      } else {
-        createExpense(transactionData)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            setError(err.message || t('errors.expenseError'));
-          });
-      }
-    }
+      try {
+        console.log(transactionData);
+        const response =
+          formData.type === 'income'
+            ? await createIncome(transactionData)
+            : await createExpense(transactionData);
 
-    onClose();
+        console.log(response);
+      } catch (err) {
+        setError(err.message || t(`errors.${formData.type}Error`));
+      }
+
+      onClose();
+    } else {
+      setError(t('errors.formIncomplete'));
+    }
   };
 
   const handleChange = (event) => {
@@ -181,78 +191,70 @@ const AddNewExpenseModal = ({ open, onClose }) => {
     setActiveButton(type);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await getAllTag();
-        setCategories(data);
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <MDialog open={open} onClose={onClose}>
-      <DialogTitle variant="title">{t('newTransaction.title')}</DialogTitle>
-      <MContent>
-        <FormGroup>
-          <MBox>
-            <MButton
-              onClick={() => handleButtonClick('income')}
-              isActive={activeButton === 'income'}>
-              <AddCircleOutlineIcon />
-              <Text>{t('newTransaction.income')}</Text>
-            </MButton>
-            <MButton
-              onClick={() => handleButtonClick('expense')}
-              isActive={activeButton === 'expense'}>
-              <RemoveCircleOutlineIcon />
-              <Text>{t('newTransaction.expense')}</Text>
-            </MButton>
-          </MBox>
-          <FormLabel>
-            <Typography variant="h6">{t('newTransaction.category')}</Typography>
-          </FormLabel>
-          <StyledSelect
-            value={formData.category}
-            onChange={handleCategoryChange}
-            style={{ width: '100%' }}>
-            {categories.map((category) => (
-              <StyledMenu key={category.tag_id} value={category.tag_id}>
-                {category.tag_name}
-              </StyledMenu>
-            ))}
-          </StyledSelect>
+      <form onSubmit={handleSubmit}>
+        <DialogTitle variant="title">{t('newTransaction.title')}</DialogTitle>
+        <MContent>
+          <FormGroup>
+            <MBox>
+              <MButton
+                onClick={() => handleButtonClick('income')}
+                isActive={activeButton === 'income'}>
+                <AddCircleOutlineIcon />
+                <Text>{t('newTransaction.income')}</Text>
+              </MButton>
+              <MButton
+                onClick={() => handleButtonClick('expense')}
+                isActive={activeButton === 'expense'}>
+                <RemoveCircleOutlineIcon />
+                <Text>{t('newTransaction.expense')}</Text>
+              </MButton>
+            </MBox>
+            <FormLabel>
+              <Typography variant="h6">{t('newTransaction.category')}</Typography>
+            </FormLabel>
+            <StyledSelect
+              value={formData.category}
+              onChange={handleCategoryChange}
+              style={{ width: '100%' }}>
+              {categories.map((category) => (
+                <StyledMenu key={category.tag_id} value={category.tag_id}>
+                  {category.tag_name}
+                </StyledMenu>
+              ))}
+            </StyledSelect>
 
-          <FormLabel>
-            <Typography variant="h6">{t('newTransaction.amount')} </Typography>
-          </FormLabel>
-          <InputLine type="number" onClick={handleChange} />
-          <FormLabel>
-            <Typography variant="h6">{t('newTransaction.date')} </Typography>
-          </FormLabel>
-          <InputLine type="date" onClick={handleChange} />
-          <FormLabel>
-            <Typography variant="h6">{t('newTransaction.name')} </Typography>
-          </FormLabel>
-          <InputLine type="text" onClick={handleChange} />
-          <FormLabel>
-            <Typography variant="h6">{t('newTransaction.description')} </Typography>
-          </FormLabel>
-          <InputLine type="text" onClick={handleChange} />
-        </FormGroup>
-      </MContent>
-      <MDialogActions>
-        <StyledButton onClick={handleSubmit}>
-          <Typography variant="h6">{t('newTransaction.save')}</Typography>
-        </StyledButton>
-        <StyledButton onClick={onClose}>
-          <Typography variant="h6">{t('common.cancel')}</Typography>
-        </StyledButton>
-      </MDialogActions>
+            <FormLabel>
+              <Typography variant="h6">{t('newTransaction.amount')}</Typography>
+            </FormLabel>
+            <InputLine
+              type="number"
+              name="amount"
+              value={formData.amount}
+              onChange={handleChange}
+            />
+
+            <FormLabel>
+              <Typography variant="h6">{t('newTransaction.date')}</Typography>
+            </FormLabel>
+            <InputLine type="date" name="date" value={formData.date} onChange={handleChange} />
+
+            <FormLabel>
+              <Typography variant="h6">{t('newTransaction.description')}</Typography>
+            </FormLabel>
+            <InputLine type="text" name="desc" value={formData.desc} onChange={handleChange} />
+          </FormGroup>
+        </MContent>
+        <MDialogActions>
+          <StyledButton type="submit">
+            <Typography variant="h6">{t('newTransaction.save')}</Typography>
+          </StyledButton>
+          <StyledButton onClick={onClose}>
+            <Typography variant="h6">{t('common.cancel')}</Typography>
+          </StyledButton>
+        </MDialogActions>
+      </form>
 
       {error && (
         <MuiAlert severity="error" sx={{ marginTop: 2 }} variant="filled">

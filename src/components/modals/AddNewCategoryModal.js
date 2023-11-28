@@ -66,7 +66,7 @@ const AddNewCategoryModal = ({ open, onClose }) => {
   const handleSubmit = () => {
     if (formData.name) {
       const tagData = {
-        name: formData.name
+        tagName: formData.name
       };
       createTag(tagData)
         .then((res) => {
@@ -94,7 +94,7 @@ const AddNewCategoryModal = ({ open, onClose }) => {
           <FormLabel>
             <Typography variant="h6">{t('newCategory.name')} </Typography>
           </FormLabel>
-          <InputLine type="text" onClick={handleChange} />
+          <InputLine type="text" name="name" value={formData.name} onChange={handleChange} />
         </FormGroup>
       </MContent>
       <MDialogActions>

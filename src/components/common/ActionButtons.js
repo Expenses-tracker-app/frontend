@@ -3,6 +3,7 @@ import DateContext from '../layout/DateContext';
 import { styled, Select, MenuItem, Button, Container, InputLabel } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { getAllTag } from '../../services/apiService';
+import { convertResponseToArray } from '../../utilities/helper';
 
 const Wrapper = styled(Container)(() => ({
   display: 'flex',
@@ -46,7 +47,7 @@ const MButton = styled(Button)(({ theme }) => ({
 
 const ActionButtons = () => {
   const [categories, setCategories] = useState([]);
-  const { selectedCategory, setSelectedCategory } = useState(DateContext);
+  const { selectedCategory, setSelectedCategory } = useContext(DateContext);
   const { selectedDate, setSelectedDate } = useContext(DateContext);
   const { t } = useTranslation();
 
@@ -63,16 +64,15 @@ const ActionButtons = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await getAllTag();
-        setCategories(data);
-
-        if (data) {
-          setCategories(data);
-        } else {
-          console.log('No data received from the server.');
+        const response = await getAllTag();
+        if (response.status === 404) {
+          console.log('No categories found');
+          return;
         }
+        const data = convertResponseToArray(response) || [];
+        setCategories(data);
       } catch (err) {
-        console.log(err.message);
+        console.error('Error fetching categories:', err.message);
       }
     };
 

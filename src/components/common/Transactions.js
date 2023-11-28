@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { styled, Typography, Grid, List } from '@mui/material';
 import DateProvider from '../layout/DateContext';
 import { getExpense, getIncome } from '../../services/apiService';
+import { convertResponseToArray } from '../../utilities/helper';
 
 const Wrapper = styled(Grid)(({ theme }) => ({
   justifyContent: 'center',
@@ -34,64 +35,68 @@ export const Transactions = () => {
   const { t } = useTranslation();
   const { selectedDate } = useContext(DateProvider);
   const [filteredData, setFilteredData] = useState([]);
-  const [combinedData, setCombinedData] = useState([]);
+
+  // Utility function to extract the correct date field
+  const getTransactionDate = (transaction) => {
+    return transaction.expense_date || transaction.income_date;
+  };
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await Promise.all([getExpense(), getIncome()]);
+        const [expensesResponse, incomesResponse] = await Promise.all([getExpense(), getIncome()]);
 
-        if (response.data) {
-          setCombinedData(response.data);
-        } else {
-          console.log('No data received from the server.');
-          return;
-        }
+        const expensesData =
+          expensesResponse && expensesResponse.status !== 404
+            ? convertResponseToArray(expensesResponse)
+            : [];
 
-        if (selectedDate) {
-          const filteredTransactions = combinedData.filter((item) => {
-            const itemDate = new Date(item.date.split('-').reverse().join('-'));
-            return itemDate.toDateString() === selectedDate.toDateString();
-          });
+        const incomesData =
+          incomesResponse && incomesResponse.status !== 404
+            ? convertResponseToArray(incomesResponse)
+            : [];
 
-          filteredTransactions.sort((a, b) => {
-            const dateA = new Date(a.date.split('-').reverse().join('-'));
-            const dateB = new Date(b.date.split('-').reverse().join('-'));
-            return dateB - dateA;
-          });
-
-          setFilteredData(filteredTransactions);
-        } else {
-          combinedData.sort((a, b) => {
-            const dateA = new Date(a.date.split('-').reverse().join('-'));
-            const dateB = new Date(b.date.split('-').reverse().join('-'));
-            return dateB - dateA;
-          });
-
-          setFilteredData(combinedData);
-        }
+        const combinedData = [...expensesData, ...incomesData];
+        const processedData = combinedData
+          .filter(
+            (item) =>
+              !selectedDate ||
+              new Date(getTransactionDate(item)).toDateString() === selectedDate.toDateString()
+          )
+          .sort((a, b) => new Date(getTransactionDate(b)) - new Date(getTransactionDate(a)));
+        setFilteredData(processedData);
       } catch (error) {
         console.error('Error fetching transactions:', error);
       }
     };
 
     fetchTransactions();
-  }, [selectedDate, combinedData]);
+  }, [selectedDate]);
 
   return (
     <Wrapper>
       <Title>{t('transactions.title')}</Title>
       <List>
         {filteredData.length > 0 ? (
-          filteredData.map((item, index) => (
-            <TransactionItem
-              key={index}
-              desc={item.desc}
-              date={item.date}
-              amount={item.amount}
-              isExpense={item.expense_id !== undefined}
-            />
-          ))
+          filteredData.map((transaction) => {
+            const isExpense = Object.prototype.hasOwnProperty.call(transaction, 'expense_id');
+            const id = isExpense ? transaction.expense_id : transaction.income_id;
+            const desc = isExpense
+              ? transaction.expense_description
+              : transaction.income_description;
+            const date = isExpense ? transaction.expense_date : transaction.income_date;
+            const amount = isExpense ? transaction.expense_amount : transaction.income_amount;
+
+            return (
+              <TransactionItem
+                key={id}
+                desc={desc}
+                date={date}
+                amount={amount}
+                isExpense={isExpense}
+              />
+            );
+          })
         ) : (
           <Typography>{t('transactions.noTransactions')}</Typography>
         )}

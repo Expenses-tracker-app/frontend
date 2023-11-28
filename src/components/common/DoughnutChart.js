@@ -5,6 +5,7 @@ import { ArcElement } from 'chart.js';
 import { Chart as ChartJS } from 'chart.js';
 import DateProvider from '../layout/DateContext';
 import { getExpense, getIncome } from '../../services/apiService';
+import { convertResponseToArray } from '../../utilities/helper';
 ChartJS.register(ArcElement);
 
 const Wrapper = styled(Grid)(({ theme }) => ({
@@ -54,81 +55,71 @@ export const DoughnutChart = () => {
   const { selectedDate, selectedCategory } = useContext(DateProvider);
   const [expenses, setExpenses] = useState([]);
   const [incomes, setIncomes] = useState([]);
-  const [filteredExpenses, setFilteredExpenses] = useState();
-  const [filteredIncomes, setFilteredIncomes] = useState();
 
   useEffect(() => {
-    const fetchTransactions = async () => {
+    const fetchAndProcessTransactions = async (fetchFunction, setTransactions) => {
       try {
-        const expensesResponse = await getExpense();
-        const sortedExpenses =
-          expensesResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date)) || [];
-        setFilteredExpenses(sortedExpenses);
-
-
-        if (selectedDate && filteredExpenses !== []) {
-          setFilteredExpenses(
-            filteredExpenses.filter((expense) => {
-              const expenseDate = new Date(expense.date.split('T')[0]);
-              return expenseDate.toDateString() === selectedDate.toDateString();
-            })
-          );
+        const response = await fetchFunction();
+        if (response.status === 404) {
+          console.log(response.message);
+          return;
         }
 
-        if (selectedCategory && filteredExpenses !== []) {
-          setFilteredExpenses(
-            filteredExpenses.filter((expense) => expense.tag_id === selectedCategory)
-          );
-        }
-        const groupedExpenses = groupAndSumByDate(filteredExpenses);
-        setExpenses(groupedExpenses);
+        const responseArray = convertResponseToArray(response);
 
-        const incomesResponse = await getIncome();
-        const sortedIncomes =
-          incomesResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date)) || [];
-        setFilteredIncomes(sortedIncomes);
-
-        if (selectedDate && filteredIncomes !== []) {
-          setFilteredIncomes(
-            filteredIncomes.filter((income) => {
-              const incomeDate = new Date(income.date.split('T')[0]);
-              return incomeDate.toDateString() === selectedDate.toDateString();
-            })
-          );
-        }
-
-        if (selectedCategory && filteredIncomes !== []) {
-          setFilteredIncomes(
-            filteredIncomes.filter((income) => income.tag_id === selectedCategory)
-          );
-        }
-        const groupedIncomes = groupAndSumByDate(filteredIncomes);
-        setIncomes(groupedIncomes);
+        let transactions =
+          responseArray.sort(
+            (a, b) => new Date(getTransactionDate(b)) - new Date(getTransactionDate(a))
+          ) || [];
+        transactions = filterTransactions(transactions);
+        const groupedTransactions = groupAndSumByDate(transactions);
+        setTransactions(groupedTransactions);
       } catch (error) {
         console.error('Error fetching transactions:', error);
       }
     };
 
-    fetchTransactions();
-  }, [selectedCategory, filteredExpenses, filteredIncomes, selectedDate]);
+    const getTransactionDate = (transaction) => {
+      return transaction.expense_date || transaction.income_date;
+    };
 
-  const groupAndSumByDate = (transactions) => {
-    const groupedTransactions = {};
+    const groupAndSumByDate = (transactions) => {
+      const groupedTransactions = {};
 
-    transactions.forEach((transaction) => {
-      const date = transaction.date.split('T')[0];
-      if (!groupedTransactions[date]) {
-        groupedTransactions[date] = {
-          date,
-          totalAmount: 0
-        };
-      }
+      transactions.forEach((transaction) => {
+        const date = getTransactionDate(transaction).split('T')[0];
+        if (!groupedTransactions[date]) {
+          groupedTransactions[date] = {
+            date,
+            totalAmount: 0
+          };
+        }
 
-      groupedTransactions[date].totalAmount += transaction.amount;
-    });
+        groupedTransactions[date].totalAmount +=
+          transaction.expense_ampunt || transaction.income_amount;
+      });
 
-    return Object.values(groupedTransactions);
-  };
+      return Object.values(groupedTransactions);
+    };
+
+    const filterTransactions = (transactions) => {
+      return transactions.filter((transaction) => {
+        const transactionDate = new Date(getTransactionDate(transaction).split('T')[0]);
+        const isDateMatch = selectedDate
+          ? transactionDate.toDateString() === selectedDate.toDateString()
+          : true;
+        const isCategoryMatch = selectedCategory ? transaction.tag_id === selectedCategory : true;
+        return isDateMatch && isCategoryMatch;
+      });
+    };
+
+    const fetchData = async () => {
+      await fetchAndProcessTransactions(getExpense, setExpenses);
+      await fetchAndProcessTransactions(getIncome, setIncomes);
+    };
+
+    fetchData();
+  }, [selectedDate, selectedCategory]);
 
   const [doughnutData, setDoughnutData] = useState({
     labels: ['Incomes', 'Expenses'],
@@ -145,13 +136,15 @@ export const DoughnutChart = () => {
       ...prevData,
       datasets: [
         {
-          data: [incomes, expenses],
-          backgroundColor: ['#39d49b', '#f00a0a'],
-          borderColor: ['#39d49b', '#f00a0a']
+          ...prevData.datasets[0],
+          data: [calculateTotal(incomes), calculateTotal(expenses)]
         }
       ]
     }));
   }, [incomes, expenses]);
+
+  const calculateTotal = (transactions) =>
+    transactions.reduce((acc, transaction) => acc + transaction.totalAmount, 0);
 
   return (
     <Wrapper>
