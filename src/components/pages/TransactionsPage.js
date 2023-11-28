@@ -60,23 +60,22 @@ export const TransactionsPage = () => {
       try {
         setError(null);
         const expenses = await getExpense();
-        if (!expenses.ok) {
-          setError(expenses.message);
-        } else {
+        if (expenses) {
           calculateTotal(expenses.data, setTotalExpenses);
+        } else {
+          console.log('No expenses received from the server.');
         }
 
         const incomes = await getIncome();
-        if (!incomes.ok) {
-          setError(incomes.message);
-        } else {
+        if (incomes) {
           calculateTotal(incomes.data, setTotalIncomes);
+        } else {
+          console.log('No expenses received from the server.');
         }
 
-        if (expenses.data && incomes.data) {
-          const allTransactions = [...expenses.data, ...incomes.data];
-          setTransactions(allTransactions);
-        }
+        const allTransactions = [...expenses.data, ...incomes.data];
+        setTransactions(allTransactions);
+
       } catch (error) {
         console.error('Error fetching expenses:', error);
       }
@@ -127,14 +126,15 @@ export const TransactionsPage = () => {
           <Grid item xs={12}>
             <MCard>
               <List>
-                {transactions.map((transaction, index) => (
-                  <ExpenseItem
-                    key={index}
-                    desc={transaction.desc}
-                    date={transaction.date}
-                    amount={transaction.amount}
-                  />
-                ))}
+                {transactions.length > 0 &&
+                  transactions.map((transaction, index) => (
+                    <ExpenseItem
+                      key={index}
+                      desc={transaction.desc}
+                      date={transaction.date}
+                      amount={transaction.amount}
+                    />
+                  ))}
               </List>
             </MCard>
           </Grid>

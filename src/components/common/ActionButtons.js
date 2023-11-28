@@ -65,6 +65,12 @@ const ActionButtons = () => {
       try {
         const { data } = await getAllTag();
         setCategories(data);
+
+        if (data) {
+          setCategories(data);
+        } else {
+          console.log('No data received from the server.');
+        }
       } catch (err) {
         console.log(err.message);
       }
@@ -77,11 +83,15 @@ const ActionButtons = () => {
     <Wrapper>
       <MLabel>{t('menu.categories')}</MLabel>
       <StyledSelect value={selectedCategory} onChange={handleCategoryChange}>
-        {categories.map((category) => (
-          <StyledMenu key={category.tag_id} value={category.tag_id}>
-            {category.tag_name}
-          </StyledMenu>
-        ))}
+        {categories.length > 0 ? (
+          categories.map((category) => (
+            <StyledMenu key={category.tag_id} value={category.tag_id}>
+              {category.tag_name}
+            </StyledMenu>
+          ))
+        ) : (
+          <StyledMenu disabled>{t('categories.noCategories')}</StyledMenu>
+        )}
       </StyledSelect>
       <MButton onClick={handleDateChange}>{t('common.today')}</MButton>
     </Wrapper>
