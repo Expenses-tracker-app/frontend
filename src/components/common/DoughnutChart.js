@@ -54,55 +54,60 @@ export const DoughnutChart = () => {
   const { selectedDate, selectedCategory } = useContext(DateProvider);
   const [expenses, setExpenses] = useState([]);
   const [incomes, setIncomes] = useState([]);
-  const [filteredExpenses, setFilteredExpenses] = useState();
-  const [filteredIncomes, setFilteredIncomes] = useState();
+  const [filteredExpenses, setFilteredExpenses] = useState([]);
+  const [filteredIncomes, setFilteredIncomes] = useState([]);
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
         const expensesResponse = await getExpense();
-        const sortedExpenses =
-          expensesResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date)) || [];
-        setFilteredExpenses(sortedExpenses);
-
-        if (selectedDate && filteredExpenses !== []) {
-          setFilteredExpenses(
-            filteredExpenses.filter((expense) => {
-              const expenseDate = new Date(expense.date.split('T')[0]);
-              return expenseDate.toDateString() === selectedDate.toDateString();
-            })
+        if (expensesResponse) {
+          const sortedExpenses = expensesResponse.data.sort(
+            (a, b) => new Date(b.date) - new Date(a.date)
           );
-        }
+          setFilteredExpenses(sortedExpenses);
 
-        if (selectedCategory && filteredExpenses !== []) {
-          setFilteredExpenses(
-            filteredExpenses.filter((expense) => expense.tag_id === selectedCategory)
-          );
+          if (selectedDate) {
+            setFilteredExpenses(
+              filteredExpenses.filter((expense) => {
+                const expenseDate = new Date(expense.date.split('T')[0]);
+                return expenseDate.toDateString() === selectedDate.toDateString();
+              })
+            );
+          }
+
+          if (selectedCategory) {
+            setFilteredExpenses(
+              filteredExpenses.filter((expense) => expense.tag_id === selectedCategory)
+            );
+          }
+          const groupedExpenses = groupAndSumByDate(filteredExpenses);
+          setExpenses(groupedExpenses);
         }
-        const groupedExpenses = groupAndSumByDate(filteredExpenses);
-        setExpenses(groupedExpenses);
 
         const incomesResponse = await getIncome();
-        const sortedIncomes =
-          incomesResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date)) || [];
-        setFilteredIncomes(sortedIncomes);
-
-        if (selectedDate && filteredIncomes !== []) {
-          setFilteredIncomes(
-            filteredIncomes.filter((income) => {
-              const incomeDate = new Date(income.date.split('T')[0]);
-              return incomeDate.toDateString() === selectedDate.toDateString();
-            })
+        if (incomesResponse) {
+          const sortedIncomes = incomesResponse.data.sort(
+            (a, b) => new Date(b.date) - new Date(a.date)
           );
-        }
+          setFilteredIncomes(sortedIncomes);
+          if (selectedDate) {
+            setFilteredIncomes(
+              filteredIncomes.filter((income) => {
+                const incomeDate = new Date(income.date.split('T')[0]);
+                return incomeDate.toDateString() === selectedDate.toDateString();
+              })
+            );
+          }
 
-        if (selectedCategory && filteredIncomes !== []) {
-          setFilteredIncomes(
-            filteredIncomes.filter((income) => income.tag_id === selectedCategory)
-          );
+          if (selectedCategory) {
+            setFilteredIncomes(
+              filteredIncomes.filter((income) => income.tag_id === selectedCategory)
+            );
+          }
+          const groupedIncomes = groupAndSumByDate(filteredIncomes);
+          setIncomes(groupedIncomes);
         }
-        const groupedIncomes = groupAndSumByDate(filteredIncomes);
-        setIncomes(groupedIncomes);
       } catch (error) {
         console.error('Error fetching transactions:', error);
       }

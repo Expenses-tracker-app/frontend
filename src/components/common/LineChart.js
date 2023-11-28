@@ -90,44 +90,52 @@ export function LineChart() {
 
   const [expenses, setExpenses] = useState([]);
   const [incomes, setIncomes] = useState([]);
+  const [filteredExpenses, setFilteredExpenses] = useState([]);
+  const [filteredIncomes, setFilteredIncomes] = useState([]);
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
         const expensesResponse = await getExpense();
-        let filteredExpenses = expensesResponse.data;
-        if (selectedCategory) {
-          filteredExpenses = filteredExpenses.filter(
-            (expense) => expense.tag_id === selectedCategory
+        if (expensesResponse) {
+          setFilteredExpenses(expensesResponse.data);
+          if (selectedCategory) {
+            setFilteredExpenses(
+              filteredExpenses.filter((expense) => expense.tag_id === selectedCategory)
+            );
+          }
+          const sortedExpenses = filteredExpenses.sort((a, b) =>
+            selectedCategory
+              ? new Date(b.date) - new Date(a.date)
+              : a.category.localeCompare(b.category)
           );
+          const groupedExpenses = groupAndSumByDate(sortedExpenses);
+          setExpenses(groupedExpenses);
         }
-        const sortedExpenses = filteredExpenses.sort((a, b) =>
-          selectedCategory
-            ? new Date(b.date) - new Date(a.date)
-            : a.category.localeCompare(b.category)
-        );
-        const groupedExpenses = groupAndSumByDate(sortedExpenses);
-        setExpenses(groupedExpenses);
 
         const incomesResponse = await getIncome();
-        let filteredIncomes = incomesResponse.data;
-        if (selectedCategory) {
-          filteredIncomes = filteredIncomes.filter((income) => income.tag_id === selectedCategory);
+        if (incomesResponse) {
+          setFilteredIncomes(incomesResponse.data);
+          if (selectedCategory) {
+            setFilteredIncomes(
+              filteredIncomes.filter((income) => income.tag_id === selectedCategory)
+            );
+          }
+          const sortedIncomes = filteredIncomes.sort((a, b) =>
+            selectedCategory
+              ? new Date(b.date) - new Date(a.date)
+              : a.category.localeCompare(b.category)
+          );
+          const groupedIncomes = groupAndSumByDate(sortedIncomes);
+          setIncomes(groupedIncomes);
         }
-        const sortedIncomes = filteredIncomes.sort((a, b) =>
-          selectedCategory
-            ? new Date(b.date) - new Date(a.date)
-            : a.category.localeCompare(b.category)
-        );
-        const groupedIncomes = groupAndSumByDate(sortedIncomes);
-        setIncomes(groupedIncomes);
       } catch (error) {
         console.error('Error fetching transactions:', error);
       }
     };
 
     fetchTransactions();
-  }, [selectedCategory]);
+  }, [selectedCategory, filteredExpenses, filteredIncomes]);
 
   const groupAndSumByDate = (transactions) => {
     const groupedTransactions = {};

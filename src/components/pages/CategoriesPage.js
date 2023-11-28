@@ -110,7 +110,7 @@ export const CategoriesPage = () => {
 
         <MCard>
           <MBox>
-            {tags.length > 0 &&
+            {tags &&
               tags.map((tag) => (
                 <div key={tag.tag_id}>
                   <MButton onClick={() => handleOpenEditModal(tag)}>{tag.tag_name}</MButton>
