@@ -78,8 +78,7 @@ export const TransactionsPage = () => {
             ? convertResponseToArray(incomesResponse)
             : [];
         setIncomes(incomesData);
-
-        setTransactions([...expenses, ...incomes]);
+        setTransactions([...expensesData, ...incomesData]);
       } catch (fetchError) {
         setError(fetchError.message || 'Error fetching transactions');
         console.error(fetchError);
@@ -87,7 +86,7 @@ export const TransactionsPage = () => {
     };
 
     fetchTransactions();
-  }, [incomes, expenses]);
+  }, []);
 
   const toggleModal = () => setOpenModal(!openModal);
 
