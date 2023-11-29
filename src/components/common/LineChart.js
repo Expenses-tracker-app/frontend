@@ -115,9 +115,10 @@ const LineChart = ({ expenses, incomes }) => {
         .sort((a, b) => new Date(getTransactionDate(b)) - new Date(getTransactionDate(a)));
       return processedData;
     };
-
-    setExpenseSum(groupAndSumByDate(sortByCategoryAndDate(expenses)));
-    setIncomeSum(groupAndSumByDate(sortByCategoryAndDate(incomes)));
+    if (expenses.length !== 0 && incomes.length !== 0) {
+      setExpenseSum(groupAndSumByDate(sortByCategoryAndDate(expenses)));
+      setIncomeSum(groupAndSumByDate(sortByCategoryAndDate(incomes)));
+    }
   }, [selectedDate, selectedCategory, expenses, incomes]);
 
   useEffect(() => {

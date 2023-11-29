@@ -58,7 +58,9 @@ const Transactions = ({ expenses, incomes }) => {
       return processedData;
     };
 
-    setFilteredData(sortByCategoryAndDate);
+    if (expenses.length !== 0 && incomes.length !== 0) {
+      setFilteredData(sortByCategoryAndDate());
+    }
   }, [selectedDate, selectedCategory, expenses, incomes]);
 
   return (

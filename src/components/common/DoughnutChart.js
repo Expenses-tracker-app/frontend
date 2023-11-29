@@ -81,8 +81,10 @@ const DoughnutChart = ({ expenses, incomes }) => {
       return processedData;
     };
 
-    setExpenseSum(sortByCategoryAndDate(expenses));
-    setIncomeSum(sortByCategoryAndDate(incomes));
+    if (expenses.length !== 0 && incomes.length !== 0) {
+      setExpenseSum(sortByCategoryAndDate(expenses));
+      setIncomeSum(sortByCategoryAndDate(incomes));
+    }
   }, [selectedDate, selectedCategory, expenses, incomes]);
 
   const [doughnutData, setDoughnutData] = useState({
