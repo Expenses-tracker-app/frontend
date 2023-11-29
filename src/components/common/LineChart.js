@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect, useMemo } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Grid, styled } from '@mui/material';
 import { Line } from 'react-chartjs-2';
 import DateProvider from '../layout/DateContext';
-import { getExpense, getIncome } from '../../services/apiService';
-import { convertResponseToArray } from '../../utilities/helper';
+import PropTypes from 'prop-types';
 
 const Wrapper = styled(Grid)(({ theme }) => ({
   color: theme.palette.primary.main,
@@ -70,82 +69,86 @@ export const lineOptions = {
   }
 };
 
-export function LineChart() {
+const LineChart = ({ expenses, incomes }) => {
   const { selectedDate, selectedCategory } = useContext(DateProvider);
-  const [lineData, setLineData] = useState({ labels: [], datasets: [] });
-  const [transactions, setTransactions] = useState({ expenses: [], incomes: [] });
-  const isCurrentDate = selectedDate.toDateString() === new Date().toDateString();
-  const labels = useMemo(
-    () =>
-      isCurrentDate
-        ? ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
-        : ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-    [isCurrentDate]
-  );
+  const [lineData, setLineData] = useState({ labels: labels, datasets: [] });
+  const [expenseSum, setExpenseSum] = useState();
+  const [incomeSum, setIncomeSum] = useState();
+  const labels = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+
+  const getTransactionDate = (transaction) => {
+    return transaction.expense_date || transaction.income_date;
+  };
 
   useEffect(() => {
-    const getTransactionDate = (transaction) => {
-      return transaction.expense_date || transaction.income_date;
+    const groupAndSumByDate = (transactions) => {
+      const groupedTransactions = {};
+
+      transactions.forEach((transaction) => {
+        const date = getTransactionDate(transaction).split('T')[0];
+        if (!groupedTransactions[date]) {
+          groupedTransactions[date] = {
+            date,
+            totalAmount: 0
+          };
+        }
+
+        groupedTransactions[date].totalAmount +=
+          transaction.expense_ampunt || transaction.income_amount;
+      });
+
+      return Object.values(groupedTransactions);
     };
 
-    const processTransactions = (data) => {
-      return data
-        .filter((trx) => !selectedCategory || trx.tag_id === selectedCategory)
-        .sort((a, b) => new Date(getTransactionDate(b)) - new Date(getTransactionDate(a)))
-        .reduce((acc, trx) => {
-          const date = getTransactionDate(trx).split('T')[0];
-          if (!acc[date]) {
-            acc[date] = { date, totalAmount: 0 };
+    const sortByCategoryAndDate = (transactions) => {
+      const processedData = transactions
+        .filter((item) => {
+          if (!selectedDate && !selectedCategory) {
+            return processedData;
+          } else {
+            (!selectedDate ||
+              (new Date(getTransactionDate(item)).getFullYear() === selectedDate.getFullYear() &&
+                new Date(getTransactionDate(item)).getMonth() === selectedDate.getMonth())) &&
+              (!selectedCategory || item.tag_id === selectedCategory);
           }
-          acc[date].totalAmount += trx.expense_amount || trx.income_amount;
-          return acc;
-        }, {});
+        })
+        .sort((a, b) => new Date(getTransactionDate(b)) - new Date(getTransactionDate(a)));
+      return processedData;
     };
 
-    const fetchTransactions = async () => {
-      try {
-        const [expensesResponse, incomesResponse] = await Promise.all([getExpense(), getIncome()]);
-
-        const expensesData =
-          expensesResponse.status !== 404 ? convertResponseToArray(expensesResponse) : [];
-        const incomesData =
-          incomesResponse.status !== 404 ? convertResponseToArray(incomesResponse) : [];
-
-        setTransactions({
-          expenses: Object.values(processTransactions(expensesData)),
-          incomes: Object.values(processTransactions(incomesData))
-        });
-      } catch (error) {
-        console.error('Error fetching transactions:', error);
-      }
-    };
-
-    fetchTransactions();
-  }, [selectedCategory, selectedDate]);
+    setExpenseSum(groupAndSumByDate(sortByCategoryAndDate(expenses)));
+    setIncomeSum(groupAndSumByDate(sortByCategoryAndDate(incomes)));
+  }, [selectedDate, selectedCategory, expenses, incomes]);
 
   useEffect(() => {
     setLineData({
-      labels,
       datasets: [
         {
           label: 'Incomes',
-          data: transactions.incomes,
+          data: incomeSum,
           borderColor: '#39d49b',
           backgroundColor: '#39d49b'
         },
         {
           label: 'Expenses',
-          data: transactions.expenses,
+          data: expenseSum,
           borderColor: '#f00a0a',
           backgroundColor: '#f00a0a'
         }
       ]
     });
-  }, [transactions, labels]);
+  }, [incomeSum, expenseSum]);
 
   return (
     <Wrapper>
       <Line options={lineOptions} data={lineData} />
     </Wrapper>
   );
-}
+};
+
+LineChart.propTypes = {
+  expenses: PropTypes.object,
+  incomes: PropTypes.object
+};
+
+export default LineChart;
