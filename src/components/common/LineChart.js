@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { Grid, styled } from '@mui/material';
 import { Line } from 'react-chartjs-2';
 import DateProvider from '../layout/DateContext';
@@ -71,10 +71,14 @@ export const lineOptions = {
 
 const LineChart = ({ expenses, incomes }) => {
   const { selectedDate, selectedCategory } = useContext(DateProvider);
-  const [lineData, setLineData] = useState({ labels: labels, datasets: [] });
   const [expenseSum, setExpenseSum] = useState();
   const [incomeSum, setIncomeSum] = useState();
-  const labels = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+
+  const labels = useMemo(() => {
+    return ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+  }, []);
+
+  const [lineData, setLineData] = useState({ labels, datasets: [] });
 
   const getTransactionDate = (transaction) => {
     return transaction.expense_date || transaction.income_date;
@@ -123,6 +127,7 @@ const LineChart = ({ expenses, incomes }) => {
 
   useEffect(() => {
     setLineData({
+      labels: labels,
       datasets: [
         {
           label: 'Incomes',
@@ -138,7 +143,7 @@ const LineChart = ({ expenses, incomes }) => {
         }
       ]
     });
-  }, [incomeSum, expenseSum]);
+  }, [incomeSum, expenseSum, labels]);
 
   return (
     <Wrapper>
@@ -148,8 +153,8 @@ const LineChart = ({ expenses, incomes }) => {
 };
 
 LineChart.propTypes = {
-  expenses: PropTypes.object,
-  incomes: PropTypes.object
+  expenses: PropTypes.array,
+  incomes: PropTypes.array
 };
 
 export default LineChart;

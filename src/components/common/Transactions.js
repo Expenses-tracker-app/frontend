@@ -96,8 +96,8 @@ const Transactions = ({ expenses, incomes }) => {
 };
 
 Transactions.propTypes = {
-  expenses: PropTypes.object,
-  incomes: PropTypes.object
+  expenses: PropTypes.array,
+  incomes: PropTypes.array
 };
 
 export default Transactions;

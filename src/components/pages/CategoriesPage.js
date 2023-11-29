@@ -77,21 +77,21 @@ export const CategoriesPage = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
   const { t } = useTranslation();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getAllTag();
-        if (response) {
-          const tagsArray = convertResponseToArray(response);
-          setTags(tagsArray);
-        } else {
-          console.log('No data received from the server.');
-        }
-      } catch (err) {
-        console.error('Error fetching tags:', err.message);
+  const fetchData = async () => {
+    try {
+      const response = await getAllTag();
+      if (response) {
+        const tagsArray = convertResponseToArray(response);
+        setTags(tagsArray);
+      } else {
+        console.log('No data received from the server.');
       }
-    };
+    } catch (err) {
+      console.error('Error fetching tags:', err.message);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -103,6 +103,7 @@ export const CategoriesPage = () => {
   const handleCloseModal = () => {
     setOpenEditModal(false);
     setOpenAddModal(false);
+    fetchData();
   };
 
   return (

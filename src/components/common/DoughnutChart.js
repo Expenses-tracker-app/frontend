@@ -82,8 +82,8 @@ const DoughnutChart = ({ expenses, incomes }) => {
     };
 
     if (expenses.length !== 0 && incomes.length !== 0) {
-      setExpenseSum(sortByCategoryAndDate(expenses));
-      setIncomeSum(sortByCategoryAndDate(incomes));
+      setExpenseSum(calculateTotal(sortByCategoryAndDate(expenses)));
+      setIncomeSum(calculateTotal(sortByCategoryAndDate(incomes)));
     }
   }, [selectedDate, selectedCategory, expenses, incomes]);
 
@@ -103,7 +103,7 @@ const DoughnutChart = ({ expenses, incomes }) => {
       datasets: [
         {
           ...prevData.datasets[0],
-          data: [calculateTotal(expenseSum), calculateTotal(incomeSum)]
+          data: [expenseSum, incomeSum]
         }
       ]
     }));
@@ -117,8 +117,8 @@ const DoughnutChart = ({ expenses, incomes }) => {
 };
 
 DoughnutChart.propTypes = {
-  expenses: PropTypes.object,
-  incomes: PropTypes.object
+  expenses: PropTypes.array,
+  incomes: PropTypes.array
 };
 
 export default DoughnutChart;
