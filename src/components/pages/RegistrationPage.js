@@ -62,41 +62,44 @@ export const RegistrationPage = () => {
   const { t } = useTranslation();
   const [alert, setAlert] = useState(null);
   const [error, setError] = useState(null);
-  const [newPerson, setNewPerson] = useState({ email: '', password: '', retypePassword: '' });
   const [passwordMismatch, setPasswordMismatch] = useState(false);
   const [registrationDone, setRegistrationDone] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    retypePassword: ''
+  });
 
-  const handleEmailChange = (e) => {
-    setNewPerson({ ...newPerson, email: e.target.value });
-  };
-
-  const handlePasswordChange = (e) => {
-    setNewPerson({ ...newPerson, password: e.target.value });
-  };
-
-  const handleRetypePasswordChange = (e) => {
-    setNewPerson({ ...newPerson, retypePassword: e.target.value });
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value
+    });
   };
 
   const handleSubmit = async () => {
     try {
-      if (newPerson.password === newPerson.retypePassword && newPerson.password !== '') {
-        setNewPerson({ email: '', password: '', retypePassword: '' });
+      if (formData.password === formData.retypePassword && formData.password !== '') {
         setPasswordMismatch(false);
+        const passwordRegex = /^(?=.*[a-zA-Z]{5,})(?=.*\d).*$/;
 
-        const email = newPerson.email;
-        const password = newPerson.password;
-        const username = newPerson.email;
+        if (passwordRegex.test(formData.password)) {
+          const user = {
+            email: formData.email,
+            password: formData.password
+          };
 
-        const user = { email, password, username };
-        const { status, message } = await createUser(user);
-
-        if (status === 200) {
-          setRegistrationDone(true);
-          setAlert(message || t('registration.success'));
-          navigate(paths.login.path);
+          createUser(user)
+            .then((res) => {
+              setRegistrationDone(true);
+              setAlert(res || t('registration.success'));
+              navigate(paths.login.path);
+            })
+            .catch((err) => {
+              setError(err.message || t('errors.registrationFailed'));
+            });
         } else {
-          setError(message || t('errors.registrationFailed'));
+          setError('Password must have at least 5 letters, 1 number, and no special characters.');
         }
       } else {
         setPasswordMismatch(true);
@@ -116,25 +119,15 @@ export const RegistrationPage = () => {
           <FormLabel>
             <Typography variant="h6">{t('registration.email')}</Typography>
           </FormLabel>
-          <InputLine id="settings_email" value={newPerson.email} onChange={handleEmailChange} />
+          <InputLine value={formData.email} onChange={handleChange} />
           <FormLabel>
             <Typography variant="h6">{t('registration.password')}</Typography>
           </FormLabel>
-          <InputLine
-            id="settings_psw"
-            type="password"
-            value={newPerson.password}
-            onChange={handlePasswordChange}
-          />
+          <InputLine type="password" value={formData.password} onChange={handleChange} />
           <FormLabel>
             <Typography variant="h6">{t('registration.retypePassword')}</Typography>
           </FormLabel>
-          <InputLine
-            id="settings_retype_psw"
-            type="password"
-            value={newPerson.retypePassword}
-            onChange={handleRetypePasswordChange}
-          />
+          <InputLine type="password" value={formData.retypePassword} onChange={handleChange} />
 
           <StyledButton onClick={handleSubmit}>
             <Typography variant="h6">{t('registration.save')}</Typography>
