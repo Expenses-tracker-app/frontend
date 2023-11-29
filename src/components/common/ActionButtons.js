@@ -5,13 +5,16 @@ import { useTranslation } from 'react-i18next';
 import { getAllTag } from '../../services/apiService';
 import { convertResponseToArray } from '../../utilities/helper';
 
-const Wrapper = styled(Container)(() => ({
+const Wrapper = styled(Container)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
   width: '490px',
-  margin: '-5px auto -5px auto'
+  margin: '-5px auto -5px auto',
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column'
+  }
 }));
 
 const MLabel = styled(InputLabel)(() => ({
@@ -42,7 +45,10 @@ const MButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.blue,
   border: `1px solid ${theme.palette.primary.blue}`,
   width: '25%',
-  fontSize: '15px'
+  fontSize: '15px',
+  [theme.breakpoints.down('sm')]: {
+    width: '98%'
+  }
 }));
 
 const ActionButtons = () => {
