@@ -73,7 +73,6 @@ export const lineOptions = {
 export function LineChart() {
   const { selectedDate, selectedCategory } = useContext(DateProvider);
   const [lineData, setLineData] = useState({ labels: [], datasets: [] });
-
   const [transactions, setTransactions] = useState({ expenses: [], incomes: [] });
   const isCurrentDate = selectedDate.toDateString() === new Date().toDateString();
   const labels = useMemo(

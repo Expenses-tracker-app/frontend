@@ -73,7 +73,6 @@ export const DoughnutChart = () => {
           ) || [];
         transactions = filterTransactions(transactions);
         const groupedTransactions = groupAndSumByDate(transactions);
-        setTransactions(groupedTransactions);
       } catch (error) {
         console.error('Error fetching transactions:', error);
       }
