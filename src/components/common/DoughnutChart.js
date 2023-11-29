@@ -53,8 +53,8 @@ const doughnutOptions = {
 
 const DoughnutChart = ({ expenses, incomes }) => {
   const { selectedDate, selectedCategory } = useContext(DateProvider);
-  const [expenseSum, setExpenseSum] = useState();
-  const [incomeSum, setIncomeSum] = useState();
+  const [expenseSum, setExpenseSum] = useState(0);
+  const [incomeSum, setIncomeSum] = useState(0);
 
   const getTransactionDate = (transaction) => {
     return transaction.expense_date || transaction.income_date;

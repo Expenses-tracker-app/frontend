@@ -71,8 +71,8 @@ export const lineOptions = {
 
 const LineChart = ({ expenses, incomes }) => {
   const { selectedDate, selectedCategory } = useContext(DateProvider);
-  const [expenseSum, setExpenseSum] = useState();
-  const [incomeSum, setIncomeSum] = useState();
+  const [expenseSum, setExpenseSum] = useState(0);
+  const [incomeSum, setIncomeSum] = useState(0);
 
   const labels = useMemo(() => {
     return ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
