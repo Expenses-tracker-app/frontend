@@ -29,7 +29,8 @@
     "expenseError": "Saving the expense failed",
     "expenseDelete": "Deleting of the expense failed",
     "categoryError": "Saving the category failed",
-    "categoryDelete": "Deleting the category failed"
+    "categoryDelete": "Deleting the category failed",
+    "userUpdateError": "User could not be updated"
   },
   "user": {
     "login": "Login",
