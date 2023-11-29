@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (isLoggedIn && location.pathname === paths.login.path) {
       navigate(paths.home.path);
-    } else if (!isLoggedIn) {
+    } else if (!isLoggedIn && location.pathname !== paths.registration.path) {
       navigate(paths.login.path);
     }
   }, [isLoggedIn, navigate, location.pathname]);
