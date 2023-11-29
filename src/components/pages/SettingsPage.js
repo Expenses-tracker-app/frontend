@@ -62,6 +62,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 export const SettingsPage = () => {
   const { t } = useTranslation();
   const [error, setError] = useState(null);
+  const [updated, setUpdated] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -82,6 +83,7 @@ export const SettingsPage = () => {
           updateUser(user)
             .then((res) => {
               console.log(res);
+              setUpdated(true);
             })
             .catch((err) => {
               setError(err.message);
@@ -95,6 +97,7 @@ export const SettingsPage = () => {
       }
     }
   };
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -125,6 +128,12 @@ export const SettingsPage = () => {
           {error && (
             <MuiAlert severity="error" sx={{ marginTop: 2 }} variant="filled">
               {error}
+            </MuiAlert>
+          )}
+
+          {updated && (
+            <MuiAlert severity="success" sx={{ marginTop: 2 }} variant="filled">
+              {updated}
             </MuiAlert>
           )}
         </FormGroup>
