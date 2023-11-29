@@ -71,24 +71,30 @@ export const SettingsPage = () => {
   const handleSave = () => {
     if (formData.password === formData.retypePassword) {
       if (formData.email && formData.password) {
-        const user = {
-          email: formData.email,
-          password: formData.password
-        };
-        updateUser(user)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            setError(err.message);
-            console.err(err.message || t('errors.userUpdateError'));
-          });
+        const passwordRegex = /^(?=.*[a-zA-Z]{5,})(?=.*\d).*$/;
+
+        if (passwordRegex.test(formData.password)) {
+          const user = {
+            email: formData.email,
+            password: formData.password
+          };
+
+          updateUser(user)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              setError(err.message);
+              console.err(err.message || t('errors.userUpdateError'));
+            });
+        } else {
+          setError('Password must have at least 5 letters, 1 number, and no special characters.');
+        }
+      } else {
+        setError('Passwords do not match');
       }
-    } else {
-      setError('Passwords do not match');
     }
   };
-
   const handleChange = (event) => {
     setFormData({
       ...formData,
