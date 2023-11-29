@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { updateUser } from '../../services/apiService';
 
 import {
   Button,
@@ -10,9 +10,9 @@ import {
   FormLabel,
   Input,
   FormGroup,
-  Typography
+  Typography,
+  Alert as MuiAlert
 } from '@mui/material';
-import paths from '../../utilities/pathnames';
 
 // Styles
 const Wrapper = styled(Container)(() => ({
@@ -59,13 +59,42 @@ const StyledButton = styled(Button)(({ theme }) => ({
   }
 }));
 
-const StyledLink = styled(Link)(() => ({
-  textDecoration: 'none',
-  margin: 'auto'
-}));
-
 export const SettingsPage = () => {
   const { t } = useTranslation();
+  const [error, setError] = useState(null);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    retypePassword: ''
+  });
+
+  const handleSave = () => {
+    if (formData.password === formData.retypePassword) {
+      if (formData.email && formData.password) {
+        const user = {
+          email: formData.email,
+          password: formData.password
+        };
+        updateUser(user)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            setError(err.message);
+            console.err(err.message || t('errors.userUpdateError'));
+          });
+      }
+    } else {
+      setError('Passwords do not match');
+    }
+  };
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value
+    });
+  };
 
   return (
     <Wrapper>
@@ -75,21 +104,23 @@ export const SettingsPage = () => {
           <FormLabel>
             <Typography variant="h6">{t('settings.changeEmail')}</Typography>
           </FormLabel>
-          <InputLine id="settings_email" />
+          <InputLine type="email" value={formData.email} onChange={handleChange} />
           <FormLabel>
             <Typography variant="h6">{t('settings.changePassword')}</Typography>
           </FormLabel>
-          <InputLine id="settings_psw" />
+          <InputLine type="text" value={formData.password} onChange={handleChange} />
           <FormLabel>
-            <Typography variant="h6">{t('settings.retypePassword')}</Typography>
+            <InputLine type="text" value={formData.retypePassword} onChange={handleChange} />
           </FormLabel>
-          <InputLine id="settings_retype_psw" />
+          <StyledButton onClick={handleSave}>
+            <Typography variant="h6">{t('settings.save')}</Typography>
+          </StyledButton>
 
-          <StyledLink to={paths.settings.path}>
-            <StyledButton>
-              <Typography variant="h6">{t('settings.save')}</Typography>
-            </StyledButton>
-          </StyledLink>
+          {error && (
+            <MuiAlert severity="error" sx={{ marginTop: 2 }} variant="filled">
+              {error}
+            </MuiAlert>
+          )}
         </FormGroup>
       </FormWrapper>
     </Wrapper>
