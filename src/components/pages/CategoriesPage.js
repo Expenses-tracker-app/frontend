@@ -6,6 +6,7 @@ import { Button, styled, Typography, Container, Card, Box } from '@mui/material'
 import { useTranslation } from 'react-i18next';
 import EditCategoryModal from '../modals/EditCategoryModal';
 import AddNewCategoryModal from '../modals/AddNewCategoryModal';
+import { convertResponseToArray } from '../../utilities/helper';
 
 const Wrapper = styled(Container)(() => ({
   display: 'flex',
@@ -79,14 +80,15 @@ export const CategoriesPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await getAllTag();
-        if (data) {
-          setTags(data);
+        const response = await getAllTag();
+        if (response) {
+          const tagsArray = convertResponseToArray(response);
+          setTags(tagsArray);
         } else {
           console.log('No data received from the server.');
         }
       } catch (err) {
-        console.log(err.message);
+        console.error('Error fetching tags:', err.message);
       }
     };
 
