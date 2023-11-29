@@ -75,6 +75,7 @@ export const CategoriesPage = () => {
   const [category, setCategory] = useState(null);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
+  const [updateCategories, setUpdateCategories] = useState(false);
   const { t } = useTranslation();
 
   const fetchData = async () => {
@@ -93,7 +94,7 @@ export const CategoriesPage = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [updateCategories]);
 
   const handleOpenEditModal = (tag) => {
     setCategory(tag);
@@ -103,7 +104,7 @@ export const CategoriesPage = () => {
   const handleCloseModal = () => {
     setOpenEditModal(false);
     setOpenAddModal(false);
-    fetchData();
+    setUpdateCategories((prev) => !prev);
   };
 
   return (

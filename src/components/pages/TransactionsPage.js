@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ExpenseItem from '../common/TransactionItem';
+import TransactionItem from '../common/TransactionItem';
 import TotalBalanceItem from '../common/TotalBalanceItem';
 import { useTranslation } from 'react-i18next';
 import {
@@ -14,6 +14,7 @@ import {
   Alert as MuiAlert
 } from '@mui/material';
 import AddNewExpenseModal from '../modals/AddNewTransactionModal';
+import EditTransactionModal from '../modals/EditCategoryModal';
 import { getExpense, getIncome } from '../../services/apiService';
 import { convertResponseToArray } from '../../utilities/helper';
 
@@ -53,11 +54,15 @@ const calculateTotal = (transactions) =>
 
 export const TransactionsPage = () => {
   const [error, setError] = useState(null);
-  const [openModal, setOpenModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
   const [transactions, setTransactions] = useState([]);
+  const [transaction, setTransaction] = useState([]);
+  const [updateTransaction, setUpdateTransactions] = useState(false);
 
   const [expenses, setExpenses] = useState([]);
   const [incomes, setIncomes] = useState([]);
+
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -86,14 +91,23 @@ export const TransactionsPage = () => {
     };
 
     fetchTransactions();
-  }, []);
-
-  const toggleModal = () => setOpenModal(!openModal);
+  }, [updateTransaction]);
 
   const amount = calculateTotal(incomes) - calculateTotal(expenses);
   const percentage = calculateTotal(expenses)
     ? calculateTotal(incomes) / calculateTotal(expenses)
     : 0;
+
+  const handleOpenEditModal = (transaction) => {
+    setTransaction(transaction);
+    setOpenEditModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenEditModal(false);
+    setOpenAddModal(false);
+    setUpdateTransactions((prev) => !prev);
+  };
 
   return (
     <Wrapper>
@@ -107,13 +121,20 @@ export const TransactionsPage = () => {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <MCard>
-              <MButton variant="text" onClick={toggleModal}>
+              <MButton variant="text" onClick={() => setOpenAddModal(true)}>
                 <Typography variant="h2">{t('transactions.addNew')}</Typography>
               </MButton>
             </MCard>
           </Grid>
 
-          <AddNewExpenseModal open={openModal} onClose={toggleModal} />
+          {transaction !== null && (
+            <EditTransactionModal
+              open={openEditModal}
+              onClose={handleCloseModal}
+              transaction={transaction}
+            />
+          )}
+          <AddNewExpenseModal open={openAddModal} onClose={handleCloseModal} />
 
           <Grid item xs={6}>
             <MCard>
@@ -142,12 +163,13 @@ export const TransactionsPage = () => {
                       : transaction.income_amount;
 
                     return (
-                      <ExpenseItem
+                      <TransactionItem
                         key={id}
                         desc={desc}
                         date={date}
                         amount={amount}
                         isExpense={isExpense}
+                        onClick={() => handleOpenEditModal(transaction)}
                       />
                     );
                   })}
