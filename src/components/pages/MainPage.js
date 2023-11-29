@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, styled, Typography, Container } from '@mui/material';
 import 'react-calendar/dist/Calendar.css';
-import { LineChart } from '../common/LineChart';
+import LineChart from '../common/LineChart';
 import { MCalendar } from '../common/Calendar';
-import { DoughnutChart } from '../common/DoughnutChart';
-import { Transactions } from '../common/Transactions';
+import DoughnutChart from '../common/DoughnutChart';
+import Transactions from '../common/Transactions';
 import { Link } from 'react-router-dom';
 import paths from '../../utilities/pathnames';
 import ActionButtons from '../common/ActionButtons';
+import { getExpense, getIncome } from '../../services/apiService';
+import { convertResponseToArray } from '../../utilities/helper';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -95,6 +97,8 @@ const MLink = styled(Link)(({ theme }) => ({
 export const MainPage = () => {
   const { t } = useTranslation();
   const [greeting, setGreeting] = useState('');
+  const [expenses, setExpenses] = useState([]);
+  const [incomes, setIncomes] = useState([]);
 
   useEffect(() => {
     const currentTime = new Date().getHours();
@@ -111,6 +115,35 @@ export const MainPage = () => {
     setGreeting(newGreeting);
   }, []);
 
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const [expensesResponse, incomesResponse] = await Promise.all([getExpense(), getIncome()]);
+
+        if (expensesResponse.status === 404 || incomesResponse.status === 404) {
+          console.error('Error fetching transactions: status code 404');
+        }
+
+        const expensesData =
+          expensesResponse && expensesResponse.status !== 404
+            ? convertResponseToArray(expensesResponse)
+            : [];
+        setExpenses(expensesData);
+
+        const incomesData =
+          incomesResponse && incomesResponse.status !== 404
+            ? convertResponseToArray(incomesResponse)
+            : [];
+
+        setIncomes(incomesData);
+      } catch (error) {
+        console.error('Error fetching transactions:', error);
+      }
+    };
+
+    fetchTransactions();
+  }, []);
+
   return (
     <Wrapper>
       <MTitle>
@@ -118,15 +151,15 @@ export const MainPage = () => {
         <Welcome variant="h3">{t('specific.welcome')}</Welcome>
       </MTitle>
       <div>
-        <LineChart />
+        <LineChart expenses={expenses} incomes={incomes} />
         <Box>
           <MCalendar />
-          <DoughnutChart />
+          <DoughnutChart expenses={expenses} incomes={incomes} />
         </Box>
         <MBox>
           <ActionButtons />
           <MLink to={paths.transactions.path}>
-            <Transactions />
+            <Transactions expenses={expenses} incomes={incomes} />
           </MLink>
         </MBox>
       </div>

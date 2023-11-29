@@ -55,8 +55,9 @@ export const TransactionsPage = () => {
   const [error, setError] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [transactions, setTransactions] = useState([]);
-  const [totalExpenses, setTotalExpenses] = useState(0);
-  const [totalIncomes, setTotalIncomes] = useState(0);
+
+  const [expenses, setExpenses] = useState([]);
+  const [incomes, setIncomes] = useState([]);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -70,15 +71,15 @@ export const TransactionsPage = () => {
             ? convertResponseToArray(expensesResponse)
             : [];
 
+        setExpenses(expensesData);
+
         const incomesData =
           incomesResponse && incomesResponse.status !== 404
             ? convertResponseToArray(incomesResponse)
             : [];
+        setIncomes(incomesData);
 
-        setTotalExpenses(calculateTotal(expensesData));
-        setTotalIncomes(calculateTotal(incomesData));
-
-        setTransactions([...expensesData, ...incomesData]);
+        setTransactions([...expenses, ...incomes]);
       } catch (fetchError) {
         setError(fetchError.message || 'Error fetching transactions');
         console.error(fetchError);
@@ -86,12 +87,14 @@ export const TransactionsPage = () => {
     };
 
     fetchTransactions();
-  }, []);
+  }, [incomes, expenses]);
 
   const toggleModal = () => setOpenModal(!openModal);
 
-  const amount = totalIncomes - totalExpenses;
-  const percentage = totalExpenses ? totalIncomes / totalExpenses : 0;
+  const amount = calculateTotal(incomes) - calculateTotal(expenses);
+  const percentage = calculateTotal(expenses)
+    ? calculateTotal(incomes) / calculateTotal(expenses)
+    : 0;
 
   return (
     <Wrapper>

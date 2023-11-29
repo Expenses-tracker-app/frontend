@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { styled, ListItemButton, Typography } from '@mui/material';
 import { ArcElement } from 'chart.js';
 import { Chart as ChartJS } from 'chart.js';

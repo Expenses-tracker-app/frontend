@@ -3,8 +3,7 @@ import TransactionItem from './TransactionItem';
 import { useTranslation } from 'react-i18next';
 import { styled, Typography, Grid, List } from '@mui/material';
 import DateProvider from '../layout/DateContext';
-import { getExpense, getIncome } from '../../services/apiService';
-import { convertResponseToArray } from '../../utilities/helper';
+import PropTypes from 'prop-types';
 
 const Wrapper = styled(Grid)(({ theme }) => ({
   justifyContent: 'center',
@@ -31,9 +30,9 @@ const Title = styled(Typography)(() => ({
   fontSize: '18px'
 }));
 
-export const Transactions = () => {
+const Transactions = ({ expenses, incomes }) => {
   const { t } = useTranslation();
-  const { selectedDate } = useContext(DateProvider);
+  const { selectedDate, selectedCategory } = useContext(DateProvider);
   const [filteredData, setFilteredData] = useState([]);
 
   // Utility function to extract the correct date field
@@ -42,36 +41,27 @@ export const Transactions = () => {
   };
 
   useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        const [expensesResponse, incomesResponse] = await Promise.all([getExpense(), getIncome()]);
-
-        const expensesData =
-          expensesResponse && expensesResponse.status !== 404
-            ? convertResponseToArray(expensesResponse)
-            : [];
-
-        const incomesData =
-          incomesResponse && incomesResponse.status !== 404
-            ? convertResponseToArray(incomesResponse)
-            : [];
-
-        const combinedData = [...expensesData, ...incomesData];
-        const processedData = combinedData
-          .filter(
-            (item) =>
-              !selectedDate ||
-              new Date(getTransactionDate(item)).toDateString() === selectedDate.toDateString()
-          )
-          .sort((a, b) => new Date(getTransactionDate(b)) - new Date(getTransactionDate(a)));
-        setFilteredData(processedData);
-      } catch (error) {
-        console.error('Error fetching transactions:', error);
-      }
+    const sortByCategoryAndDate = () => {
+      const today = new Date();
+      const processedData = [...expenses, ...incomes]
+        .filter((item) => {
+          if (!selectedDate && !selectedCategory) {
+            const transactionDate = new Date(getTransactionDate(item));
+            return transactionDate.toDateString() === today.toDateString();
+          } else {
+            (!selectedDate ||
+              new Date(getTransactionDate(item)).toDateString() === selectedDate.toDateString()) &&
+              (!selectedCategory || item.tag_id === selectedCategory);
+          }
+        })
+        .sort((a, b) => new Date(getTransactionDate(b)) - new Date(getTransactionDate(a)));
+      return processedData;
     };
 
-    fetchTransactions();
-  }, [selectedDate]);
+    if (expenses.length !== 0 && incomes.length !== 0) {
+      setFilteredData(sortByCategoryAndDate());
+    }
+  }, [selectedDate, selectedCategory, expenses, incomes]);
 
   return (
     <Wrapper>
@@ -104,3 +94,10 @@ export const Transactions = () => {
     </Wrapper>
   );
 };
+
+Transactions.propTypes = {
+  expenses: PropTypes.object,
+  incomes: PropTypes.object
+};
+
+export default Transactions;

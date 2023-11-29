@@ -67,7 +67,6 @@ const ActionButtons = () => {
         const response = await getAllTag();
         if (response.status === 404) {
           console.log('No categories found');
-
         }
         const data = convertResponseToArray(response) || [];
         setCategories(data);
