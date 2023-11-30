@@ -159,11 +159,10 @@ const AddNewExpenseModal = ({ open, onClose }) => {
             : await createExpense(transactionData);
 
         console.log(response);
+        onClose();
       } catch (err) {
         setError(err.message || t(`errors.${formData.type}Error`));
       }
-
-      onClose();
     } else {
       setError(t('errors.formIncomplete'));
     }
