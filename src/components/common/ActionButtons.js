@@ -24,7 +24,6 @@ const MLabel = styled(InputLabel)(() => ({
 const StyledSelect = styled(Select)(({ theme }) => ({
   background: `${theme.palette.grey[600]} !important`,
   color: `${theme.palette.primary.blue} !important`,
-  border: `1 px solid ${theme.palette.primary.blue} !important`,
   width: '225px',
   borderRadius: '35px',
   margin: '10px auto 10px 0px',
@@ -33,12 +32,16 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   },
   '& .MuiSelect-icon': {
     color: `${theme.palette.primary.blue} !important`
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '98%',
+    maxWidth: '135px'
   }
 }));
 
 const StyledMenu = styled(MenuItem)(({ theme }) => ({
-  background: theme.palette.primary.blue,
-  color: theme.palette.primary.main
+  background: theme.palette.primary.main,
+  color: theme.palette.primary.blue
 }));
 
 const MButton = styled(Button)(({ theme }) => ({
@@ -48,7 +51,8 @@ const MButton = styled(Button)(({ theme }) => ({
   width: '25%',
   fontSize: '15px',
   [theme.breakpoints.down('sm')]: {
-    width: '98%'
+    width: '98%',
+    maxWidth: '235px'
   }
 }));
 
