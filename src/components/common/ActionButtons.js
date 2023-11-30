@@ -24,6 +24,7 @@ const MLabel = styled(InputLabel)(() => ({
 const StyledSelect = styled(Select)(({ theme }) => ({
   background: `${theme.palette.grey[600]} !important`,
   color: `${theme.palette.primary.blue} !important`,
+  border: `1 px solid ${theme.palette.primary.blue} !important`,
   width: '225px',
   borderRadius: '35px',
   margin: '10px auto 10px 0px',
@@ -36,8 +37,8 @@ const StyledSelect = styled(Select)(({ theme }) => ({
 }));
 
 const StyledMenu = styled(MenuItem)(({ theme }) => ({
-  background: theme.palette.primary.contrastText,
-  color: theme.palette.primary.blue
+  background: theme.palette.primary.blue,
+  color: theme.palette.primary.main
 }));
 
 const MButton = styled(Button)(({ theme }) => ({
