@@ -15,7 +15,8 @@ const Wrapper = styled(Container)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',
     with: '95%',
-    margin: 'auto'
+    margin: 'auto',
+    justifyContent: 'center'
   }
 }));
 
@@ -26,7 +27,7 @@ const MLabel = styled(InputLabel)(() => ({
 const StyledSelect = styled(Select)(({ theme }) => ({
   background: `${theme.palette.grey[600]} !important`,
   color: `${theme.palette.primary.blue} !important`,
-  width: '225px',
+  width: '250px',
   borderRadius: '35px',
   margin: '10px auto 10px 0px',
   '& .MuiSelect-select': {
@@ -59,7 +60,7 @@ const MButton = styled(Button)(({ theme }) => ({
   fontSize: '15px',
   [theme.breakpoints.down('sm')]: {
     width: '50%',
-    margin: 'auto auto 10px auto'
+    margin: 'auto'
   }
 }));
 
