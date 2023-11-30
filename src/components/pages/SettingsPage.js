@@ -61,17 +61,21 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
 export const SettingsPage = () => {
   const { t } = useTranslation();
-  const [error, setError] = useState(null);
-  const [updated, setUpdated] = useState(false);
+  const [alert, setAlert] = useState('');
+  const [error, setError] = useState('');
+  const [registrationDone, setRegistrationDone] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     retypePassword: ''
   });
 
-  const handleSave = () => {
-    if (formData.password === formData.retypePassword) {
-      if (formData.email && formData.password) {
+  const handleSubmit = async () => {
+    try {
+      setAlert('');
+      setRegistrationDone('');
+      setError('');
+      if (formData.password === formData.retypePassword && formData.password !== '') {
         const passwordRegex = /^(?=.*[a-zA-Z]{5,})(?=.*\d).*$/;
 
         if (passwordRegex.test(formData.password)) {
@@ -82,19 +86,19 @@ export const SettingsPage = () => {
 
           updateUser(user)
             .then((res) => {
-              console.log(res);
-              setUpdated(true);
+              setRegistrationDone(res || t('registration.success'));
             })
             .catch((err) => {
-              setError(err.message);
-              console.err(err.message || t('errors.userUpdateError'));
+              setError(err.message || t('errors.registrationFailed'));
             });
         } else {
-          setError('Password must have at least 5 letters, 1 number, and no special characters.');
+          setAlert(t('errors.passwordProtection'));
         }
       } else {
-        setError('Passwords do not match');
+        setAlert(t('errors.passwordMismatch'));
       }
+    } catch (err) {
+      setError(err.message || t('errors.registrationError'));
     }
   };
 
@@ -133,19 +137,25 @@ export const SettingsPage = () => {
             onChange={handleChange}
           />
 
-          <StyledButton onClick={handleSave}>
+          <StyledButton onClick={handleSubmit}>
             <Typography variant="h6">{t('settings.save')}</Typography>
           </StyledButton>
+
+          {registrationDone && (
+            <MuiAlert severity="success" sx={{ marginTop: 2 }} variant="filled">
+              {registrationDone}
+            </MuiAlert>
+          )}
+
+          {alert && (
+            <MuiAlert severity="warning" sx={{ marginTop: 2 }} variant="filled">
+              {alert}
+            </MuiAlert>
+          )}
 
           {error && (
             <MuiAlert severity="error" sx={{ marginTop: 2 }} variant="filled">
               {error}
-            </MuiAlert>
-          )}
-
-          {updated && (
-            <MuiAlert severity="success" sx={{ marginTop: 2 }} variant="filled">
-              {updated}
             </MuiAlert>
           )}
         </FormGroup>
