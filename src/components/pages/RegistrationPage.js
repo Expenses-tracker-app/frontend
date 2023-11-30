@@ -60,10 +60,9 @@ const StyledButton = styled(Button)(({ theme }) => ({
 export const RegistrationPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [alert, setAlert] = useState(null);
-  const [error, setError] = useState(null);
-  const [passwordMismatch, setPasswordMismatch] = useState(false);
-  const [registrationDone, setRegistrationDone] = useState(false);
+  const [alert, setAlert] = useState('');
+  const [error, setError] = useState('');
+  const [registrationDone, setRegistrationDone] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -79,8 +78,10 @@ export const RegistrationPage = () => {
 
   const handleSubmit = async () => {
     try {
+      setAlert('');
+      setRegistrationDone('');
+      setError('');
       if (formData.password === formData.retypePassword && formData.password !== '') {
-        setPasswordMismatch(false);
         const passwordRegex = /^(?=.*[a-zA-Z]{5,})(?=.*\d).*$/;
 
         if (passwordRegex.test(formData.password)) {
@@ -91,19 +92,16 @@ export const RegistrationPage = () => {
 
           createUser(user)
             .then((res) => {
-              setRegistrationDone(true);
-              setAlert(res || t('registration.success'));
+              setRegistrationDone(res || t('registration.success'));
               navigate(paths.login.path);
             })
             .catch((err) => {
               setError(err.message || t('errors.registrationFailed'));
             });
         } else {
-          setError('Password must have at least 5 letters, 1 number, and no special characters.');
+          setAlert(t('errors.passwordProtection'));
         }
       } else {
-        setPasswordMismatch(true);
-        setRegistrationDone(false);
         setAlert(t('errors.passwordMismatch'));
       }
     } catch (err) {
@@ -119,15 +117,25 @@ export const RegistrationPage = () => {
           <FormLabel>
             <Typography variant="h6">{t('registration.email')}</Typography>
           </FormLabel>
-          <InputLine value={formData.email} onChange={handleChange} />
+          <InputLine type="email" value={formData.email} name="email" onChange={handleChange} />
           <FormLabel>
             <Typography variant="h6">{t('registration.password')}</Typography>
           </FormLabel>
-          <InputLine type="password" value={formData.password} onChange={handleChange} />
+          <InputLine
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
           <FormLabel>
             <Typography variant="h6">{t('registration.retypePassword')}</Typography>
           </FormLabel>
-          <InputLine type="password" value={formData.retypePassword} onChange={handleChange} />
+          <InputLine
+            type="password"
+            name="retypePassword"
+            value={formData.retypePassword}
+            onChange={handleChange}
+          />
 
           <StyledButton onClick={handleSubmit}>
             <Typography variant="h6">{t('registration.save')}</Typography>
@@ -135,11 +143,11 @@ export const RegistrationPage = () => {
 
           {registrationDone && (
             <MuiAlert severity="success" sx={{ marginTop: 2 }} variant="filled">
-              {alert}
+              {registrationDone}
             </MuiAlert>
           )}
 
-          {passwordMismatch && (
+          {alert && (
             <MuiAlert severity="warning" sx={{ marginTop: 2 }} variant="filled">
               {alert}
             </MuiAlert>

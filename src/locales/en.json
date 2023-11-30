@@ -30,7 +30,8 @@
     "expenseDelete": "Deleting of the expense failed",
     "categoryError": "Saving the category failed",
     "categoryDelete": "Deleting the category failed",
-    "userUpdateError": "User could not be updated"
+    "userUpdateError": "User could not be updated",
+    "passwordProtection": "Password must have at least 5 letters, 1 number, and no special characters."
   },
   "user": {
     "login": "Login",
