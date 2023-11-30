@@ -48,7 +48,7 @@ const StyledMenu = styled(MenuItem)(({ theme }) => ({
 const Box = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'row',
-  width: '100%',
+  width: '100%'
 }));
 
 const MButton = styled(Button)(({ theme }) => ({
