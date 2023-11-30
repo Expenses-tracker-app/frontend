@@ -13,7 +13,8 @@ const Wrapper = styled(Container)(({ theme }) => ({
   width: '490px',
   margin: '-5px auto -5px auto',
   [theme.breakpoints.down('sm')]: {
-    flexDirection: 'column'
+    flexDirection: 'column',
+    with: '95%'
   }
 }));
 
@@ -32,10 +33,6 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   },
   '& .MuiSelect-icon': {
     color: `${theme.palette.primary.blue} !important`
-  },
-  [theme.breakpoints.down('sm')]: {
-    width: '98%',
-    maxWidth: '135px'
   }
 }));
 
@@ -57,7 +54,7 @@ const MButton = styled(Button)(({ theme }) => ({
   width: '25%',
   fontSize: '15px',
   [theme.breakpoints.down('sm')]: {
-    width: '90%',
+    width: '100%',
     margin: 'auto auto 10px auto'
   }
 }));
