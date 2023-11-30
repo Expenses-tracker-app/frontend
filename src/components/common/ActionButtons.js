@@ -34,7 +34,7 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   color: `${theme.palette.primary.blue} !important`,
   width: '250px',
   borderRadius: '35px',
-  margin: '0px auto 10px 0px',
+  margin: '10px auto 10px 0px',
   '& .MuiSelect-select': {
     background: `${theme.palette.grey[600]} !important`
   },
@@ -64,8 +64,8 @@ const MButton = styled(Button)(({ theme }) => ({
   width: '25%',
   fontSize: '15px',
   [theme.breakpoints.down('sm')]: {
-    width: '100%',
-    margin: 'auto auto 10px auto'
+    width: '95%',
+    margin: 'auto auto 5px auto'
   }
 }));
 
