@@ -21,6 +21,7 @@ const Wrapper = styled(Container)(({ theme }) => ({
   },
   [theme.breakpoints.down('xs')]: {
     with: '75%',
+    maxWidth: '390px',
     margin: 'auto'
   }
 }));
