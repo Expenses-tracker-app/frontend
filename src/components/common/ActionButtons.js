@@ -44,6 +44,11 @@ const StyledMenu = styled(MenuItem)(({ theme }) => ({
   color: theme.palette.primary.blue
 }));
 
+const Box = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'row'
+}));
+
 const MButton = styled(Button)(({ theme }) => ({
   borderRadius: '35px',
   background: theme.palette.primary.blue,
@@ -52,7 +57,8 @@ const MButton = styled(Button)(({ theme }) => ({
   fontSize: '15px',
   [theme.breakpoints.down('sm')]: {
     width: '98%',
-    maxWidth: '235px'
+    maxWidth: '235px',
+    margin: 'auto'
   }
 }));
 
@@ -91,18 +97,20 @@ const ActionButtons = () => {
 
   return (
     <Wrapper>
-      <MLabel>{t('menu.categories')}</MLabel>
-      <StyledSelect value={selectedCategory} onChange={handleCategoryChange}>
-        {categories ? (
-          categories.map((category) => (
-            <StyledMenu key={category.tag_id} value={category.tag_id}>
-              {category.tag_name}
-            </StyledMenu>
-          ))
-        ) : (
-          <StyledMenu disabled>{t('categories.noCategories')}</StyledMenu>
-        )}
-      </StyledSelect>
+      <Box>
+        <MLabel>{t('menu.categories')}</MLabel>
+        <StyledSelect value={selectedCategory} onChange={handleCategoryChange}>
+          {categories ? (
+            categories.map((category) => (
+              <StyledMenu key={category.tag_id} value={category.tag_id}>
+                {category.tag_name}
+              </StyledMenu>
+            ))
+          ) : (
+            <StyledMenu disabled>{t('categories.noCategories')}</StyledMenu>
+          )}
+        </StyledSelect>
+      </Box>
       <MButton onClick={handleDateChange}>{t('common.today')}</MButton>
     </Wrapper>
   );
