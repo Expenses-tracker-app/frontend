@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { convertResponseToArray } from '../../utilities/helper';
 import {
   updateIncome,
   updateExpense,
@@ -211,10 +212,15 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await getAllTag();
-        setCategories(data);
+        const response = await getAllTag();
+        if (response) {
+          const categoriesArray = convertResponseToArray(response);
+          setCategories(categoriesArray);
+        } else {
+          console.log('No data received from the server.');
+        }
       } catch (err) {
-        console.log(err.message);
+        console.error('Error fetching tags:', err.message);
       }
     };
 
@@ -248,11 +254,12 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
             value={formData.category}
             onChange={handleCategoryChange}
             style={{ width: '100%' }}>
-            {categories.map((category) => (
-              <StyledMenu key={category.tag_id} value={category.tag_id}>
-                {category.tag_name}
-              </StyledMenu>
-            ))}
+            {categories &&
+              categories.map((category) => (
+                <StyledMenu key={category.tag_id} value={category.tag_id}>
+                  {category.tag_name}
+                </StyledMenu>
+              ))}
           </StyledSelect>
 
           <FormLabel>
