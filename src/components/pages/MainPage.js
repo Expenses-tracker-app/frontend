@@ -62,7 +62,7 @@ const MBox = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   marginTop: '-270px',
   [theme.breakpoints.down('md')]: {
-    margin: 'auto',
+    margin: '2.5px auto auto auto',
     width: '100%',
     justifyContent: 'center'
   }
