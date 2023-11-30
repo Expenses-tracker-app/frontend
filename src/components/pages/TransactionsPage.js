@@ -14,7 +14,7 @@ import {
   Alert as MuiAlert
 } from '@mui/material';
 import AddNewExpenseModal from '../modals/AddNewTransactionModal';
-import EditTransactionModal from '../modals/EditCategoryModal';
+import EditTransactionModal from '../modals/EditTransactionModal';
 import { getExpense, getIncome } from '../../services/apiService';
 import { convertResponseToArray } from '../../utilities/helper';
 
