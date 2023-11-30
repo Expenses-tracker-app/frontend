@@ -42,6 +42,12 @@ const calculateTotal = (transactions) =>
     return sum + amount;
   }, 0);
 
+const Title = styled(Typography)(() => ({
+  fontWeight: '600',
+  padding: '15px',
+  fontSize: '18px'
+}));
+
 export const TransactionsPage = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
@@ -128,6 +134,7 @@ export const TransactionsPage = () => {
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <MCard>
+              <Title>{t('transactions.title')}</Title>
               <List>
                 {transactions.length > 0 ? (
                   transactions.map((transaction) => {
