@@ -19,7 +19,7 @@ const Wrapper = styled(Grid)(({ theme }) => ({
     maxWidth: '480px'
   },
   [theme.breakpoints.down('sm')]: {
-    width: '90%',
+    width: '95%',
     margin: 'auto'
   }
 }));

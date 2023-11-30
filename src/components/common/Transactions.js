@@ -19,7 +19,7 @@ const Wrapper = styled(Grid)(({ theme }) => ({
     justifyContent: 'center'
   },
   [theme.breakpoints.down('sm')]: {
-    with: '90%',
+    with: '95%',
     margin: 'auto'
   }
 }));

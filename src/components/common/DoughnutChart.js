@@ -22,7 +22,7 @@ const Wrapper = styled(Grid)(({ theme }) => ({
   },
   [theme.breakpoints.down('sm')]: {
     height: '200px',
-    width: '45%',
+    width: '47.5%',
     maxWidth: '235px',
     marginLeft: '5px'
   }
