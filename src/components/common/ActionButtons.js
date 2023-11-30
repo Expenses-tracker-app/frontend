@@ -14,7 +14,8 @@ const Wrapper = styled(Container)(({ theme }) => ({
   margin: '-5px auto -5px auto',
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',
-    with: '95%'
+    with: '95%',
+    margin: 'auto'
   }
 }));
 
@@ -33,6 +34,9 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   },
   '& .MuiSelect-icon': {
     color: `${theme.palette.primary.blue} !important`
+  },
+  [theme.breakpoints.down('sm')]: {
+    with: '100%'
   }
 }));
 
@@ -44,7 +48,7 @@ const StyledMenu = styled(MenuItem)(({ theme }) => ({
 const Box = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'row',
-  width: '100%'
+  width: '100%',
 }));
 
 const MButton = styled(Button)(({ theme }) => ({
@@ -54,7 +58,7 @@ const MButton = styled(Button)(({ theme }) => ({
   width: '25%',
   fontSize: '15px',
   [theme.breakpoints.down('sm')]: {
-    width: '100%',
+    width: '50%',
     margin: 'auto auto 10px auto'
   }
 }));
