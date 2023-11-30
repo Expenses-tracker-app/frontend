@@ -64,7 +64,7 @@ const MButton = styled(Button)(({ theme }) => ({
   width: '25%',
   fontSize: '15px',
   [theme.breakpoints.down('sm')]: {
-    width: '95%',
+    width: '100%',
     margin: 'auto auto 5px auto'
   }
 }));
