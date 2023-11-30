@@ -15,6 +15,7 @@ const Wrapper = styled(Container)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',
     with: '95%',
+    maxWidth: '235px',
     margin: 'auto',
     justifyContent: 'center'
   }
@@ -59,8 +60,8 @@ const MButton = styled(Button)(({ theme }) => ({
   width: '25%',
   fontSize: '15px',
   [theme.breakpoints.down('sm')]: {
-    width: '50%',
-    margin: 'auto'
+    width: '100%',
+    margin: 'auto auto 5px auto'
   }
 }));
 
