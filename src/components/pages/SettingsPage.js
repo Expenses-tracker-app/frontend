@@ -75,22 +75,31 @@ export const SettingsPage = () => {
       setAlert('');
       setRegistrationDone('');
       setError('');
+
+      // Check if password and retypePassword match and meet the criteria
       if (formData.password === formData.retypePassword && formData.password !== '') {
         const passwordRegex = /^(?=.*[a-zA-Z]{5,})(?=.*\d).*$/;
 
         if (passwordRegex.test(formData.password)) {
-          const user = {
-            email: formData.email,
-            password: formData.password
-          };
+          // Check if email is set up and in the correct format
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-          updateUser(user)
-            .then((res) => {
-              setRegistrationDone(res || t('registration.success'));
-            })
-            .catch((err) => {
-              setError(err.message || t('errors.registrationFailed'));
-            });
+          if (formData.email && emailRegex.test(formData.email)) {
+            const user = {
+              email: formData.email,
+              password: formData.password
+            };
+
+            updateUser(user)
+              .then((res) => {
+                setRegistrationDone(res || t('registration.success'));
+              })
+              .catch((err) => {
+                setError(err.message || t('errors.registrationFailed'));
+              });
+          } else {
+            setError(t('errors.invalidEmail'));
+          }
         } else {
           setAlert(t('errors.passwordProtection'));
         }
@@ -122,7 +131,7 @@ export const SettingsPage = () => {
             <Typography variant="h6">{t('settings.changePassword')}</Typography>
           </FormLabel>
           <InputLine
-            type="text"
+            type="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
@@ -131,7 +140,7 @@ export const SettingsPage = () => {
             <Typography variant="h6">{t('settings.retypePassword')}</Typography>
           </FormLabel>
           <InputLine
-            type="text"
+            type="password"
             name="retypePassword"
             value={formData.retypePassword}
             onChange={handleChange}

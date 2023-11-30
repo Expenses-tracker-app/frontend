@@ -31,7 +31,8 @@
     "categoryError": "Saving the category failed",
     "categoryDelete": "Deleting the category failed",
     "userUpdateError": "User could not be updated",
-    "passwordProtection": "Password must have at least 5 letters, 1 number, and no special characters."
+    "passwordProtection": "Password must have at least 5 letters, 1 number, and no special characters.",
+    "invalidEmail": "The email needs to be filled in correctly"
   },
   "user": {
     "login": "Login",
