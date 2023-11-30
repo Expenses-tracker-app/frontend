@@ -15,7 +15,7 @@ const Wrapper = styled(Container)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',
     with: '95%',
-    maxWidth: '235px',
+    maxWidth: '480px',
     margin: 'auto',
     justifyContent: 'center'
   }
