@@ -15,13 +15,12 @@ const Wrapper = styled(Container)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',
     with: '100%',
-    maxWidth: '480px',
+    maxWidth: '400px',
     margin: 'auto',
     justifyContent: 'center'
   },
   [theme.breakpoints.down('xs')]: {
-    with: '75%',
-    maxWidth: '390px',
+    with: '95%',
     margin: 'auto'
   }
 }));
