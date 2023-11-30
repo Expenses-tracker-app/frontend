@@ -2,17 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TransactionItem from '../common/TransactionItem';
 import TotalBalanceItem from '../common/TotalBalanceItem';
 import { useTranslation } from 'react-i18next';
-import {
-  styled,
-  Card,
-  Button,
-  Typography,
-  Container,
-  Grid,
-  Box,
-  List,
-  Alert as MuiAlert
-} from '@mui/material';
+import { styled, Card, Button, Typography, Container, Grid, Box, List } from '@mui/material';
 import AddNewExpenseModal from '../modals/AddNewTransactionModal';
 import EditTransactionModal from '../modals/EditTransactionModal';
 import { getExpense, getIncome } from '../../services/apiService';
@@ -53,7 +43,6 @@ const calculateTotal = (transactions) =>
   }, 0);
 
 export const TransactionsPage = () => {
-  const [error, setError] = useState(null);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
   const [transactions, setTransactions] = useState([]);
@@ -68,7 +57,6 @@ export const TransactionsPage = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        setError(null);
         const [expensesResponse, incomesResponse] = await Promise.all([getExpense(), getIncome()]);
 
         const expensesData =
@@ -85,8 +73,7 @@ export const TransactionsPage = () => {
         setIncomes(incomesData);
         setTransactions([...expensesData, ...incomesData]);
       } catch (fetchError) {
-        setError(fetchError.message || 'Error fetching transactions');
-        console.error(fetchError);
+        console.error(fetchError || 'Error fetching transactions');
       }
     };
 
@@ -113,11 +100,6 @@ export const TransactionsPage = () => {
     <Wrapper>
       <Typography variant="h1">{t('transactions.title')}</Typography>
       <ContentContainer>
-        {error && (
-          <MuiAlert severity="error" sx={{ marginTop: 2 }} variant="filled">
-            {error}
-          </MuiAlert>
-        )}
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <MCard>
@@ -147,7 +129,7 @@ export const TransactionsPage = () => {
           <Grid item xs={12}>
             <MCard>
               <List>
-                {transactions.length > 0 &&
+                {transactions.length > 0 ? (
                   transactions.map((transaction) => {
                     const isExpense = Object.prototype.hasOwnProperty.call(
                       transaction,
@@ -172,7 +154,10 @@ export const TransactionsPage = () => {
                         onClick={() => handleOpenEditModal(transaction)}
                       />
                     );
-                  })}
+                  })
+                ) : (
+                  <Typography>{t('transactions.noTransactions')}</Typography>
+                )}
               </List>
             </MCard>
           </Grid>

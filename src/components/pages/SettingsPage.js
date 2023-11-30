@@ -113,14 +113,26 @@ export const SettingsPage = () => {
           <FormLabel>
             <Typography variant="h6">{t('settings.changeEmail')}</Typography>
           </FormLabel>
-          <InputLine type="email" value={formData.email} onChange={handleChange} />
+          <InputLine type="email" name="email" value={formData.email} onChange={handleChange} />
           <FormLabel>
             <Typography variant="h6">{t('settings.changePassword')}</Typography>
           </FormLabel>
-          <InputLine type="text" value={formData.password} onChange={handleChange} />
+          <InputLine
+            type="text"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
           <FormLabel>
-            <InputLine type="text" value={formData.retypePassword} onChange={handleChange} />
+            <Typography variant="h6">{t('settings.retypePassword')}</Typography>
           </FormLabel>
+          <InputLine
+            type="text"
+            name="retypePassword"
+            value={formData.retypePassword}
+            onChange={handleChange}
+          />
+
           <StyledButton onClick={handleSave}>
             <Typography variant="h6">{t('settings.save')}</Typography>
           </StyledButton>

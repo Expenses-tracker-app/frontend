@@ -71,12 +71,12 @@ const AddNewCategoryModal = ({ open, onClose }) => {
       createTag(tagData)
         .then((res) => {
           console.log(res);
+          onClose();
         })
         .catch((err) => {
           setError(err.message || t('errors.categoryError'));
         });
     }
-    onClose();
   };
 
   const handleChange = (event) => {
