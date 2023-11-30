@@ -26,7 +26,9 @@ const ContentContainer = styled(Box)(() => ({
 const MCard = styled(Card)(({ theme }) => ({
   background: theme.palette.grey[600],
   borderRadius: '35px',
-  marginBottom: '20px'
+  marginBottom: '20px',
+  textAlign: 'center',
+  padding: '15px'
 }));
 
 const MButton = styled(Button)(() => ({
