@@ -20,7 +20,7 @@ const Wrapper = styled(Container)(({ theme }) => ({
     justifyContent: 'center'
   },
   [theme.breakpoints.down('xs')]: {
-    with: '95%',
+    with: '75%',
     margin: 'auto'
   }
 }));
