@@ -24,7 +24,7 @@ const CustomCalendar = styled(Calendar)(({ theme }) => ({
     width: '95%',
     maxWidth: '235px',
     height: '200px',
-    marginRight: '5px'
+    marginRight: '2.5px'
   },
   '& .react-calendar__navigation__arrow': {
     display: 'none'
