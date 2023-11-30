@@ -46,7 +46,8 @@ const StyledMenu = styled(MenuItem)(({ theme }) => ({
 
 const Box = styled('div')(() => ({
   display: 'flex',
-  flexDirection: 'row'
+  flexDirection: 'row',
+  width: '100%'
 }));
 
 const MButton = styled(Button)(({ theme }) => ({
@@ -56,9 +57,8 @@ const MButton = styled(Button)(({ theme }) => ({
   width: '25%',
   fontSize: '15px',
   [theme.breakpoints.down('sm')]: {
-    width: '98%',
-    maxWidth: '235px',
-    margin: 'auto'
+    width: '90%',
+    margin: 'auto auto 10px auto'
   }
 }));
 
