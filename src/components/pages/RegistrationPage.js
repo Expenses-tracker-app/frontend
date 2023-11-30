@@ -81,23 +81,32 @@ export const RegistrationPage = () => {
       setAlert('');
       setRegistrationDone('');
       setError('');
+
+      // Check if password and retypePassword match and meet the criteria
       if (formData.password === formData.retypePassword && formData.password !== '') {
         const passwordRegex = /^(?=.*[a-zA-Z]{5,})(?=.*\d).*$/;
 
         if (passwordRegex.test(formData.password)) {
-          const user = {
-            email: formData.email,
-            password: formData.password
-          };
+          // Check if email is set up and in the correct format
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-          createUser(user)
-            .then((res) => {
-              setRegistrationDone(res || t('registration.success'));
-              navigate(paths.login.path);
-            })
-            .catch((err) => {
-              setError(err.message || t('errors.registrationFailed'));
-            });
+          if (formData.email && emailRegex.test(formData.email)) {
+            const user = {
+              email: formData.email,
+              password: formData.password
+            };
+
+            createUser(user)
+              .then((res) => {
+                setRegistrationDone(res || t('registration.success'));
+                navigate(paths.login.path);
+              })
+              .catch((err) => {
+                setError(err.message || t('errors.registrationFailed'));
+              });
+          } else {
+            setError(t('errors.invalidEmail'));
+          }
         } else {
           setAlert(t('errors.passwordProtection'));
         }
