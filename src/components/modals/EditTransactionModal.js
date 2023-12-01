@@ -142,6 +142,7 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
         updateIncome(transactionData)
           .then((res) => {
             console.log(res);
+            onClose();
           })
           .catch((err) => {
             setError(err.message || t('errors.incomesError'));
@@ -150,6 +151,7 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
         updateExpense(transactionData)
           .then((res) => {
             console.log(res);
+            onClose();
           })
           .catch((err) => {
             setError(err.message || t('errors.expensesError'));
@@ -191,6 +193,7 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
         deleteIncome(transaction)
           .then((res) => {
             console.log(res);
+            onClose();
           })
           .catch((err) => {
             setError(err.message || t('errors.incomeDelete'));
@@ -199,14 +202,13 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
         deleteExpense(transaction)
           .then((res) => {
             console.log(res);
+            onClose();
           })
           .catch((err) => {
             setError(err.message || t('errors.expenseDelete'));
           });
       }
     }
-
-    onClose();
   };
 
   useEffect(() => {

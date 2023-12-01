@@ -42,12 +42,10 @@ const Transactions = ({ expenses, incomes }) => {
 
   useEffect(() => {
     const sortByCategoryAndDate = () => {
-      const today = new Date();
       const processedData = [...expenses, ...incomes]
         .filter((item) => {
           if (!selectedDate && !selectedCategory) {
-            const transactionDate = new Date(getTransactionDate(item));
-            return transactionDate.toDateString() === today.toDateString();
+            return processedData;
           } else {
             (!selectedDate ||
               new Date(getTransactionDate(item)).toDateString() === selectedDate.toDateString()) &&

@@ -89,7 +89,7 @@ export const TransactionsPage = () => {
   }, [updateTransaction]);
 
   const amount = calculateTotal(incomes) - calculateTotal(expenses);
-  const percentage = calculateTotal(expenses)
+  const percentage = Math.round(calculateTotal(expenses))
     ? calculateTotal(incomes) / calculateTotal(expenses)
     : 0;
 
