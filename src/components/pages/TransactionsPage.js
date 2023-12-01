@@ -95,7 +95,6 @@ export const TransactionsPage = () => {
 
   const handleOpenEditModal = (transaction) => {
     setTransaction(transaction);
-    console.log(transaction);
     setOpenEditModal(true);
   };
 
@@ -118,7 +117,7 @@ export const TransactionsPage = () => {
             </MCard>
           </Grid>
 
-          {transaction !== null && (
+          {transaction && (
             <EditTransactionModal
               open={openEditModal}
               onClose={handleCloseModal}

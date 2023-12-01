@@ -111,7 +111,6 @@ const EditTransactionModal = ({ transaction, open, onClose }) => {
   const [editMode, setEditMode] = useState(false);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
-  const [isExpense, setIsExpense] = useState('');
   const [formData, setFormData] = useState({
     type: '',
     category: '',
@@ -120,18 +119,10 @@ const EditTransactionModal = ({ transaction, open, onClose }) => {
     desc: ''
   });
 
-  const getTransactionType = (transaction) => {
-    if (transaction.expense_amount !== undefined) {
-      setIsExpense(true);
-    } else {
-      setIsExpense(false);
-    }
-  };
-
   useEffect(() => {
-    if (transaction !== undefined) {
+    if (transaction) {
       const updateFormData = (transaction) => {
-        getTransactionType(transaction);
+        const isExpense = Object.prototype.hasOwnProperty.call(transaction, 'expense_id');
 
         const updatedFormData = {
           type: isExpense ? 'expense' : 'income',
@@ -143,9 +134,9 @@ const EditTransactionModal = ({ transaction, open, onClose }) => {
 
         setFormData(updatedFormData);
       };
-      updateFormData();
+      updateFormData(transaction);
     }
-  }, [transaction, isExpense]);
+  }, [transaction]);
 
   const handleSave = () => {
     event.preventDefault();
