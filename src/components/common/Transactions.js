@@ -62,7 +62,7 @@ const Transactions = ({ expenses, incomes }) => {
       const newFilteredData = sortByCategoryAndDate();
       setFilteredData(newFilteredData);
     }
-  }, [selectedDate, selectedCategory, expenses, incomes, filteredData]);
+  }, [selectedDate, selectedCategory, expenses, incomes]);
 
   return (
     <Wrapper>

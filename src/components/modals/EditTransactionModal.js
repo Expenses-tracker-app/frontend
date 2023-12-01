@@ -121,7 +121,7 @@ const EditTransactionModal = ({ transaction, open, onClose }) => {
   });
 
   const getTransactionType = (transaction) => {
-    if (transaction.expense_amount) {
+    if (transaction.expense_amount !== undefined) {
       setIsExpense(true);
     } else {
       setIsExpense(false);
@@ -129,7 +129,7 @@ const EditTransactionModal = ({ transaction, open, onClose }) => {
   };
 
   useEffect(() => {
-    if (transaction) {
+    if (transaction !== undefined) {
       const updateFormData = (transaction) => {
         getTransactionType(transaction);
 
