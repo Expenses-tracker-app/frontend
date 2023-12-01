@@ -71,6 +71,7 @@ const AddNewCategoryModal = ({ open, onClose }) => {
       createTag(tagData)
         .then((res) => {
           console.log(res);
+          refresh();
           onClose();
         })
         .catch((err) => {
@@ -83,6 +84,12 @@ const AddNewCategoryModal = ({ open, onClose }) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value
+    });
+  };
+
+  const refresh = () => {
+    setFormData({
+      name: ''
     });
   };
 

@@ -159,6 +159,7 @@ const AddNewExpenseModal = ({ open, onClose }) => {
             : await createExpense(transactionData);
 
         console.log(response);
+        refresh();
         onClose();
       } catch (err) {
         setError(err.message || t(`errors.${formData.type}Error`));
@@ -188,6 +189,16 @@ const AddNewExpenseModal = ({ open, onClose }) => {
       type
     });
     setActiveButton(type);
+  };
+
+  const refresh = () => {
+    setFormData({
+      type: '',
+      category: '',
+      amount: '',
+      date: '',
+      desc: ''
+    });
   };
 
   return (
