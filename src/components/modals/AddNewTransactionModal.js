@@ -105,7 +105,7 @@ const MButton = styled(Button)(({ theme, isActive }) => ({
   }
 }));
 
-const AddNewExpenseModal = ({ open, onClose }) => {
+const AddNewTransactionModal = ({ open, onClose }) => {
   const { t } = useTranslation();
   const [categories, setCategories] = useState([]);
   const [activeButton, setActiveButton] = useState(null);
@@ -275,9 +275,9 @@ const AddNewExpenseModal = ({ open, onClose }) => {
   );
 };
 
-AddNewExpenseModal.propTypes = {
+AddNewTransactionModal.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired
 };
 
-export default AddNewExpenseModal;
+export default AddNewTransactionModal;

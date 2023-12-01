@@ -3,7 +3,7 @@ import TransactionItem from '../common/TransactionItem';
 import TotalBalanceItem from '../common/TotalBalanceItem';
 import { useTranslation } from 'react-i18next';
 import { styled, Card, Button, Typography, Container, Grid, Box, List } from '@mui/material';
-import AddNewExpenseModal from '../modals/AddNewTransactionModal';
+import AddNewTransactionModal from '../modals/AddNewTransactionModal';
 import EditTransactionModal from '../modals/EditTransactionModal';
 import { getExpense, getIncome } from '../../services/apiService';
 import { convertResponseToArray } from '../../utilities/helper';
@@ -89,12 +89,13 @@ export const TransactionsPage = () => {
   }, [updateTransaction]);
 
   const amount = calculateTotal(incomes) - calculateTotal(expenses);
-  const percentage = calculateTotal(expenses)
+  const percentage = Math.round(calculateTotal(expenses))
     ? calculateTotal(incomes) / calculateTotal(expenses)
     : 0;
 
   const handleOpenEditModal = (transaction) => {
     setTransaction(transaction);
+    console.log(transaction);
     setOpenEditModal(true);
   };
 
@@ -124,7 +125,7 @@ export const TransactionsPage = () => {
               transaction={transaction}
             />
           )}
-          <AddNewExpenseModal open={openAddModal} onClose={handleCloseModal} />
+          <AddNewTransactionModal open={openAddModal} onClose={handleCloseModal} />
 
           <Grid item xs={6}>
             <MCard>

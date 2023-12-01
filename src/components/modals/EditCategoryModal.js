@@ -76,14 +76,13 @@ const EditCategoryModal = ({ tag, open, onClose }) => {
       updateTag(tagToUpdate)
         .then((res) => {
           console.log(res);
+          setEditMode(false);
+          onClose();
         })
         .catch((err) => {
           setError(err.message || t('errors.categoryError'));
         });
     }
-
-    setEditMode(false);
-    onClose();
   };
 
   const handleDelete = () => {
@@ -95,13 +94,12 @@ const EditCategoryModal = ({ tag, open, onClose }) => {
       deleteTag(tagToDelete)
         .then((res) => {
           console.log(res);
+          onClose();
         })
         .catch((err) => {
           setError(err.message || t('errors.categoryDelete'));
         });
     }
-
-    onClose();
   };
 
   if (!tag) {
