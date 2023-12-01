@@ -120,23 +120,24 @@ const EditTransactionModal = ({ transaction, open, onClose }) => {
   });
 
   useEffect(() => {
-    const updateFormData = (transaction) => {
-      const isExpense = Object.prototype.hasOwnProperty.call(transaction, 'expense_amount');
+    if (transaction) {
+      const updateFormData = (transaction) => {
+        const isExpense = Object.prototype.hasOwnProperty.call(transaction, 'expense_amount');
 
-      const type = isExpense ? 'expense' : 'income';
+        const type = isExpense ? 'expense' : 'income';
 
-      const updatedFormData = {
-        type: type,
-        category: isExpense ? transaction.tag_id : transaction.income_id,
-        amount: isExpense ? transaction.expense_amount : transaction.income_amount,
-        date: isExpense ? transaction.expense_date : transaction.income_date,
-        desc: isExpense ? transaction.expense_description : transaction.income_description
+        const updatedFormData = {
+          type: type,
+          category: isExpense ? transaction.tag_id : transaction.income_id,
+          amount: isExpense ? transaction.expense_amount : transaction.income_amount,
+          date: isExpense ? transaction.expense_date : transaction.income_date,
+          desc: isExpense ? transaction.expense_description : transaction.income_description
+        };
+
+        setFormData(updatedFormData);
       };
-
-      setFormData(updatedFormData);
-    };
-
-    updateFormData();
+      updateFormData();
+    }
   }, [transaction]);
 
   const handleSave = () => {
