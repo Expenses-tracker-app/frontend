@@ -309,7 +309,7 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
 };
 
 AddNewExpenseModal.propTypes = {
-  transaction: PropTypes.object.isRequired,
+  transaction: PropTypes.array.isRequired,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired
 };

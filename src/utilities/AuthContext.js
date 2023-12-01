@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   const handleLogin = async () => {
     setIsLoggedIn(true);
@@ -27,12 +28,16 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
     if (isLoggedIn && location.pathname === paths.login.path) {
       navigate(paths.home.path);
     } else if (!isLoggedIn && location.pathname !== paths.registration.path) {
       navigate(paths.login.path);
     }
-  }, [isLoggedIn, navigate, location.pathname]);
+  }, [isLoggedIn, navigate, location.pathname, isLoading]);
 
   const checkLogin = async () => {
     try {
@@ -55,11 +60,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    checkLogin();
+    checkLogin().finally(() => setLoading(false));
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, handleLogin, handleLogout }}>
+    <AuthContext.Provider value={{ isLoggedIn, handleLogin, handleLogout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

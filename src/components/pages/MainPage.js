@@ -120,10 +120,6 @@ export const MainPage = () => {
       try {
         const [expensesResponse, incomesResponse] = await Promise.all([getExpense(), getIncome()]);
 
-        if (expensesResponse.status === 404 || incomesResponse.status === 404) {
-          console.error('Error fetching transactions: status code 404');
-        }
-
         const expensesData =
           expensesResponse && expensesResponse.status !== 404
             ? convertResponseToArray(expensesResponse)

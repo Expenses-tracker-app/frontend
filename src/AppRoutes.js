@@ -7,14 +7,11 @@ import { SettingsPage } from './components/pages/SettingsPage';
 import { RegistrationPage } from './components/pages/RegistrationPage';
 import { NotFoundPage } from './components/pages/NotFoundPage';
 import { CategoriesPage } from './components/pages/CategoriesPage';
-import { AuthContext } from './utilities/AuthContext';
-import { useContext } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import React from 'react';
+import { ProtectedRoute } from './utilities/ProtectedRoute';
 
 export function AppRoutes() {
-  const { isLoggedIn } = useContext(AuthContext);
-
   return (
     <Routes>
       <Route element={<Layout />}>
@@ -23,22 +20,38 @@ export function AppRoutes() {
 
         <Route
           path={paths.home.path}
-          element={isLoggedIn ? <MainPage /> : <Navigate to={paths.login.path} replace />}
+          element={
+            <ProtectedRoute>
+              <MainPage />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path={paths.transactions.path}
-          element={isLoggedIn ? <TransactionsPage /> : <Navigate to={paths.login.path} replace />}
+          element={
+            <ProtectedRoute>
+              <TransactionsPage />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path={paths.settings.path}
-          element={isLoggedIn ? <SettingsPage /> : <Navigate to={paths.login.path} replace />}
+          element={
+            <ProtectedRoute>
+              <SettingsPage />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path={paths.categories.path}
-          element={isLoggedIn ? <CategoriesPage /> : <Navigate to={paths.login.path} replace />}
+          element={
+            <ProtectedRoute>
+              <CategoriesPage />
+            </ProtectedRoute>
+          }
         />
 
         <Route path="*" element={<NotFoundPage />} />
