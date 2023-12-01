@@ -69,13 +69,14 @@
   "newTransaction": {
     "income": "Income",
     "expense": "Expense",
-    "title": "Add a new expense",
+    "title": "Add a new transaction",
     "category": "Category",
     "amount": "Amount",
     "date": "Date",
     "description": "Description",
     "save": "Save",
-    "name": "Name"
+    "name": "Name",
+    "editTransactionTitle": "Edit transaction"
   },
   "newCategory": {
     "title": "Add new category",
