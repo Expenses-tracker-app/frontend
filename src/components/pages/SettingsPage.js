@@ -90,7 +90,8 @@ export const SettingsPage = () => {
 
             updateUser(user)
               .then((res) => {
-                setRegistrationDone(res || t('registration.success'));
+                console.log(res);
+                setRegistrationDone(t('registration.success'));
               })
               .catch((err) => {
                 setError(err.message || t('errors.registrationFailed'));

@@ -62,7 +62,6 @@ export const RegistrationPage = () => {
   const { t } = useTranslation();
   const [alert, setAlert] = useState('');
   const [error, setError] = useState('');
-  const [registrationDone, setRegistrationDone] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -79,7 +78,6 @@ export const RegistrationPage = () => {
   const handleSubmit = async () => {
     try {
       setAlert('');
-      setRegistrationDone('');
       setError('');
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -96,7 +94,7 @@ export const RegistrationPage = () => {
 
             createUser(user)
               .then((res) => {
-                setRegistrationDone(res || t('registration.success'));
+                console.log(res);
                 navigate(paths.login.path);
               })
               .catch((err) => {
@@ -147,12 +145,6 @@ export const RegistrationPage = () => {
           <StyledButton onClick={handleSubmit}>
             <Typography variant="h6">{t('registration.save')}</Typography>
           </StyledButton>
-
-          {registrationDone && (
-            <MuiAlert severity="success" sx={{ marginTop: 2 }} variant="filled">
-              {registrationDone}
-            </MuiAlert>
-          )}
 
           {alert && (
             <MuiAlert severity="warning" sx={{ marginTop: 2 }} variant="filled">
