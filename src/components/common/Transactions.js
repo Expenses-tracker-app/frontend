@@ -45,11 +45,11 @@ const Transactions = ({ expenses, incomes }) => {
     const sortByCategoryAndDate = () => {
       const processedData = [...expenses, ...incomes]
         .filter((item) => {
-          if (!selectedDate && !selectedCategory) {
+          if (selectedDate === new Date() && !selectedCategory) {
             console.log(processedData);
             return processedData;
           } else {
-            (!selectedDate ||
+            (selectedDate === new Date() ||
               new Date(getTransactionDate(item)).toDateString() === selectedDate.toDateString()) &&
               (!selectedCategory || item.tag_id === selectedCategory);
           }
@@ -59,9 +59,10 @@ const Transactions = ({ expenses, incomes }) => {
     };
 
     if (expenses.length !== 0 && incomes.length !== 0) {
-      setFilteredData(sortByCategoryAndDate());
+      const newFilteredData = sortByCategoryAndDate();
+      setFilteredData(newFilteredData);
     }
-  }, [selectedDate, selectedCategory, expenses, incomes]);
+  }, [selectedDate, selectedCategory, expenses, incomes, filteredData]);
 
   return (
     <Wrapper>

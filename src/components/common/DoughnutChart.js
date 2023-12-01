@@ -70,11 +70,11 @@ const DoughnutChart = ({ expenses, incomes }) => {
       const today = new Date();
       const processedData = transactions
         .filter((item) => {
-          if (!selectedDate && !selectedCategory) {
+          if (selectedDate === new Date() && !selectedCategory) {
             const transactionDate = new Date(getTransactionDate(item));
             return transactionDate.toDateString() === today.toDateString();
           } else {
-            (!selectedDate ||
+            (selectedDate === new Date() ||
               new Date(getTransactionDate(item)).toDateString() === selectedDate.toDateString()) &&
               (!selectedCategory || item.tag_id === selectedCategory);
           }

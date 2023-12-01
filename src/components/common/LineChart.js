@@ -109,10 +109,10 @@ const LineChart = ({ expenses, incomes }) => {
     const sortByCategoryAndDate = (transactions) => {
       const processedData = transactions
         .filter((item) => {
-          if (!selectedDate && !selectedCategory) {
+          if (selectedDate === new Date() && !selectedCategory) {
             return processedData;
           } else {
-            (!selectedDate ||
+            (selectedDate === new Date() ||
               (new Date(getTransactionDate(item)).getFullYear() === selectedDate.getFullYear() &&
                 new Date(getTransactionDate(item)).getMonth() === selectedDate.getMonth())) &&
               (!selectedCategory || item.tag_id === selectedCategory);
