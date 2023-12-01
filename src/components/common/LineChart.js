@@ -85,6 +85,8 @@ const LineChart = ({ expenses, incomes }) => {
   };
 
   useEffect(() => {
+    console.log('LineChart:', expenses);
+
     const groupAndSumByDate = (transactions) => {
       const groupedTransactions = {};
 

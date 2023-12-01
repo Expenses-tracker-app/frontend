@@ -64,6 +64,8 @@ const DoughnutChart = ({ expenses, incomes }) => {
     transactions.reduce((acc, transaction) => acc + transaction.totalAmount, 0);
 
   useEffect(() => {
+    console.log('Doughnutchart:', expenses);
+
     const sortByCategoryAndDate = (transactions) => {
       const today = new Date();
       const processedData = transactions

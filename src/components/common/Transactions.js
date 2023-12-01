@@ -41,10 +41,12 @@ const Transactions = ({ expenses, incomes }) => {
   };
 
   useEffect(() => {
+    console.log('Transactions:', expenses);
     const sortByCategoryAndDate = () => {
       const processedData = [...expenses, ...incomes]
         .filter((item) => {
           if (!selectedDate && !selectedCategory) {
+            console.log(processedData);
             return processedData;
           } else {
             (!selectedDate ||
