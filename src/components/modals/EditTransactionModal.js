@@ -106,7 +106,7 @@ const MButton = styled(Button)(({ theme }) => ({
   }
 }));
 
-const AddNewExpenseModal = ({ transaction, open, onClose }) => {
+const EditTransactionModal = ({ transaction, open, onClose }) => {
   const { t } = useTranslation();
   const [editMode, setEditMode] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -158,8 +158,6 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
           });
       }
     }
-
-    onClose();
   };
 
   const handleChange = (event) => {
@@ -231,7 +229,7 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
 
   return (
     <MDialog open={open} onClose={onClose}>
-      <DialogTitle variant="title">{t('newTransaction.title')}</DialogTitle>
+      <DialogTitle variant="title">{t('newTransaction.editTransactionTitle')}</DialogTitle>
       <MContent>
         <FormGroup>
           <MBox>
@@ -310,10 +308,10 @@ const AddNewExpenseModal = ({ transaction, open, onClose }) => {
   );
 };
 
-AddNewExpenseModal.propTypes = {
+EditTransactionModal.propTypes = {
   transaction: PropTypes.array.isRequired,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired
 };
 
-export default AddNewExpenseModal;
+export default EditTransactionModal;
