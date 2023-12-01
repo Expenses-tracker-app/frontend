@@ -160,7 +160,7 @@ export const MainPage = () => {
       </MTitle>
       {expenses.length === 0 && incomes.length === 0 ? (
         <StyledDiv>
-          <h3> Please add your first transaction... </h3>
+          <Typography variant="h2">{t('transactions.firstTransaction')}</Typography>
           <Link to={paths.transactions.path}>
             <MButton variant="text">
               <Typography variant="h2">{t('transactions.addNew')}</Typography>
