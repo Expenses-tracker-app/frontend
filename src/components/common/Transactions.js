@@ -35,33 +35,26 @@ const Transactions = ({ expenses, incomes }) => {
   const { selectedDate, selectedCategory } = useContext(DateProvider);
   const [filteredData, setFilteredData] = useState([]);
 
-  // Utility function to extract the correct date field
   const getTransactionDate = (transaction) => {
-    return transaction.expense_date || transaction.income_date;
+    return new Date(transaction.expense_date || transaction.income_date);
   };
 
   useEffect(() => {
-    console.log('Transactions:', expenses);
-    const sortByCategoryAndDate = () => {
-      const processedData = [...expenses, ...incomes]
-        .filter((item) => {
-          if (selectedDate === new Date() && !selectedCategory) {
-            console.log(processedData);
-            return processedData;
-          } else {
-            (selectedDate === new Date() ||
-              new Date(getTransactionDate(item)).toDateString() === selectedDate.toDateString()) &&
-              (!selectedCategory || item.tag_id === selectedCategory);
-          }
+    const filterAndSortTransactions = () => {
+      return [...expenses, ...incomes]
+        .filter((transaction) => {
+          const transactionDate = getTransactionDate(transaction);
+          const isSelectedDate =
+            transactionDate.getFullYear() === selectedDate.getFullYear() &&
+            transactionDate.getMonth() === selectedDate.getMonth();
+          return selectedCategory
+            ? transaction.tag_id === selectedCategory && isSelectedDate
+            : isSelectedDate;
         })
-        .sort((a, b) => new Date(getTransactionDate(b)) - new Date(getTransactionDate(a)));
-      return processedData;
+        .sort((a, b) => getTransactionDate(b) - getTransactionDate(a));
     };
 
-    if (expenses.length !== 0 && incomes.length !== 0) {
-      const newFilteredData = sortByCategoryAndDate();
-      setFilteredData(newFilteredData);
-    }
+    setFilteredData(filterAndSortTransactions());
   }, [selectedDate, selectedCategory, expenses, incomes]);
 
   return (
@@ -70,12 +63,12 @@ const Transactions = ({ expenses, incomes }) => {
       <List>
         {filteredData.length > 0 ? (
           filteredData.map((transaction) => {
-            const isExpense = Object.prototype.hasOwnProperty.call(transaction, 'expense_id');
+            const isExpense = 'expense_id' in transaction;
             const id = isExpense ? transaction.expense_id : transaction.income_id;
             const desc = isExpense
               ? transaction.expense_description
               : transaction.income_description;
-            const date = isExpense ? transaction.expense_date : transaction.income_date;
+            const date = getTransactionDate(transaction).toLocaleDateString();
             const amount = isExpense ? transaction.expense_amount : transaction.income_amount;
 
             return (

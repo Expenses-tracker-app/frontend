@@ -71,81 +71,60 @@ export const lineOptions = {
 
 const LineChart = ({ expenses, incomes }) => {
   const { selectedDate, selectedCategory } = useContext(DateProvider);
-  const [expenseSum, setExpenseSum] = useState(0);
-  const [incomeSum, setIncomeSum] = useState(0);
+  const [lineData, setLineData] = useState({ labels: [], datasets: [] });
 
-  const labels = useMemo(() => {
-    return ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
-  }, []);
-
-  const [lineData, setLineData] = useState({ labels, datasets: [] });
+  const labels = useMemo(() => ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'], []);
 
   const getTransactionDate = (transaction) => {
-    return transaction.expense_date || transaction.income_date;
+    return new Date(transaction.expense_date || transaction.income_date);
   };
 
   useEffect(() => {
-    console.log('LineChart:', expenses);
+    const filterAndSortTransactions = (transactions) => {
+      return transactions
+        .filter((transaction) => {
+          const transactionDate = getTransactionDate(transaction);
+          const isSelectedDate =
+            transactionDate.getFullYear() === selectedDate.getFullYear() &&
+            transactionDate.getMonth() === selectedDate.getMonth();
+          return selectedCategory
+            ? transaction.tag_id === selectedCategory && isSelectedDate
+            : isSelectedDate;
+        })
+        .sort((a, b) => getTransactionDate(b) - getTransactionDate(a));
+    };
 
     const groupAndSumByDate = (transactions) => {
-      const groupedTransactions = {};
-
-      transactions.forEach((transaction) => {
-        const date = getTransactionDate(transaction).split('T')[0];
-        if (!groupedTransactions[date]) {
-          groupedTransactions[date] = {
-            date,
-            totalAmount: 0
-          };
-        }
-
-        groupedTransactions[date].totalAmount +=
-          transaction.expense_ampunt || transaction.income_amount;
-      });
-
-      return Object.values(groupedTransactions);
+      return transactions.reduce((acc, transaction) => {
+        const amount = transaction.expense_amount || transaction.income_amount;
+        acc[getTransactionDate(transaction)] = (acc[getTransactionDate(transaction)] || 0) + amount;
+        return acc;
+      }, {});
     };
+    const processedExpenses = expenses.length ? filterAndSortTransactions(expenses) : [];
+    const processedIncomes = incomes.length ? filterAndSortTransactions(incomes) : [];
 
-    const sortByCategoryAndDate = (transactions) => {
-      const processedData = transactions
-        .filter((item) => {
-          if (selectedDate === new Date() && !selectedCategory) {
-            return processedData;
-          } else {
-            (selectedDate === new Date() ||
-              (new Date(getTransactionDate(item)).getFullYear() === selectedDate.getFullYear() &&
-                new Date(getTransactionDate(item)).getMonth() === selectedDate.getMonth())) &&
-              (!selectedCategory || item.tag_id === selectedCategory);
-          }
-        })
-        .sort((a, b) => new Date(getTransactionDate(b)) - new Date(getTransactionDate(a)));
-      return processedData;
-    };
-    if (expenses.length !== 0 && incomes.length !== 0) {
-      setExpenseSum(groupAndSumByDate(sortByCategoryAndDate(expenses)));
-      setIncomeSum(groupAndSumByDate(sortByCategoryAndDate(incomes)));
-    }
-  }, [selectedDate, selectedCategory, expenses, incomes]);
+    const expenseSum = groupAndSumByDate(processedExpenses);
+    const incomeSum = groupAndSumByDate(processedIncomes);
 
-  useEffect(() => {
     setLineData({
-      labels: labels,
+      labels,
       datasets: [
         {
           label: 'Incomes',
-          data: incomeSum,
+          data: Object.values(incomeSum),
           borderColor: '#39d49b',
           backgroundColor: '#39d49b'
         },
         {
           label: 'Expenses',
-          data: expenseSum,
+          data: Object.values(expenseSum),
           borderColor: '#f00a0a',
           backgroundColor: '#f00a0a'
         }
       ]
     });
-  }, [incomeSum, expenseSum, labels]);
+  }, [selectedDate, selectedCategory, expenses, incomes, labels]);
 
   return (
     <Wrapper>

@@ -130,7 +130,6 @@ export const MainPage = () => {
           incomesResponse && incomesResponse.status !== 404
             ? convertResponseToArray(incomesResponse)
             : [];
-
         setIncomes(incomesData);
       } catch (error) {
         console.error('Error fetching transactions:', error);
@@ -147,15 +146,27 @@ export const MainPage = () => {
         <Welcome variant="h3">{t('specific.welcome')}</Welcome>
       </MTitle>
       <div>
-        <LineChart expenses={expenses} incomes={incomes} />
+        {expenses.length !== 0 || incomes.length !== 0 ? (
+          <LineChart expenses={expenses} incomes={incomes} />
+        ) : (
+          <div> No data to display </div>
+        )}
         <Box>
           <MCalendar />
-          <DoughnutChart expenses={expenses} incomes={incomes} />
+          {expenses.length !== 0 || incomes.length !== 0 ? (
+            <DoughnutChart expenses={expenses} incomes={incomes} />
+          ) : (
+            <div> No data to display </div>
+          )}
         </Box>
         <MBox>
           <ActionButtons />
           <MLink to={paths.transactions.path}>
-            <Transactions expenses={expenses} incomes={incomes} />
+            {expenses.length !== 0 || incomes.length !== 0 ? (
+              <Transactions expenses={expenses} incomes={incomes} />
+            ) : (
+              <div> No data to display </div>
+            )}
           </MLink>
         </MBox>
       </div>

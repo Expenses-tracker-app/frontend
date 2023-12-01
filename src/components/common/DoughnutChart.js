@@ -53,63 +53,49 @@ const doughnutOptions = {
 
 const DoughnutChart = ({ expenses, incomes }) => {
   const { selectedDate, selectedCategory } = useContext(DateProvider);
-  const [expenseSum, setExpenseSum] = useState(0);
-  const [incomeSum, setIncomeSum] = useState(0);
-
-  const getTransactionDate = (transaction) => {
-    return transaction.expense_date || transaction.income_date;
-  };
-
-  const calculateTotal = (transactions) =>
-    transactions.reduce((acc, transaction) => acc + transaction.totalAmount, 0);
-
-  useEffect(() => {
-    console.log('Doughnutchart:', expenses);
-
-    const sortByCategoryAndDate = (transactions) => {
-      const today = new Date();
-      const processedData = transactions
-        .filter((item) => {
-          if (selectedDate === new Date() && !selectedCategory) {
-            const transactionDate = new Date(getTransactionDate(item));
-            return transactionDate.toDateString() === today.toDateString();
-          } else {
-            (selectedDate === new Date() ||
-              new Date(getTransactionDate(item)).toDateString() === selectedDate.toDateString()) &&
-              (!selectedCategory || item.tag_id === selectedCategory);
-          }
-        })
-        .sort((a, b) => new Date(getTransactionDate(b)) - new Date(getTransactionDate(a)));
-      return processedData;
-    };
-
-    if (expenses.length !== 0 && incomes.length !== 0) {
-      setExpenseSum(calculateTotal(sortByCategoryAndDate(expenses)));
-      setIncomeSum(calculateTotal(sortByCategoryAndDate(incomes)));
-    }
-  }, [selectedDate, selectedCategory, expenses, incomes]);
-
   const [doughnutData, setDoughnutData] = useState({
     labels: ['Incomes', 'Expenses'],
     datasets: [
-      {
-        backgroundColor: ['#39d49b', '#f00a0a'],
-        borderColor: ['#39d49b', '#f00a0a']
-      }
+      { backgroundColor: ['#39d49b', '#f00a0a'], borderColor: ['#39d49b', '#f00a0a'], data: [] }
     ]
   });
 
+  const getTransactionDate = (transaction) => {
+    return new Date(transaction.expense_date || transaction.income_date);
+  };
+
   useEffect(() => {
+    const filterAndSortTransactions = (transactions) => {
+      return transactions
+        .filter((transaction) => {
+          const transactionDate = getTransactionDate(transaction);
+          const isSelectedDate =
+            transactionDate.getFullYear() === selectedDate.getFullYear() &&
+            transactionDate.getMonth() === selectedDate.getMonth();
+          return selectedCategory
+            ? transaction.tag_id === selectedCategory && isSelectedDate
+            : isSelectedDate;
+        })
+        .sort((a, b) => getTransactionDate(b) - getTransactionDate(a));
+    };
+
+    const calculateTotal = (transactions) =>
+      transactions.reduce(
+        (acc, transaction) => acc + (transaction.expense_amount || transaction.income_amount),
+        0
+      );
+
+    const processedExpenses = filterAndSortTransactions(expenses);
+    const processedIncomes = filterAndSortTransactions(incomes);
+
+    const expenseSum = calculateTotal(processedExpenses);
+    const incomeSum = calculateTotal(processedIncomes);
+
     setDoughnutData((prevData) => ({
       ...prevData,
-      datasets: [
-        {
-          ...prevData.datasets[0],
-          data: [expenseSum, incomeSum]
-        }
-      ]
+      datasets: [{ ...prevData.datasets[0], data: [incomeSum, expenseSum] }]
     }));
-  }, [incomeSum, expenseSum]);
+  }, [selectedDate, selectedCategory, expenses, incomes]);
 
   return (
     <Wrapper>

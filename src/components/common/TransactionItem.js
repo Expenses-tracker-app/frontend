@@ -31,7 +31,7 @@ const Income = styled(Typography)(({ theme }) => ({
 
 const TransactionItem = ({ desc, date, amount, isExpense, onClick }) => {
   return (
-    <StyledListItemButton onClick={onClick}>
+    <StyledListItemButton onClick={onClick ? onClick : () => {}}>
       <div>
         <Typography variant="h5">{desc}</Typography>
         <Date>{date}</Date>
@@ -52,7 +52,7 @@ TransactionItem.propTypes = {
   date: PropTypes.string.isRequired,
   amount: PropTypes.number.isRequired,
   isExpense: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func
 };
 
 export default TransactionItem;
